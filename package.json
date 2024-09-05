@@ -2,8 +2,11 @@
   "name": "setec-o-y",
   "version": "1.0.0",
   "type": "module",
-  "main": "index.js",
-  "scripts": {},
+  "main": "./backend/index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

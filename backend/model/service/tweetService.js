@@ -8,17 +8,23 @@ export class TweetService {
     try {
 
       //Validação de dados temporárias 
+      
+            // // Verifique se o autor do tweet existe (inativo ate os user estarem cadastrados)
+            // const authorExists = await userRepository.findUserById(tweet.authorId);
+            // if (!authorExists) {
+            //   throw new Error('Author does not exist');
+            // }
 
       // Verifique se o texto do tweet não está vazio
       if (!tweet.text || tweet.text.trim() === '') {
-        throw new Error('Tweet text cannot be empty');
+        throw new Error('Texto vazio');
       }
 
-      // Verifique se o autor do tweet existe (opcional)
-      const authorExists = await userRepository.findUserById(tweet.authorId);
-      if (!authorExists) {
-        throw new Error('Author does not exist');
+      // Verifica a data de criação do tweet
+      if (!tweet.createdAt || isNaN(new Date(tweet.createdAt).getTime())) { 
+        tweet.createdAt = new Date(); // Se veradeiro, use a data atual
       }
+
 
       return await tweetRepository.createTweet(tweet);
     } catch (error) {

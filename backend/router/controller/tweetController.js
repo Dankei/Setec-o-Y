@@ -8,7 +8,7 @@ export class TweetController {
   // Criar um novo tweet
   async createTweet(request, response) {
     const { text, authorId, createdAt } = request.body;
-    console.log(text, authorId, createdAt);
+    console.log("\n Dados: ", text, authorId, createdAt); // Debug
 
     try {
       const tweet = new TweetEntity(text, authorId, new Date(createdAt));
@@ -19,7 +19,7 @@ export class TweetController {
       response.status(400).json({ message: error.message });
     }
   }
-
+ 
   // Encontrar um tweet por ID
   async findTweetById(request, response) {
     const { id } = request.params;
