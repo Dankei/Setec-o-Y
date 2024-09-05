@@ -6,20 +6,29 @@ const userService = new UserService();
 export class UserController{
 
     async  createUser (request, response) {
+        console.log("\n\n\ninfo: Iniciado UserController.createUser", request.body);
+        const { username, email, senha } = request.body;
 
-    const { username, email, senha } = request.body;
-    console.log(username, email, senha);
+        try {
 
-    try {
             const user = new UserEntity(username, email, senha, null);
-            console.log(user);
             const result = await userService.createUser(user);
+
+            console.log("\n\n\ninfo: Finalizado UserController.createUser", result);
             response.status(201).json(result);
+
+            
         } catch (error) {
+            console.log("\n\n\nerror: UserController.createUser", error);
             response.status(400).json({ message: error.message });
         }
 
     }
+
+
+
+
+
 
     async findUserAll(request, response) {
         try {
