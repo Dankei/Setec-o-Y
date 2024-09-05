@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "startfront": "webpack-dev-server .",
-    "start": "nodemon backend/backend.js"
+    "start": "nodemon backend/backend.js",
     "build": "webpack ."
   },
   "keywords": [],
