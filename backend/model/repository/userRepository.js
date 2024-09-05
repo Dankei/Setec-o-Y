@@ -7,16 +7,28 @@ export class UserRepository {
 
     // Criando um novo usuário no banco de dados
     async createUser(user){
-        console.log("Testandoii");
+        try{
+        console.log("\n\n\ninfo: Iniciado UserRepository.createUser", user);
 
-        console.log(user);
+
+        const {username, email, senha} = user;
+
 
         const [result] = await database.query(
             'INSERT INTO tb_user (username,email,senha) VALUES (?,?,?)',
-            [user.username, user.email, user.senha]
+            [username, email, senha]
         );
-        user.id = result.insertId;
-        return user;
+
+        const newUser = new UserEntity(username, email, senha, result.insertId);
+        console.log("\n\n\ninfo: Finalizado UserRepository.createUser", newUser);
+
+        return newUser;
+
+
+    }catch(error){
+        console.log("\n\n\nerror: UserRepository.createUser", error);
+        throw error;
+    }
     }
 
 
