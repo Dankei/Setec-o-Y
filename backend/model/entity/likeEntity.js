@@ -1,8 +1,8 @@
 export class LikeEntity{
-    constructor(id, userID, id_tweetID){
-        this.id = id;
+    constructor(userID, tweetID){
+        this.id = null;
         this.userID = userID;
-        this.id_tweetID = id_tweetID;
+        this.tweetID = tweetID;
         this.createdAT = new Date();
     }
 }

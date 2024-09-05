@@ -16,7 +16,8 @@ export class LikeRepository {
             [userID, tweetID, createdAT]
         );
 
-        const newLike = new LikeEntity(result.insertId,userID, tweetID, createdAT);
+        const newLike = new LikeEntity(userID, tweetID);
+        newLike.id = result.insertId;
         console.log("\n\n\ninfo: Finalizado LikeRepository.createLike", newLike);
 
         return newLike;
