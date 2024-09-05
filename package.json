@@ -2,10 +2,12 @@
   "name": "setec-o-y",
   "version": "1.0.0",
   "type": "module",
+
   "main": "./frontend/src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server .",
+    "startfront": "webpack-dev-server .",
+    "start": "nodemon backend/backend.js"
     "build": "webpack ."
   },
   "keywords": [],
@@ -13,6 +15,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
