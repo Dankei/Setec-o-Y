@@ -2,6 +2,7 @@ import express from 'express';
 
 import { UserController } from './controller/userController.js';
 import { LikeController } from './controller/likeController.js';
+import { TweetController } from './controller/tweetController.js';
 
 const router = express.Router();
 const userController = new UserController();
