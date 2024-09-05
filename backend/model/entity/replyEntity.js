@@ -1,5 +1,5 @@
 export class ReplyEntity{
-    constructor(id=null, text, userID, tweetID, replyID=null){
+    constructor(text, userID, tweetID,replyID=null, id=null){
     
         this.id = id;
         this.text = text;
