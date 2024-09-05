@@ -1,5 +1,5 @@
-import { ReplyEntity } from "../../model/entity/replyEntity";
-import { ReplyService } from "../../model/service/replyService";
+import { ReplyEntity } from "../../model/entity/replyEntity.js";
+import { ReplyService } from "../../model/service/replyService.js";
 
 const replyService = new ReplyService();
 

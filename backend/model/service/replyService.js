@@ -1,4 +1,4 @@
-import { ReplyRepository } from "../repository/replyRepository";
+import { ReplyRepository } from "../repository/replyRepository.js";
 
 const replyRepository = new ReplyRepository();
 
@@ -9,7 +9,7 @@ export class ReplyService {
 
         //Regra para salvar reply
 
-        
+
         // Garantindo que replyID seja null caso não seja informado
         const replyIDValue = reply.replyID !== undefined && reply.replyID !== '' ? reply.replyID : null;
         reply.replyID = replyIDValue;

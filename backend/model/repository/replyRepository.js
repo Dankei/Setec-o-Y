@@ -11,11 +11,17 @@ export class ReplyRepository {
             
             const {text, userID, tweetID, replyID} = reply;
 
-            
+
             const [result] = await database.query(
                 'INSERT INTO tb_reply (text, userID, tweetID, replyID) VALUES (?,?,?,?)',
                 [text, userID, tweetID, replyID]
             );
+
+            const newReply = new ReplyEntity(text, userID, tweetID, replyID,result.insertId);
+            console.log("\n\n\ninfo: Finalizado ReplyRepository.createReply", newReply);
+
+            return newReply;
+
         }catch(error){
             console.log("\n\n\nerror: ReplyRepository.createReply", error);
             throw error;
