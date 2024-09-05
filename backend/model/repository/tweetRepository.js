@@ -2,19 +2,27 @@ import { database } from "../../database/database.js";
 import { TweetEntity } from "../entity/tweetEntity.js";
 
 export class TweetRepository {
-
   // Criando um novo tweet
-  async createTweet({ text, authorId, createdAt }) {
+  async createTweet(tweet) {
     try {
+      const { text, authorId, createdAt } = tweet;
+
       const [result] = await database.query(
-        'INSERT INTO tb_tweet (text, authorId, createdAt) VALUES (?, ?, ?)',
+        "INSERT INTO tb_tweet (text, authorId, createdAt) VALUES (?, ?, ?)",
         [text, authorId, createdAt]
       );
-      const tweet = new TweetEntity(text, authorId, createdAt, result.insertId);
-      return tweet;
+
+      const newTweet = new TweetEntity(
+        text,
+        authorId,
+        createdAt,
+        result.insertId
+      );
+
+      return newTweet;
     } catch (error) {
-      console.error('Error na criação do tweet:', error);
-      throw new Error('Failed to create tweet');
+      console.error("Error na criação do tweet:", error);
+      throw new Error("Failed to create tweet");
     }
   }
 
@@ -22,7 +30,7 @@ export class TweetRepository {
   async findTweetById(id) {
     try {
       const [rows] = await database.query(
-        'SELECT * FROM tb_tweet WHERE id = ?',
+        "SELECT * FROM tb_tweet WHERE id = ?",
         [id]
       );
       if (rows.length) {
@@ -31,24 +39,22 @@ export class TweetRepository {
       }
       return null;
     } catch (error) {
-      console.error('Error ao encotrar o tweet pelo ID:', error);
-      throw new Error('Failed to find tweet');
+      console.error("Error ao encotrar o tweet pelo ID:", error);
+      throw new Error("Failed to find tweet");
     }
   }
 
   // Encontrar todos os tweets
   async findAllTweets() {
     try {
-      const [rows] = await database.query(
-        'SELECT * FROM tb_tweet'
-      );
-      return rows.map(row => {
+      const [rows] = await database.query("SELECT * FROM tb_tweet");
+      return rows.map((row) => {
         const { id, text, authorId, createdAt } = row;
         return new TweetEntity(text, authorId, new Date(createdAt), id);
       });
     } catch (error) {
-      console.error('Error ao encotrar todos os tweets:', error);
-      throw new Error('Failed to find tweets');
+      console.error("Error ao encotrar todos os tweets:", error);
+      throw new Error("Failed to find tweets");
     }
   }
 
@@ -56,16 +62,16 @@ export class TweetRepository {
   async findTweetsByAuthorId(authorId) {
     try {
       const [rows] = await database.query(
-        'SELECT * FROM tb_tweet WHERE authorId = ?',
+        "SELECT * FROM tb_tweet WHERE authorId = ?",
         [authorId]
       );
-      return rows.map(row => {
+      return rows.map((row) => {
         const { id, text, authorId, createdAt } = row;
         return new TweetEntity(text, authorId, new Date(createdAt), id);
       });
     } catch (error) {
-      console.error('Error ao encotrar o tweet pelo ID do autor:', error);
-      throw new Error('Failed to find tweets by author');
+      console.error("Error ao encotrar o tweet pelo ID do autor:", error);
+      throw new Error("Failed to find tweets by author");
     }
   }
 }
