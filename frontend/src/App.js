@@ -1,7 +1,12 @@
 import React from "react"
+import IndexPage from "./pages/IndexPage.js";
 
-const App = () =>{
-    return <h1>Y!</h1>
+function App() {
+    return (
+        <div className="w-screen h-screen">
+            <IndexPage />
+        </div>
+    )
 }
 
 export default App;
