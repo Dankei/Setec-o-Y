@@ -1,10 +1,17 @@
 import mysql from "mysql2/promise";
 import dotenv from "dotenv";
 
-dotenv.config({ path: "../../.env" });
+// Carrega as variáveis de ambiente do arquivo .env
+dotenv.config({ path: "../.env" });
+
+// Desestruturação das variáveis de ambiente
 const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT } = process.env;
 
-
+    console.log('DB_HOST:', DB_HOST);
+    console.log('DB_PORT:', DB_PORT);
+    console.log('DB_USER:', DB_USER);
+    console.log('DB_PASSWORD:', DB_PASSWORD);
+    console.log('DB_NAME:', DB_NAME);
 // Cria um pool de conexões com o MySQL
 export const database = mysql.createPool({
     host: DB_HOST,
@@ -17,6 +24,7 @@ export const database = mysql.createPool({
     queueLimit: 0        // Sem limite de requisições na fila
 });
 
+// Verifica a conexão inicial
 database.getConnection()
     .then(connection => {
         console.log('Connected to the database!');
@@ -25,3 +33,9 @@ database.getConnection()
     .catch(err => {
         console.error('Error connecting to the database:', err);
     });
+    console.log('DB_HOST:', DB_HOST);
+    console.log('DB_PORT:', DB_PORT);
+    console.log('DB_USER:', DB_USER);
+    console.log('DB_PASSWORD:', DB_PASSWORD);
+    console.log('DB_NAME:', DB_NAME);
+    

@@ -1,12 +1,12 @@
 import express from 'express';
-import userRoutes from './router/routes.js'; // Ajuste o caminho conforme necessário
+import router from './router/routes.js'; // Ajuste o caminho conforme necessário
 
 const app = express();
 
 app.use(express.json()); // Middleware para interpretar JSON no corpo das requisições
 
 // Usa as rotas definidas no arquivo user.routes.js
-app.use('/api', userRoutes);
+app.use('/api', router);
 
 // Inicia o servidor
 const PORT = 3000;

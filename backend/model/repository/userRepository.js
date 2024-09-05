@@ -7,6 +7,10 @@ export class UserRepository {
 
     // Criando um novo usuário no banco de dados
     async createUser(user){
+        console.log("Testandoii");
+
+        console.log(user);
+
         const [result] = await database.query(
             'INSERT INTO tb_user (username,email,senha) VALUES (?,?,?)',
             [user.username, user.email, user.senha]
@@ -26,6 +30,16 @@ export class UserRepository {
             return new UserEntity(id, username, email, senha);
         }
         return null;
+    }
+
+    async findUserAll(){
+        const [rows] = await database.query(
+            'SELECT * FROM tb_user'
+        );
+        return rows.map(row => {
+            const {id, username, email, senha} = row;
+            return new UserEntity(username, email, senha,id);
+        });
     }
 
 }
