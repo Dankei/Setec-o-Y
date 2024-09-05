@@ -2,7 +2,9 @@ import mysql from "mysql2/promise";
 import dotenv from "dotenv";
 
 // Carrega as variáveis de ambiente do arquivo .env
-dotenv.config({ path: ".env" });
+
+dotenv.config({ path: "../.env" });
+
 
 // Desestruturação das variáveis de ambiente
 const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT } = process.env;
