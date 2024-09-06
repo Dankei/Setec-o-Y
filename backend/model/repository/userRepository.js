@@ -11,15 +11,15 @@ export class UserRepository {
         console.log("\n\n\ninfo: Iniciado UserRepository.createUser", user);
 
 
-        const {username, email, senha} = user;
+        const {username, email, password} = user;
 
 
         const [result] = await database.query(
-            'INSERT INTO tb_user (username,email,senha) VALUES (?,?,?)',
-            [username, email, senha]
+            'INSERT INTO tb_user (username,email,password) VALUES (?,?,?)',
+            [username, email, password]
         );
 
-        const newUser = new UserEntity(username, email, senha, result.insertId);
+        const newUser = new UserEntity(username, email, password, result.insertId);
         console.log("\n\n\ninfo: Finalizado UserRepository.createUser", newUser);
 
         return newUser;
@@ -32,14 +32,35 @@ export class UserRepository {
     }
 
 
+    // Verificando se o email já está cadastrado
+    async findUserByEmail(email){
+        const [rows] = await database.query(
+            'SELECT * FROM tb_user WHERE email = ?',
+            [email]
+        );
+        if(rows.length){
+            const {id, username, email, password} = rows[0];
+            return new UserEntity(id, username, email, password);
+        }
+        return null;
+    }
+
+
+
+
+
+
+
+
+
     async fintUserbyId(id){
         const [rows] = await database.query(
             'SELECT * FROM tb_user WHERE id = ?',
             [id]
         );
         if(rows.length){
-            const {id, username, email, senha} = rows[0];
-            return new UserEntity(id, username, email, senha);
+            const {id, username, email, password} = rows[0];
+            return new UserEntity(id, username, email, password);
         }
         return null;
     }
@@ -49,8 +70,8 @@ export class UserRepository {
             'SELECT * FROM tb_user'
         );
         return rows.map(row => {
-            const {id, username, email, senha} = row;
-            return new UserEntity(username, email, senha,id);
+            const {id, username, email, password} = row;
+            return new UserEntity(username, email, password,id);
         });
     }
 
