@@ -1,3 +1,4 @@
+import e from 'express';
 import { UserEntity } from '../../model/entity/userEntity.js';
 import { UserService } from '../../model/service/userService.js';
 
@@ -31,17 +32,33 @@ export class UserController{
     }
 
 
+    async login(request, response) {
+        console.log("\n\n\ninfo: Iniciado UserController.login", request.body);
+        const { email, password } = request.body;
 
-
-
-
-    async findUserAll(request, response) {
         try {
-            const result = await userService.findUserAll();
+            const result = await userService.login(email, password);
+
+            console.log("\n\n\ninfo: Finalizado UserController.login", result);
             response.status(200).json(result);
+
         } catch (error) {
-            response.status(400).json({ message: error.message });
+            console.log("\n\n\nerror: UserController.login", error.message);
+
+            if(error.message === 'Email não cadastrado'){
+                response.status(404).json({message: error.message});
+
+            }else if(error.message === 'Senha incorreta'){
+                response.status(401).json({message: error.message});
+
+            }else{
+            response.status(400).json({message: error.message});
+            }
         }
+
     }
+
+
+
 
 }

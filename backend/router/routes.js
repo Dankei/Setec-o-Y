@@ -17,8 +17,7 @@ const replyController = new ReplyController();
 
 // Rotas de usuários
 router.post('/users', userController.createUser);
-router.get('/users', userController.findUserAll);
-
+router.post('/login', userController.login);
 
 // Rotas de tweets
 router.post('/tweets', tweetController.createTweet);

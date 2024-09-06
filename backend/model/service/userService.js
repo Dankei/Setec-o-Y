@@ -35,12 +35,28 @@ export class UserService {
       
     }
 
-    findUserById(id) {
-        return userRepository.findUserById(id);
-    }
+    login(email, password) {
+        console.log("\n\n\ninfo: Iniciado UserService.login", email, password);
 
-    findUserAll() {
-        return userRepository.findUserAll();
+        //Regra para login
+        //1. Verificar se o email existe
+        console.log("\n\ninfo: Iniciado Verificação se o email existe");
+        const user = userRepository.findUserByEmail(email);
+        if (!user) {
+            console.log("\n\nerror: Email não cadastrado");
+            throw new Error('Email não cadastrado');
+        }
+
+        //2. Verificar se a senha está correta
+        console.log("\n\ninfo: Iniciado Verificação se a senha está correta");
+        const isPasswordCorrect = bcrypt.compareSync(password, user.password);
+        if (!isPasswordCorrect) {
+            console.log("\n\nerror: Senha incorreta");
+            throw new Error('Senha incorreta');
+        }
+
+        console.log("\n\n\ninfo: Finalizado UserService.login", user);
+        return user;
     }
 
 }
