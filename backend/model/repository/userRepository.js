@@ -39,8 +39,8 @@ export class UserRepository {
             [email]
         );
         if(rows.length){
-            const {id, username, email, password} = rows[0];
-            return new UserEntity(id, username, email, password);
+            const {username, email, password,id} = rows[0];
+            return new UserEntity(username, email, password,id);
         }
         return null;
     }
