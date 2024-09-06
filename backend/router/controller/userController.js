@@ -7,11 +7,11 @@ export class UserController{
 
     async  createUser (request, response) {
         console.log("\n\n\ninfo: Iniciado UserController.createUser", request.body);
-        const { username, email, senha } = request.body;
+        const { username, email, password } = request.body;
 
         try {
 
-            const user = new UserEntity(username, email, senha, null);
+            const user = new UserEntity(username, email, password, null);
             const result = await userService.createUser(user);
 
             console.log("\n\n\ninfo: Finalizado UserController.createUser", result);
