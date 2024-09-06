@@ -32,6 +32,27 @@ export class UserRepository {
     }
 
 
+    // Verificando se o email já está cadastrado
+    async findUserByEmail(email){
+        const [rows] = await database.query(
+            'SELECT * FROM tb_user WHERE email = ?',
+            [email]
+        );
+        if(rows.length){
+            const {id, username, email, password} = rows[0];
+            return new UserEntity(id, username, email, password);
+        }
+        return null;
+    }
+
+
+
+
+
+
+
+
+
     async fintUserbyId(id){
         const [rows] = await database.query(
             'SELECT * FROM tb_user WHERE id = ?',

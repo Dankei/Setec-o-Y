@@ -5,7 +5,7 @@ import { useState } from 'react';
 function SignUpScreen({ onLoginClick }) {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const [senha, setSenha] = useState('');
+    const [password, setPassword] = useState('');
 
     const handleUsernameChange = (event) => {
         setUsername(event.target.value);
@@ -15,8 +15,8 @@ function SignUpScreen({ onLoginClick }) {
         setEmail(event.target.value);
     }
 
-    const handleSenhaChange = (event) => {
-        setSenha(event.target.value);
+    const handlepasswordChange = (event) => {
+        setPassword(event.target.value);
     }
 
     return (
@@ -32,8 +32,8 @@ function SignUpScreen({ onLoginClick }) {
                     <label htmlFor="nome" className="px-5 text-2xl font-thin">E-mail</label>
                 </div>
                 <div className="flex flex-col w-full">
-                    <input type="password" id="nome" onChange={handleSenhaChange}  placeholder="****************" className="border-b-[3px] bg-transparent w-full px-5 py-1 text-2xl focus:outline-none" />
-                    <label htmlFor="nome" className="px-5 text-2xl font-thin">Senha</label>
+                    <input type="password" id="nome" onChange={handlepasswordChange}  placeholder="****************" className="border-b-[3px] bg-transparent w-full px-5 py-1 text-2xl focus:outline-none" />
+                    <label htmlFor="nome" className="px-5 text-2xl font-thin">password</label>
                 </div>
             </form>
             <div className="w-full flex-col flex gap-10 my-5">
@@ -49,7 +49,7 @@ function SignUpScreen({ onLoginClick }) {
                             body: JSON.stringify({
                                 username: username,
                                 email: email,
-                                senha: senha,
+                                password: password,
                             }),
                         })
                             .then((response) => {

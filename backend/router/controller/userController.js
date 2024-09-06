@@ -11,7 +11,7 @@ export class UserController{
 
         try {
 
-            const user = new UserEntity(username, email, password, null);
+            const user = new UserEntity(username, email, password);
             const result = await userService.createUser(user);
 
             console.log("\n\n\ninfo: Finalizado UserController.createUser", result);
@@ -19,8 +19,13 @@ export class UserController{
 
             
         } catch (error) {
-            console.log("\n\n\nerror: UserController.createUser", error);
-            response.status(400).json({ message: error.message });
+            console.log("\n\n\nerror: UserController.createUser",error.message);
+            if(error.message === 'Email já cadastrado'){
+                response.status(409).json({message: error.message});
+            }else{
+                response.status(400).json({message: error.message});
+            }
+            
         }
 
     }
