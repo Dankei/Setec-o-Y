@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import { GenerateTokenUtils } from "./utils/genereteTokenUtils.js";
 import { EmailUtils } from "./utils/emailUtils.js";
 import { TokenRepository } from "../repository/tokenRepository.js";	
+import { TokenEntity } from "../entity/tokenEntity.js";
 
 const userRepository = new UserRepository();
 const generateTokenUtils = new GenerateTokenUtils();
@@ -53,9 +54,45 @@ export class UserService {
         return userNew;
          
          
+    }
+    
+    async confirmEmail(token, userID) {
+
+        console.log("\n\n\ninfo: Iniciado UserService.confirmEmail", token, userID);
+
+        //Regra para confirmar email
+        //1. Verificar se o token é válido
+        console.log("\n\ninfo: Iniciado Verificação se o token é válido");
+        const userToken = await tokenRepository.findTokenByToken(token, userID);
+        console.log("\n\ninfo: valor de userToken", userToken);
+        if (userToken === null) {
+            console.log("\n\nerror: Token inválido");
+            throw new Error('Token inválido');
         }
-        
-        async login(email, password) {
+
+        //2. Verificar se o token está expirado
+        console.log("\n\ninfo: Iniciado Verificação se o token está expirado",new Date(), new Date(userToken.expiresAt));
+        const isTokenExpired = new Date() < new Date(userToken.expiresAt);
+        if (isTokenExpired) {
+            console.log("\n\nerror: Token expirado");
+            throw new Error('Token expirado');
+        }
+
+        //3. Atualizar o status do usuário
+        console.log("\n\ninfo: Iniciado Atualizar o status do usuário");
+        await userRepository.updateUserStatus(userID);
+        console.log("\n\ninfo: Finalizado Atualizar o status do usuário");
+
+        //4. Deletar o token
+        console.log("\n\ninfo: Iniciado Deletar o token");
+        await tokenRepository.deleteToken(token,userID);
+        console.log("\n\ninfo: Finalizado Deletar o token");
+
+        console.log("\n\n\ninfo: Finalizado UserService.confirmEmail");
+    }
+
+
+    async login(email, password) {
             console.log("\n\n\ninfo: Iniciado UserService.login", email, password);
 
         //Regra para login
@@ -80,5 +117,6 @@ export class UserService {
         console.log("\n\n\ninfo: Finalizado UserService.login", user);
         return user;
     }
+
 
 }

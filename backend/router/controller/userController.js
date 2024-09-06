@@ -31,7 +31,30 @@ export class UserController{
 
     }
 
-    
+    async confirmEmail(request, response) {
+        console.log("\n\n\ninfo: Iniciado UserController.confirmEmail", request.body);
+        const { token , userID } = request.body;
+
+        try {
+            const result = await userService.confirmEmail(token, userID);
+
+            console.log("\n\n\ninfo: Finalizado UserController.confirmEmail", result);
+            response.status(200).json(result);
+
+        } catch (error) {
+            console.log("\n\n\nerror: UserController.confirmEmail", error.message);
+
+            if(error.message === 'Token inválido'){
+                response.status(401).json({message: error.message});
+
+            }else if(error.message === 'Email não cadastrado'){
+                response.status(404).json({message: error.message});
+
+            }else{
+                response.status(400).json({message: error.message});
+            }
+        }
+    }
 
 
     async login(request, response) {

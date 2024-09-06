@@ -46,7 +46,14 @@ export class UserRepository {
     }
 
 
-
+    // Atualizando o status do usuário
+    async updateUserStatus(id){
+        const [result] = await database.query(
+            'UPDATE tb_user SET status = 1 WHERE id = ?',
+            [id]
+        );
+        return result.affectedRows > 0;
+    }
 
 
     async fintUserbyId(id){
