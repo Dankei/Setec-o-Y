@@ -9,7 +9,7 @@ const { EMAIL_KEY, EMAIL_FROM, EMAIL_HOST, EMAIL_PORT } = process.env;
 export class EmailUtils {
 
     constructor(){
-        transporter = nodemailer.createTransport({
+        this.transporter = nodemailer.createTransport({
             host: EMAIL_HOST,
             port: EMAIL_PORT,
             secure: true, 
@@ -19,7 +19,7 @@ export class EmailUtils {
             },
           });
 
-          transporter.verify(function (error, success) {
+          this.transporter.verify(function (error, success) {
             if (error) {
               console.log(error);
             } else {
@@ -37,7 +37,7 @@ export class EmailUtils {
         };
 
         try {
-            await transporter.sendEmail(mailOptions);
+            await this.transporter.sendMail(mailOptions);
             console.log("Email enviado com sucesso");
         }catch(error){
             console.log("Erro ao enviar email",error);

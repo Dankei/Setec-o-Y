@@ -1,7 +1,13 @@
 import { UserRepository } from "../repository/userRepository.js";
 import bcrypt from 'bcrypt';
+import { GenerateTokenUtils } from "./utils/genereteTokenUtils.js";
+import { EmailUtils } from "./utils/emailUtils.js";
+import { TokenRepository } from "../repository/tokenRepository.js";	
 
 const userRepository = new UserRepository();
+const generateTokenUtils = new GenerateTokenUtils();
+const emailUtils = new EmailUtils();
+const tokenRepository = new TokenRepository();
 
 export class UserService {
 
@@ -29,19 +35,28 @@ export class UserService {
         console.log("\n\ninfo: Finalizado criptocrafia da senha", user.password);
 
         
-        //3. Envia confirmação de email para o usuário 
-        console.log("\n\ninfo: Iniciado Verificação se o email é válido", user.email);
+        //3. Cria token de verificação do email
+        console.log("\n\ninfo: Iniciado Verificação se o email é válido gerando o token para o email: ", user.email);
+        const token = generateTokenUtils.generateToken();
+        console.log("\n\ninfo: Gerado Token : ", token);
+        emailUtils.sendEmail(user.email, token);
 
+        //4. Salvar o Usuario no banco de dados
+        console.log("\n\n\ninfo: Salvando o Usuario no Banco", user);
+        const userNew = await userRepository.createUser(user);
+         
+        //5. Salvar o Token no banco de dados
+        console.log("\n\ninfo: Iniciado salvar token no banco de dados");
+        await tokenRepository.createEmailToken(token, userNew.id);
 
-
-        console.log("\n\n\ninfo: Finalizado UserService.createUser", user);
-        return userRepository.createUser(user);
+        console.log("\n\n\ninfo: Finalizado UserService.createUser", userNew);
+        return userNew;
+         
+         
+        }
         
-      
-    }
-
-    async login(email, password) {
-        console.log("\n\n\ninfo: Iniciado UserService.login", email, password);
+        async login(email, password) {
+            console.log("\n\n\ninfo: Iniciado UserService.login", email, password);
 
         //Regra para login
         //1. Verificar se o email existe na base de dados

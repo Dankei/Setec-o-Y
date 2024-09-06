@@ -1,15 +1,15 @@
 
 export class GenerateTokenUtils {
     constructor() {
-       letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+       this.letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     }
 
     generateToken(length = 6) {
         let result = '';
-        const charactersLength = letters.length;
+        const charactersLength = this.letters.length;
 
         for (let i = 0; i < length; i++) {
-            result += letters.charAt(Math.floor(Math.random() * charactersLength));
+            result += this.letters.charAt(Math.floor(Math.random() * charactersLength));
         }
 
         return result;

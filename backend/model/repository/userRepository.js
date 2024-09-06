@@ -49,10 +49,6 @@ export class UserRepository {
 
 
 
-
-
-
-
     async fintUserbyId(id){
         const [rows] = await database.query(
             'SELECT * FROM tb_user WHERE id = ?',

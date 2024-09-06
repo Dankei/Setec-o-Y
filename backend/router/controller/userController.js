@@ -17,7 +17,7 @@ export class UserController{
 
             console.log("\n\n\ninfo: Finalizado UserController.createUser", result);
             response.status(201).json(result);
-
+        
             
         } catch (error) {
             console.log("\n\n\nerror: UserController.createUser",error.message);
