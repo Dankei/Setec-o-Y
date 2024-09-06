@@ -20,4 +20,3 @@ out/
 cache/
 
 # Banco de dados
-backend/database/bkpDatabase.sql
