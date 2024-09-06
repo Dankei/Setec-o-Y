@@ -1,7 +1,16 @@
 import express from 'express';
-import router from './router/routes.js'; // Ajuste o caminho conforme necessário
+import router from './router/routes.js'; 
+import cors from 'cors';
+
+
 
 const app = express();
+const corsOptions = {
+    origin: 'http://localhost:3000', // URL do frontend
+    optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json()); // Middleware para interpretar JSON no corpo das requisições
 
