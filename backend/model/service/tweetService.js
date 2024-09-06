@@ -22,10 +22,6 @@ export class TweetService {
         throw new Error('Texto vazio');
       }
 
-      // Verifica a data de criação do tweet
-      if (!tweet.createdAt || isNaN(new Date(tweet.createdAt).getTime())) {
-        tweet.createdAt = new Date(); // Se veradeiro, use a data atual
-      }
 
       console.log("\n\n\ninfo: Finalizado TweetService.createTweet", tweet); // Debug
       return await tweetRepository.createTweet(tweet);
