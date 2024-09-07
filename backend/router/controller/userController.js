@@ -56,7 +56,6 @@ export class UserController{
         }
     }
 
-
     async login(request, response) {
         console.log("\n\n\ninfo: Iniciado UserController.login", request.body);
         const { email, password } = request.body;
@@ -84,6 +83,26 @@ export class UserController{
     }
 
 
+    async followUser(request, response) {
+        console.log("\n\n\ninfo: Iniciado UserController.followUser", request.body);
+        //Primeiro é o usuario que ta logado e o segundo é o usuario que ele quer seguir
+        const { followerID, followedID } = request.body;
 
+        try {
+            const result = await userService.followUser(followerID, followedID);
+
+            console.log("\n\n\ninfo: Finalizado UserController.followUser", result);
+            response.status(201).json(result);
+
+        } catch (error) {
+            console.log("\n\n\nerror: UserController.followUser", error.message);
+                if(error.message === 'dar unfollow'){
+                    response.status(205).json({message: error.message});
+                }else{
+                    response.status(400).json({message: error.message});
+                }
+            
+        }
+    }
 
 }

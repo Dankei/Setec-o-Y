@@ -31,7 +31,6 @@ export class UserRepository {
     }
     }
 
-
     // Verificando se o email já está cadastrado
     async findUserByEmail(email){
         const [rows] = await database.query(
@@ -45,7 +44,6 @@ export class UserRepository {
         return null;
     }
 
-
     // Atualizando o status do usuário
     async updateUserStatus(id){
         const [result] = await database.query(
@@ -55,27 +53,44 @@ export class UserRepository {
         return result.affectedRows > 0;
     }
 
-
-    async fintUserbyId(id){
+    // Encontrando um usuário pelo ID
+    async findUserById(id){
         const [rows] = await database.query(
             'SELECT * FROM tb_user WHERE id = ?',
             [id]
         );
         if(rows.length){
             const {id, username, email, password} = rows[0];
-            return new UserEntity(id, username, email, password);
+            return new UserEntity( username, email, password,id);
         }
         return null;
     }
 
-    async findUserAll(){
+    // Verificando se um usuário está seguindo outro
+    async isFollowing(followerID, followedID){
         const [rows] = await database.query(
-            'SELECT * FROM tb_user'
+            'SELECT * FROM tb_follow WHERE followerID = ? AND followedID = ?',
+            [followerID, followedID]
         );
-        return rows.map(row => {
-            const {id, username, email, password} = row;
-            return new UserEntity(username, email, password,id);
-        });
+        return rows.length > 0;
+    }
+
+    // Deixando de seguir um usuário
+    async unfollowUser(followerID, followedID){
+        const [result] = await database.query(
+            'DELETE FROM tb_follow WHERE followerID = ? AND followedID = ?',
+            [followerID, followedID]
+        );
+        return result.affectedRows > 0;
+    }
+
+    // Seguindo um usuário
+    async followUser(followerID, followedID){
+        const [result] = await database.query(
+            'INSERT INTO tb_follow (followerID, followedID) VALUES (?,?)',
+            [followerID, followedID]
+        );
+        return result.affectedRows > 0;
     }
 
 }

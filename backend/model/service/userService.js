@@ -119,4 +119,45 @@ export class UserService {
     }
 
 
+    async followUser(followerID, followedID) {
+        console.log("\n\n\ninfo: Iniciado UserService.followUser", followerID, followedID);
+
+        //Regra para seguir um usuário
+        //1. Verificar se o usuário que está seguindo existe
+        console.log("\n\ninfo: Iniciado Verificação se o usuário que está seguindo existe");
+        const userFollower = await userRepository.findUserById(followerID);
+        console.log("\n\ninfo: valor de userFollower", userFollower);
+        if (userFollower === null) {
+            console.log("\n\nerror: Usuário que está seguindo não existe");
+            throw new Error('Usuário que está seguindo não existe');
+        }
+
+        //2. Verificar se o usuário que está sendo seguido existe
+        console.log("\n\ninfo: Iniciado Verificação se o usuário que está sendo seguido existe");
+        const userFollowed = await userRepository.findUserById(followedID);
+        console.log("\n\ninfo: valor de userFollowed", userFollowed);
+        if (userFollowed === null) {
+            console.log("\n\nerror: Usuário que está sendo seguido não existe");
+            throw new Error('Usuário que está sendo seguido não existe');
+        }
+
+        //3. Verificar se o usuário que está seguindo já segue o usuário que está sendo seguido
+        console.log("\n\ninfo: Iniciado Verificação se o usuário que está seguindo já segue o usuário que está sendo seguido");
+        const isFollowing = await userRepository.isFollowing(followerID, followedID);
+        console.log("\n\ninfo: valor de isFollowing", isFollowing);
+        if (isFollowing) {
+            console.log("\n\nerror: Usuário que está seguindo já segue o usuário que está sendo seguido");
+            await userRepository.unfollowUser(followerID, followedID);
+            throw new Error('dar unfollow');
+        }
+
+        //4. Seguir o usuário
+        console.log("\n\ninfo: Iniciado seguir o usuário");
+        await userRepository.followUser(followerID, followedID);
+        console.log("\n\ninfo: Finalizado seguir o usuário");
+
+        console.log("\n\n\ninfo: Finalizado UserService.followUser");
+    }
+
+
 }
