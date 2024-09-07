@@ -72,7 +72,7 @@ export class UserService {
 
         //2. Verificar se o token está expirado
         console.log("\n\ninfo: Iniciado Verificação se o token está expirado",new Date(), new Date(userToken.expiresAt));
-        const isTokenExpired = new Date() < new Date(userToken.expiresAt);
+        const isTokenExpired = new Date() > new Date(userToken.expiresAt);
         if (isTokenExpired) {
             console.log("\n\nerror: Token expirado");
             throw new Error('Token expirado');
