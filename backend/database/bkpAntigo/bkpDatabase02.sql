@@ -16,32 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `tb_follow`
---
-
-DROP TABLE IF EXISTS `tb_follow`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tb_follow` (
-  `followerID` bigint unsigned NOT NULL,
-  `followedID` bigint unsigned NOT NULL,
-  PRIMARY KEY (`followerID`,`followedID`),
-  KEY `following_id` (`followedID`),
-  CONSTRAINT `tb_follow_ibfk_1` FOREIGN KEY (`followerID`) REFERENCES `tb_user` (`id`),
-  CONSTRAINT `tb_follow_ibfk_2` FOREIGN KEY (`followedID`) REFERENCES `tb_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tb_follow`
---
-
-LOCK TABLES `tb_follow` WRITE;
-/*!40000 ALTER TABLE `tb_follow` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tb_follow` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `tb_like`
 --
 
@@ -189,4 +163,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-07  2:18:29
+-- Dump completed on 2024-09-07  1:04:44
