@@ -105,4 +105,67 @@ export class UserController{
         }
     }
 
+    async getFollowers(request,response){
+        console.log("\n\n\ninfo: Iniciado UserController.getFollowers", request.body);
+        const { userID } = request.body;
+
+        try {
+            const result = await userService.getFollowers(userID);
+
+            console.log("\n\n\ninfo: Finalizado UserController.getFollowers", result);
+            response.status(200).json(result);
+
+        } catch (error) {
+            console.log("\n\n\nerror: UserController.getFollowers", error.message);
+            response.status(400).json({message: error.message});
+        }
+    }
+    async getFollowing(request,response){
+        console.log("\n\n\ninfo: Iniciado UserController.getFollowing", request.body);
+        const { userID } = request.body;
+
+        try {
+            const result = await userService.getFollowing(userID);
+
+            console.log("\n\n\ninfo: Finalizado UserController.getFollowing", result);
+            response.status(200).json(result);
+
+        } catch (error) {
+            console.log("\n\n\nerror: UserController.getFollowing", error.message);
+            response.status(400).json({message: error.message});
+        }
+    }
+    async getfollowersList(request,response){
+        console.log("\n\n\ninfo: Iniciado UserController.getfollowersList", request.body);
+        const { userID } = request.body;
+
+        try {
+            const result = await userService.getfollowersList(userID);
+
+            console.log("\n\n\ninfo: Finalizado UserController.getfollowersList", result);
+            response.status(200).json(result);
+
+        } catch (error) {
+            console.log("\n\n\nerror: UserController.getfollowersList", error.message);
+            response.status(400).json({message: error.message});
+        }
+    }
+    async getfollowingList(request,response){
+        console.log("\n\n\ninfo: Iniciado UserController.getfollowingList", request.body);
+        const { userID } = request.body;
+
+        try {
+            const result = await userService.getfollowingList(userID);
+
+            console.log("\n\n\ninfo: Finalizado UserController.getfollowingList", result);
+            response.status(200).json(result);
+
+        } catch (error) {
+            console.log("\n\n\nerror: UserController.getfollowingList", error.message);
+            response.status(400).json({message: error.message});
+        }
+    }
+
+
+
 }
