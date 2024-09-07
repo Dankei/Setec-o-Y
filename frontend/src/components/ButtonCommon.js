@@ -5,7 +5,7 @@ export default function Button(props) {
     return (
         <div>
             <a href={props.href}>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button className=" w-fit mx-auto px-6 py-2 rounded-full bg-slate-600 text-white transition-all hover:bg-white hover:text-black font-bold">
                 {props.text}
             </button>
             </a>
