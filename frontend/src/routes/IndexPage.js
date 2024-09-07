@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import StartScreen from "../pages/StartScreen.js";
 import SignUpScreen from "../pages/SignUpScreen.js";
 import LoginScreen from "../pages/LoginScreen.js";
-import HomePage from "./HomePage.js";
+import HomePage from "./Timeline/HomePage.js";
 import { useNavigate } from "react-router-dom";
 
 function IndexPage() {

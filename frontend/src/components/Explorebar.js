@@ -1,11 +1,11 @@
 import React from 'react'
 
 
-export default function Navbar() {
+export default function Explorebar() {
 
     return (
-        <div className="flex h-screen border-solid border-white border-e-2">
-      <div className="w-64 bg-slate-950 text-white flex flex-col ps-2">
+        <div className="flex h-screen border-solid  border-s-2">
+      <div className="w-96 bg-slate-950 text-white flex flex-col ps-2">
         
         <div className="p-4 size-20"><img src="/assets/images/Logo.svg" alt="" /></div>
         
