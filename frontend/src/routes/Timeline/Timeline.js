@@ -5,9 +5,12 @@ import Explorebar from '../../components/Explorebar.js';
 
 export default function Timeline() {
   return (
-    <div className="flex space-x-2">
+    <div className="flex space-x-2 justify-center ">
       <Navbar />
-      <Outlet />
+      <div className="w-[36rem]">
+        <Outlet />
+      </div>
+      
       <Explorebar />
       
     </div>

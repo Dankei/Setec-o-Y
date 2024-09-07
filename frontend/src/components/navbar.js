@@ -4,8 +4,8 @@ import React from 'react'
 export default function Navbar() {
 
     return (
-        <div className="flex h-screen border-solid border-white border-e-2">
-      <div className="w-64 bg-slate-950 text-white flex flex-col ps-2">
+        <div className="flex h-screen border-solid border-gray-600 border-e-2">
+        <div className="w-80 ps-20 bg-slate-950 text-white flex flex-col">
         
         <div className="p-4 size-20"><img src="/assets/images/Logo.svg" alt="" /></div>
         
