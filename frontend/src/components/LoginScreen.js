@@ -1,6 +1,6 @@
 import React from 'react';
 
-function LoginScreen({ onSignUpClick }) {
+function LoginScreen({ onSignUpClick, onLoginClick }) {
     return (
         <div className="flex absolute justify-center flex-col items-center text-white top-0 bottom-0 left-0 right-0 gap-10">
             <h1 className="2xl:text-7xl lg:text-5xl text-4xl font-black">Login</h1>
@@ -17,7 +17,7 @@ function LoginScreen({ onSignUpClick }) {
             <div className="w-full flex-col flex gap-10 my-5">
                 <button
                     className="border-[3px] w-fit mx-auto px-14 py-5 rounded-full text-2xl transition-all hover:bg-white hover:text-black font-bold"
-                    onClick={() => alert('Login')}
+                    onClick={onLoginClick}
                 >
                     Entrar
                 </button>

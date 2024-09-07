@@ -14,6 +14,7 @@ module.exports = {
     open: true,
     hot: true,
     liveReload: true,
+    historyApiFallback: true
   },
   module: {
     rules: [
@@ -37,3 +38,4 @@ module.exports = {
     extensions: [".js", ".jsx"], // Para poder importar arquivos JS e JSX sem especificar a extensão
   },
 };
+
