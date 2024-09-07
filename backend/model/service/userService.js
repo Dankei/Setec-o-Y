@@ -159,5 +159,85 @@ export class UserService {
         console.log("\n\n\ninfo: Finalizado UserService.followUser");
     }
 
+    async getFollowers(userID) {
+        console.log("\n\n\ninfo: Iniciado UserService.getFollowers", userID);
+
+        //Regra para ver a quantidade de seguidores de um usuário
+        console.log("\n\ninfo: Iniciado Verificação se o usuário existe");
+        const user = await userRepository.findUserById(userID);
+        console.log("\n\ninfo: valor de user", user);
+        if (user === null) {
+            console.log("\n\nerror: Usuário não existe");
+            throw new Error('Usuário não existe');
+        }
+
+        console.log("\n\ninfo: Iniciado Verificação se o usuário tem seguidores");
+        const followers = await userRepository.countFollowers(userID);
+        console.log("\n\ninfo: valor de followers", followers);
+
+        console.log("\n\n\ninfo: Finalizado UserService.getFollowers", followers);
+        return followers;
+    }
+
+    async getFollowing(userID) {
+        console.log("\n\n\ninfo: Iniciado UserService.getFollowing", userID);
+
+        //Regra para ver a quantidade de seguindo de um usuário
+        console.log("\n\ninfo: Iniciado Verificação se o usuário existe");
+        const user = await userRepository.findUserById(userID);
+        console.log("\n\ninfo: valor de user", user);
+        if (user === null) {
+            console.log("\n\nerror: Usuário não existe");
+            throw new Error('Usuário não existe');
+        }
+
+        console.log("\n\ninfo: Iniciado Verificação se o usuário segue alguém");
+        const following = await userRepository.countFollowing(userID);
+        console.log("\n\ninfo: valor de following", following);
+
+        console.log("\n\n\ninfo: Finalizado UserService.getFollowing", following);
+        return following;
+    }
+
+    async getfollowersList(userID) {
+        console.log("\n\n\ninfo: Iniciado UserService.getfollowersList", userID);
+
+        //Regra para ver a lista de usuarios que um usuário segue
+        console.log("\n\ninfo: Iniciado Verificação se o usuário existe");
+        const user = await userRepository.findUserById(userID);
+        console.log("\n\ninfo: valor de user", user);
+        if (user === null) {
+            console.log("\n\nerror: Usuário não existe");
+            throw new Error('Usuário não existe');
+        }
+
+        console.log("\n\ninfo: Iniciado Verificação se o usuário segue alguém");
+        const followersList = await userRepository.listFollowers(userID);
+        console.log("\n\ninfo: valor de followersList", followersList);
+
+        console.log("\n\n\ninfo: Finalizado UserService.getfollowersList", followersList);
+        return followersList;
+    }
+
+    async getfollowingList(userID) {
+        console.log("\n\n\ninfo: Iniciado UserService.getfollowingList", userID);
+
+        //Regra para ver a lista de seguidores de um usuário
+        console.log("\n\ninfo: Iniciado Verificação se o usuário existe");
+        const user = await userRepository.findUserById(userID);
+        console.log("\n\ninfo: valor de user", user);
+        if (user === null) {
+            console.log("\n\nerror: Usuário não existe");
+            throw new Error('Usuário não existe');
+        }
+
+        console.log("\n\ninfo: Iniciado Verificação se o usuário tem seguidores");
+        const followingList = await userRepository.listFollowing(userID);
+        console.log("\n\ninfo: valor de followingList", followingList);
+
+        console.log("\n\n\ninfo: Finalizado UserService.getfollowingList", followingList);
+        return followingList;
+    }
+
 
 }

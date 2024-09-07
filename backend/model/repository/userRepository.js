@@ -93,4 +93,38 @@ export class UserRepository {
         return result.affectedRows > 0;
     }
 
+    // Contando a quantidade de seguidores de um usuário
+    async countFollowers(id){
+        const [rows] = await database.query(
+            'SELECT COUNT(*) AS followers FROM tb_follow WHERE followedID = ?',
+            [id]
+        );
+        return rows[0].followers;
+    }
+
+    // Contando a quantidade de usuários que um usuário segue
+    async countFollowing(id){
+        const [rows] = await database.query(
+            'SELECT COUNT(*) AS following FROM tb_follow WHERE followerID = ?',
+            [id]
+        );
+        return rows[0].following;
+    }
+
+    // Listando os seguidores de um usuário
+    async listFollowers(id){
+        const [rows] = await database.query(
+            'SELECT u.username FROM tb_user u JOIN tb_follow f ON u.id = f.followerID WHERE f.followedID = ?', [id]);
+        console.log(rows);
+        return rows.map(row => row.username);
+    }
+
+    // Listando os usuários que um usuário segue
+    async listFollowing(id){
+        const [rows] = await database.query(
+            'SELECT u.username FROM tb_user u JOIN tb_follow f ON u.id = f.followedID WHERE f.followerID = ?', [id]);
+        console.log(rows);
+        return rows.map(row => row.username);
+    }
+
 }
