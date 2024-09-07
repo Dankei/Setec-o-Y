@@ -4,13 +4,15 @@ import App from './App.js';
 import './index.css';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import IndexPage from './pages/IndexPage.js';
-import HomePage from './pages/HomePage.js';
+import IndexPage from './routes/IndexPage.js';
+import HomePage from './routes/HomePage.js';
+import ErrorPage from './routes/ErrorPage.js';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <IndexPage />
+    element: <IndexPage />,
+	errorElement: <ErrorPage />
   },
   {
     path: 'home',

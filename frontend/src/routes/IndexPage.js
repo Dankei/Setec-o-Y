@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import StartScreen from "../components/StartScreen.js";
-import SignUpScreen from "../components/SignUpScreen.js";
-import LoginScreen from "../components/LoginScreen.js";
+import StartScreen from "../pages/StartScreen.js";
+import SignUpScreen from "../pages/SignUpScreen.js";
+import LoginScreen from "../pages/LoginScreen.js";
 import HomePage from "./HomePage.js";
+import { useNavigate } from "react-router-dom";
 
 function IndexPage() {
     const [currentScreen, setCurrentScreen] = useState('start');
+    const navigate = useNavigate();
 
     const renderScreen = () => {
         if (currentScreen === 'signup') {
             return <SignUpScreen onLoginClick={() => setCurrentScreen('login')} />;
         } else if (currentScreen === 'login') {
             return <LoginScreen onSignUpClick={() => setCurrentScreen('signup')} onLoginClick={() => setCurrentScreen('timeline')}/>;
-        } else if (currentScreen === 'timeline') {
-            return <Timeline />;
         } else {
             return <StartScreen onSignUpClick={() => setCurrentScreen('signup')} onLoginClick={() => setCurrentScreen('login')} />;
         }
@@ -21,7 +21,7 @@ function IndexPage() {
 
 
     if (currentScreen === 'timeline') {
-        return <HomePage />;
+        navigate ('/home');
     }
     else {
         return (
