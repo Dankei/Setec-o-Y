@@ -9,11 +9,11 @@ export class TweetController {
   async createTweet(request, response) {
     console.log("\n\n\ninfo: Iniciado TweetController.createTweet", request.body);  // Debug
 
-    const { text, authorId, createdAt } = request.body;
-    console.log("\n Dados: ", text, authorId, createdAt); // Debug
+    const { text, authorId } = request.body;
+    console.log("\n Dados: ", text, authorId); // Debug
 
     try {
-      const tweet = new TweetEntity(text, authorId, new Date(createdAt));
+      const tweet = new TweetEntity(text, authorId);
       console.log(tweet);
       const result = await tweetService.createTweet(tweet);
 
