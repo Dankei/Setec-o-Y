@@ -27,8 +27,8 @@ function IndexPage() {
         return (
             <div className="flex h-full w-full">
                 <div className="md:block sm:flex-1 flex-0 hidden relative overflow-hidden">
-                    <img src="/images/bg.png" alt="" className="w-full h-full" />
-                    <div className="absolute bottom-0 left-0 ml-12 mb-12"><img src="/images/logo.svg" alt="" /></div>
+                    <img src="/assets/images/bg.png" alt="" className="w-full h-full" />
+                    <div className="absolute bottom-0 left-0 ml-12 mb-12"><img src="/assets/images/logo.svg" alt="" /></div>
                 </div>
                 <div className="flex-1 relative">
                     {renderScreen()}
