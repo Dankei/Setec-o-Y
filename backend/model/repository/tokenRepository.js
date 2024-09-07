@@ -8,7 +8,7 @@ export class TokenRepository {
     async createEmailToken(token, userId) {
         console.log("\n\n\ninfo: Iniciado createEmailToken", token, userId);
 
-        const expires_at = new Date(new Date() + 120 * 1000);
+        const expires_at = new Date(new Date().getTime() + 120 * 1000);
 
         const [result] = await database.query(
             'INSERT INTO tb_user_tokens (token, user_id , expires_at) VALUES (?,?,?)',

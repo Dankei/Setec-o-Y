@@ -20,6 +20,10 @@ router.post('/users', userController.createUser);
 router.post('/users/confirmEmail', userController.confirmEmail);
 router.post('/login', userController.login);
 
+
+router.post('/users/follow', userController.followUser);
+
+
 // Rotas de tweets
 router.post('/tweets', tweetController.createTweet);
 router.get('/tweets', tweetController.findAllTweets);

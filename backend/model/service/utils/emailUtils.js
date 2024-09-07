@@ -33,7 +33,55 @@ export class EmailUtils {
             from: EMAIL_FROM,
             to: to,
             subject: 'Confirmação de email',
-            text: `Seu token de confirmação é: ${token}`
+            html: `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>
+                        body {
+                            margin: 0;
+                            padding: 0;
+                            font-family: Arial, sans-serif;
+                        }
+                        .container {
+                            background-color: #000;
+                            color: #fff;
+                            text-align: center;
+                            padding: 20px;
+                        }
+                        .code {
+                            font-size: 48px;
+                            font-weight: bold;
+                            background-color: #333;
+                            padding: 20px;
+                            display: inline-block;
+                            border-radius: 5px;
+                        }
+                        .copy-icon {
+                            width: 24px;
+                            height: 24px;
+                            cursor: pointer;
+                            vertical-align: middle;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <div class="code" id="verification-code">${token}</div>
+                    </div>
+                    <script>
+                        function copyToClipboard() {
+                            const code = document.getElementById('verification-code').innerText;
+                            navigator.clipboard.writeText(code).then(function() {
+                                alert('Código copiado para a área de transferência!');
+                            }, function(err) {
+                                alert('Falha ao copiar o código.');
+                            });
+                        }
+                    </script>
+                </body>
+                </html>
+            `,
         };
 
         try {
