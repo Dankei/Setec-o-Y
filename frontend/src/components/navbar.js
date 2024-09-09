@@ -4,7 +4,7 @@ import ButtonCommon from './ButtonCommon.js'
 export default function Navbar() {
 
     return (
-        <div className="flex h-screen border-solid border-gray-600 border-e-[1px]">
+        <div className="flex h-screen">
         <div className="w-80 ps-20 bg-slate-950 text-white flex flex-col">
         
         <div className="p-4 size-20"><img src="/assets/images/Logo.svg" alt="" /></div>
