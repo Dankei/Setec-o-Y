@@ -5,14 +5,18 @@ import Explorebar from '../../components/Explorebar.js';
 
 export default function Timeline() {
   return (
-    <div className="flex justify-center ">
-      <Navbar />
+    <div className="flex justify-center relative">
+      <div className="fixed left-20 h-full">
+        <Navbar />
+      </div>
+      
       <div className="w-[37rem]">
         <Outlet />
       </div>
       
-      <Explorebar />
-      
+      <div className="fixed right-20 h-full">
+        <Explorebar />
+      </div>
     </div>
   );
 }

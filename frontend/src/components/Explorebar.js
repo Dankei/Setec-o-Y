@@ -4,7 +4,7 @@ import React from 'react'
 export default function Explorebar() {
 
     return (
-        <div className="flex h-screen border-solid border-gray-600  border-s-[1px]">
+        <div className="flex h-screen ">
       <div className="w-80 bg-slate-950 text-white flex flex-col ps-2">
         
         
