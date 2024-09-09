@@ -1,21 +1,49 @@
 import React from 'react';
 import ButtonCommon from './ButtonCommon.js';
 
-export default function NewYeet() {
+export default function Yeet(props) {
     return(
         <>
             <div className="flex flex-col border-y-[1px] border-gray-600 p-4">
-                <div className="flex">
-                    <img className="size-14 rounded-full" src="/assets/images/user-icon.jpg"/>
-                    <textarea
-                        type="text"
-                        placeholder="O quê está acontecendo?"
-                        className="flex-1 h-16 mx-5 text-lg bg-slate-950 text-white  focus:outline-none focus:ring-2 focus:ring-slate-950"
-                    />
+                <div className="flex  text-white">
+                    
+                    
+                    <div>
+                        <img className="size-12 rounded-full" src="/assets/images/user-icon.jpg"/>
+                    </div>
+                    <div className="ms-4 text-white w-[30rem]">
+                        <div className="flex justify-between ">
+                            <p className="text-sm"><b>{props.User}</b> - {props.Date} </p>
+                            <p><img src="/assets/images/more.png"></img></p>
+                        </div>
+                        
+
+
+                        <p className=" ">{props.Content}</p>
+                        <div className="flex justify-between mt-5 w-[25rem]">
+                            
+                            <div className="flex space-x-2">
+                                <p><img src="/assets/images/comment.png"/></p>
+                                <p>0</p>
+                            </div>
+                            
+                            <div className="flex space-x-2">
+                                <p><img src="/assets/images/rt-unselected.png"/></p>
+                                <p>0</p>
+                            </div>
+
+                            <div className="flex space-x-2">
+                                <p><img src="/assets/images/heart-unselected.png"/></p>
+                                <p>0</p>
+                            </div>
+
+
+                        </div>
+                    </div>
+
                 </div>
-                <div className=" flex justify-end mt-2">
-                    <ButtonCommon  text="Post" />
-                </div>
+                
+                
                 
             </div>
             
