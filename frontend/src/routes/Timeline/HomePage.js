@@ -9,10 +9,12 @@ function HomePage() {
     useEffect(() => {
         axios.get('http://localhost:3001/api/tweets/')
             .then(response => {
-                setTweets(response.data);
+                const sortedTweets = response.data.sort((a, b) => b.id - a.id);
+                setTweets(sortedTweets);
             })
             .catch(error => console.error('Error fetching tweets:', error));
     }, []);
+    console.log(tweets)
 
     return (
         <div className="flex flex-col h-full w-full border-solid border-gray-600 border-x-[1px]">
@@ -24,7 +26,7 @@ function HomePage() {
             {tweets.map(tweet => (
                 <Yeet 
                     key={tweet.id}
-                    User="Dankei" 
+                    User={tweet.authorID}
                     Date={new Date(tweet.createdAt).toLocaleString()}
                     Content={tweet.text}
                 />
