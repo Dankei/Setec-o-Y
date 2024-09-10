@@ -15,7 +15,7 @@ export default function NewYeet() {
             <div className="flex flex-col border-y-[1px] border-gray-600 p-4">
                 <div className="flex">
                     <img className="size-14 rounded-full" src="/assets/images/user-icon.jpg"/>
-                    <input
+                    <textarea
                         value={text}
                         onChange={handleTextChange}
                         type="text"

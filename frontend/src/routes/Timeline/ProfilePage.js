@@ -13,7 +13,7 @@ function ProfilePage() {
     useEffect(() => {
         axios.get('http://localhost:3001/api/tweets/author/2')
             .then(response => {
-                const sortedTweets = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                const sortedTweets = response.data.sort((a, b) => b.id - a.id);
                 setTweets(sortedTweets);
             })
             .catch(error => console.error('Error fetching tweets:', error));
