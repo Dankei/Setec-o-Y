@@ -14,7 +14,10 @@ module.exports = {
     open: true,
     hot: true,
     liveReload: true,
-    historyApiFallback: true
+    historyApiFallback: true,
+    client: {
+      logging: 'error',  // Isso deve mostrar apenas erros
+    },
   },
   module: {
     rules: [

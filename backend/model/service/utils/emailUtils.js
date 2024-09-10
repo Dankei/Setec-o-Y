@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import dotenv from "dotenv";
+import {log} from "../../../log/logger.js";
 
 dotenv.config({ path: "./.env" });
 
@@ -21,9 +22,10 @@ export class EmailUtils {
 
           this.transporter.verify(function (error, success) {
             if (error) {
-              console.log(error);
+                log.error(error);
             } else {
-              console.log("Servidor de email pronto para enviar mensagens");
+                log.success("Servidor de email pronto para enviar mensagens");
+                log.end();
             }
           });
     }
@@ -86,9 +88,9 @@ export class EmailUtils {
 
         try {
             await this.transporter.sendMail(mailOptions);
-            console.log("Email enviado com sucesso");
+            log.success("Email enviado com sucesso");
         }catch(error){
-            console.log("Erro ao enviar email",error);
+            log.error("Erro ao enviar email",error);
         }
     }
 }

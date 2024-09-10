@@ -1,5 +1,8 @@
 import mysql from "mysql2/promise";
 import dotenv from "dotenv";
+import {log} from "../log/logger.js";
+
+
 
 // Carrega as variáveis de ambiente do arquivo .env
 
@@ -24,9 +27,9 @@ export const database = mysql.createPool({
 // Verifica a conexão inicial
 database.getConnection()
     .then(connection => {
-        console.log('Connected to the database!');
+        log.success('Connected to the database');
         connection.release(); // Libera a conexão de volta para o pool
     })
     .catch(err => {
-        console.error('Error connecting to the database:', err);
+        log.error(`Error connecting to the database: ${err}`);
     });
