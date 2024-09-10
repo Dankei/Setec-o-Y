@@ -33,7 +33,7 @@ router.post('/tweets', tweetController.createTweet);
 router.delete('/tweets/:id', tweetController.deleteTweet);
 router.get('/tweets', tweetController.findAllTweets);
 router.get('/tweets/:id', tweetController.findTweetById);
-router.get('/tweets/author/:authorId', tweetController.findTweetsByAuthorId);
+router.get('/tweets/author/:authorID', tweetController.findTweetsByauthorID);
 
 
 // Rotas de likes

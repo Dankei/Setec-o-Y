@@ -11,11 +11,11 @@ export class TweetController {
       request.body
     ); // Debug
 
-    const { text, authorId } = request.body;
-    console.log("\n Dados: ", text, authorId); // Debug
+    const { text, authorID } = request.body;
+    console.log("\n Dados: ", text, authorID); // Debug
 
     try {
-      const tweet = new TweetEntity(text, authorId);
+      const tweet = new TweetEntity(text, authorID);
       console.log(tweet);
       const result = await tweetService.createTweet(tweet);
 
@@ -102,23 +102,23 @@ export class TweetController {
   }
 
   // Encontrar tweets por autor
-  async findTweetsByAuthorId(request, response) {
+  async findTweetsByauthorID(request, response) {
     console.log(
-      "\n\n\ninfo: Iniciado TweetController.findTweetsByAuthorId",
+      "\n\n\ninfo: Iniciado TweetController.findTweetsByauthorID",
       request.body
     ); // Debug
-    const { authorId } = request.params;
-    console.log(authorId);
+    const { authorID } = request.params;
+    console.log(authorID);
 
     try {
-      const result = await tweetService.findTweetsByAuthorId(authorId);
+      const result = await tweetService.findTweetsByauthorID(authorID);
       console.log(
-        "\n\n\ninfo: Finalizando TweetController.findTweetsByAuthorId",
+        "\n\n\ninfo: Finalizando TweetController.findTweetsByauthorID",
         request.result
       ); // Debug
       response.status(200).json(result);
     } catch (error) {
-      console.log("\n\n\nerror: TweetController.findTweetsByAuthorId", error); // Debug
+      console.log("\n\n\nerror: TweetController.findTweetsByauthorID", error); // Debug
       response.status(400).json({ message: error.message });
     }
   }

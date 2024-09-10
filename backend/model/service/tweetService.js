@@ -10,7 +10,7 @@ export class TweetService {
       //Validação de dados temporárias
 
       // // Verifique se o autor do tweet existe (inativo ate os user estarem cadastrados)
-      // const authorExists = await userRepository.findUserById(tweet.authorId);
+      // const authorExists = await userRepository.findUserById(tweet.authorID);
       // if (!authorExists) {
       //   throw new Error('Author does not exist');
       // }
@@ -62,19 +62,19 @@ export class TweetService {
     }
   }
 
-  async findTweetsByAuthorId(authorId) {
+  async findTweetsByauthorID(authorID) {
     console.log(
-      "\n\n\ninfo: Iniciado TweetService.findTweetsByAuthorId",
-      authorId
+      "\n\n\ninfo: Iniciado TweetService.findTweetsByauthorID",
+      authorID
     ); // Debug
     try {
       console.log(
-        "\n\n\ninfo: Finalizado TweetService.findTweetsByAuthorId",
-        authorId
+        "\n\n\ninfo: Finalizado TweetService.findTweetsByauthorID",
+        authorID
       ); // Debug
-      return await tweetRepository.findTweetsByAuthorId(authorId);
+      return await tweetRepository.findTweetsByauthorID(authorID);
     } catch (error) {
-      console.log("\n\n\nerror: TweetService.findTweetsByAuthorId", error); // Debug
+      console.log("\n\n\nerror: TweetService.findTweetsByauthorID", error); // Debug
       throw new Error("Failed to find tweets by author");
     }
   }

@@ -1,8 +1,8 @@
 export class TweetEntity {
-  constructor(text, authorId, createdAt = new Date(),id = null) {
+  constructor(text, authorID, createdAt = new Date(),id = null) {
     this.id = id;
     this.text = text;
-    this.authorId = authorId;
+    this.authorID = authorID;
     this.createdAt = createdAt;
   }
 }
