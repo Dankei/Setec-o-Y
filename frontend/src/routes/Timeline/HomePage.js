@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import NewYeet from "../../components/NewYeet.js";
 import Yeet from "../../components/Yeet.js";
+import axios from 'axios';
 
 function HomePage() {
     const [tweets, setTweets] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3001/api/tweets')
-            .then(response => response.json())
-            .then(data => setTweets(data))
+        axios.get('http://localhost:3001/api/tweets/')
+            .then(response => {
+                setTweets(response.data);
+            })
             .catch(error => console.error('Error fetching tweets:', error));
     }, []);
 
