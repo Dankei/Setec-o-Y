@@ -13,7 +13,7 @@ export default function DeleteYeet(props) {
                     resultados e da busca do Y.
                 </p>
                 <div className="flex space-x-2">
-                    <ButtonCommon text="Cancela"/>
+                    <ButtonCommon onClick={props.onClose} text="Cancela"/>
                     <ButtonDelete text="Excluir"/>
                 </div>
                 

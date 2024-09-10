@@ -2,20 +2,13 @@ import React from 'react';
 import ButtonCommon from './ButtonCommon.js';
 import { useState } from 'react';
 import axios from 'axios';
-import PopUp from './PopUp.js';
 
 export default function NewYeet() {
     const [text, setText] = useState('');
     const [authorID, setauthorID] = useState('');
-    const [open, setOpen] = React.useState(false);
-    const [charCount, setCharCount] = useState(0);
 
     const handleTextChange = (event) => {
-        const newText = event.target.value;
-        if (newText.length <= 140) {
-            setText(newText);
-            setCharCount(newText.length); // Atualiza o comprimento do texto
-        }
+        setText(event.target.value);
     }
     return(
         <>
@@ -30,18 +23,9 @@ export default function NewYeet() {
                         className="flex-1 h-16 mx-5 text-lg bg-slate-950 text-white  focus:outline-none focus:ring-2 focus:ring-slate-950"
                     />
                 </div>
-                <div className=" flex justify-end items-center space-x-3 mt-2">
-                    <p className="text-white">
-                        {charCount}/140
-                    </p>
-                    
+                <div className=" flex justify-end mt-2">
                     <ButtonCommon 
-                    onClick={() => 
-                        {
-                            console.log(length.text);
-                            if(charCount == 0){
-                                setOpen(true)
-                            } else{
+                    onClick={() => {
                         axios.post('http://localhost:3001/api/tweets', {
                             text: text,
                             authorId: "2"
@@ -66,22 +50,14 @@ export default function NewYeet() {
                                 console.error('Error message:', error.message);
                             }
                         });
-                    }}}
+                    }}
                     type="submit" 
                     text="Post" />
                 </div>
                 
             </div>
             
-            <PopUp text="Digite algo para postar!" open={open} onClose={()=> setOpen(false)}>
-                <div className="space-y-2 flex flex-col items-center">
-                    <p className="text-lg font-bold">
-                        Você deve inserir algo para yeetar!
-                    </p>
-                        <ButtonCommon onClick={() => setOpen(false)}text="Entendi"/>
-                </div>
-                </PopUp>
-            
+        
         </>
     );
 }

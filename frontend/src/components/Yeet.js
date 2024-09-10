@@ -43,7 +43,7 @@ export default function Yeet(props) {
                             </div>
                         
                         <PopUp open={open} onClose={()=> setOpen(false)}>
-                            <DeleteYeet />
+                            <DeleteYeet onClose={() => setOpen(false)} />
                         </PopUp>
 
                         </div>

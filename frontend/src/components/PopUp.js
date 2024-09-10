@@ -10,7 +10,9 @@ export default function PopUp({open, onClose, children}){
             `}
         >
             {/* PopUp */}
-            <div className={`
+            <div 
+            onClick={(event) => event.stopPropagation()}
+            className={`
             bg-slate-900 text-white rounded-xl shadow p-6 transition-all 
             ${open ? "scale-100 opacity-100" : "scale-125 opacity-0"}
             `}
