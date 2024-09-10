@@ -2,7 +2,7 @@ import { UserRepository } from "../repository/userRepository.js";
 import bcrypt from 'bcrypt';
 import { GenerateTokenUtils } from "./utils/genereteTokenUtils.js";
 import { EmailUtils } from "./utils/emailUtils.js";
-import { TokenRepository } from "../repository/tokenRepository.js";	
+import { TokenRepository } from "../repository/tokenRepository.js";
 import { TokenEntity } from "../entity/tokenEntity.js";
 
 const userRepository = new UserRepository();
@@ -13,7 +13,7 @@ const tokenRepository = new TokenRepository();
 export class UserService {
 
     async createUser(user) {
-        
+
         console.log("\n\n\ninfo: Iniciado UserService.createUser", user);
 
 
@@ -35,7 +35,7 @@ export class UserService {
         user.password = hash;
         console.log("\n\ninfo: Finalizado criptocrafia da senha", user.password);
 
-        
+
         //3. Cria token de verificação do email
         console.log("\n\ninfo: Iniciado Verificação se o email é válido gerando o token para o email: ", user.email);
         const token = generateTokenUtils.generateToken();
@@ -45,17 +45,15 @@ export class UserService {
         //4. Salvar o Usuario no banco de dados
         console.log("\n\n\ninfo: Salvando o Usuario no Banco", user);
         const userNew = await userRepository.createUser(user);
-         
+
         //5. Salvar o Token no banco de dados
         console.log("\n\ninfo: Iniciado salvar token no banco de dados");
         await tokenRepository.createEmailToken(token, userNew.id);
 
         console.log("\n\n\ninfo: Finalizado UserService.createUser", userNew);
         return userNew;
-         
-         
     }
-    
+
     async confirmEmail(token, userID) {
 
         console.log("\n\n\ninfo: Iniciado UserService.confirmEmail", token, userID);
@@ -71,7 +69,7 @@ export class UserService {
         }
 
         //2. Verificar se o token está expirado
-        console.log("\n\ninfo: Iniciado Verificação se o token está expirado",new Date(), new Date(userToken.expiresAt));
+        console.log("\n\ninfo: Iniciado Verificação se o token está expirado", new Date(), new Date(userToken.expiresAt));
         const isTokenExpired = new Date() > new Date(userToken.expiresAt);
         if (isTokenExpired) {
             console.log("\n\nerror: Token expirado");
@@ -85,7 +83,7 @@ export class UserService {
 
         //4. Deletar o token
         console.log("\n\ninfo: Iniciado Deletar o token");
-        await tokenRepository.deleteToken(token,userID);
+        await tokenRepository.deleteToken(token, userID);
         console.log("\n\ninfo: Finalizado Deletar o token");
 
         console.log("\n\n\ninfo: Finalizado UserService.confirmEmail");
@@ -93,7 +91,7 @@ export class UserService {
 
 
     async login(email, password) {
-            console.log("\n\n\ninfo: Iniciado UserService.login", email, password);
+        console.log("\n\n\ninfo: Iniciado UserService.login", email, password);
 
         //Regra para login
         //1. Verificar se o email existe na base de dados
@@ -105,7 +103,7 @@ export class UserService {
             throw new Error('Email não cadastrado');
         }
 
-        
+
         //2. Verificar se a senha está correta
         console.log("\n\ninfo: Iniciado Verificação se a senha está correta", user.password);
         const isPasswordCorrect = bcrypt.compareSync(password, user.password);
