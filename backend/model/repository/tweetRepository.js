@@ -33,6 +33,25 @@ export class TweetRepository {
     }
   }
 
+  // Deletar um tweet
+  async deleteTweet(id) {
+    try {
+      console.log("\n\n\ninfo: Iniciado TweetRepository.deleteTweet", id); // Debug
+
+      const [result] = await database.query(
+        "DELETE FROM tb_tweet WHERE id = ?",
+        [id]
+      );
+
+      console.log("\n\n\ninfo: Finalizado TweetRepository.deleteTweet", result); // Debug
+
+      return result.affectedRows > 0;
+    } catch (error) {
+      console.log("\n\n\nerror: Error ao deletar o tweet:", error); // Debug
+      throw new Error("Falha ao deletar tweet");
+    }
+  }
+
   // Encontrar um tweet por ID
   async findTweetById(id) {
     try {
@@ -66,6 +85,8 @@ export class TweetRepository {
 
       return rows.map((row) => {
         const { id, text, authorId, createdAt } = row;
+        console.log("AAaa" + row.text);
+
         return new TweetEntity(text, authorId, new Date(createdAt), id);
       });
     } catch (error) {

@@ -30,11 +30,10 @@ router.get('/users/followingList', userController.getfollowingList); //Rota para
 
 // Rotas de tweets
 router.post('/tweets', tweetController.createTweet);
+router.delete('/tweets/:id', tweetController.deleteTweet);
 router.get('/tweets', tweetController.findAllTweets);
 router.get('/tweets/:id', tweetController.findTweetById);
 router.get('/tweets/author/:authorId', tweetController.findTweetsByAuthorId);
-
-
 
 
 // Rotas de likes
