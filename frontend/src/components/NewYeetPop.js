@@ -19,7 +19,7 @@ export default function NewYeet() {
     }
     return(
         <>
-            <div className="flex flex-col border-y-[1px] border-gray-600 p-4">
+            <div className="flex flex-col  p-4 w-[30rem] relative">
                 <div className="flex">
                     <img className="size-14 rounded-full" src="/assets/images/user-icon.jpg"/>
                     <textarea
@@ -27,7 +27,7 @@ export default function NewYeet() {
                         onChange={handleTextChange}
                         type="text"
                         placeholder="O quê está acontecendo?"
-                        className="flex-1 h-16 mx-5 text-lg bg-slate-950 text-white  focus:outline-none focus:ring-2 focus:ring-slate-950"
+                        className="flex-1 h-16 mx-5 text-lg bg-slate-900 text-white  focus:outline-none focus:ring-2 focus:ring-slate-950"
                     />
                 </div>
                 <div className=" flex justify-end items-center space-x-3 mt-2">
@@ -81,6 +81,8 @@ export default function NewYeet() {
                         <ButtonCommon onClick={() => setOpen(false)}text="Entendi"/>
                 </div>
                 </PopUp>
+
+
             
         </>
     );

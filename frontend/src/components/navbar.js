@@ -1,8 +1,10 @@
 import React from 'react'
 import ButtonCommon from './ButtonCommon.js'
+import NewYeetPop from './NewYeetPop.js'
+import PopUp from './PopUp.js';
 
 export default function Navbar() {
-
+    const [open, setOpen] = React.useState(false);
     return (
         <div className="flex h-screen">
         <div className="w-80 ps-20 bg-slate-950 text-white flex flex-col">
@@ -44,9 +46,12 @@ export default function Navbar() {
         
 
         <div className="flex justify-center mt-10">
-            <ButtonCommon text="Novo Yeet"/>
+            <ButtonCommon text="Novo Yeet" onClick={() => setOpen(true)}/>
         </div>
         
+        <PopUp open={open} onClose={()=> setOpen(false)}>
+            <NewYeetPop />
+        </PopUp>
           
         </nav>
       </div>

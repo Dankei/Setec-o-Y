@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export default function Button(props) {
+export default function ButtonCommon(props) {
     return (
         <div>
             <a href={props.href}>
