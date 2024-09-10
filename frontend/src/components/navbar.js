@@ -1,6 +1,6 @@
 import React from 'react'
 import ButtonCommon from './ButtonCommon.js'
-import NewYeet from './NewYeet.js'
+import NewYeetPop from './NewYeetPop.js'
 import PopUp from './PopUp.js';
 
 export default function Navbar() {
@@ -50,7 +50,7 @@ export default function Navbar() {
         </div>
         
         <PopUp open={open} onClose={()=> setOpen(false)}>
-            <NewYeet />
+            <NewYeetPop />
         </PopUp>
           
         </nav>

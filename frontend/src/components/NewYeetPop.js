@@ -2,17 +2,24 @@ import React from 'react';
 import ButtonCommon from './ButtonCommon.js';
 import { useState } from 'react';
 import axios from 'axios';
+import PopUp from './PopUp.js';
 
 export default function NewYeet() {
     const [text, setText] = useState('');
     const [authorID, setauthorID] = useState('');
+    const [open, setOpen] = React.useState(false);
+    const [charCount, setCharCount] = useState(0);
 
     const handleTextChange = (event) => {
-        setText(event.target.value);
+        const newText = event.target.value;
+        if (newText.length <= 140) {
+            setText(newText);
+            setCharCount(newText.length); // Atualiza o comprimento do texto
+        }
     }
     return(
         <>
-            <div className="flex flex-col border-y-[1px] border-gray-600 p-4">
+            <div className="flex flex-col  p-4 w-[30rem] relative">
                 <div className="flex">
                     <img className="size-14 rounded-full" src="/assets/images/user-icon.jpg"/>
                     <textarea
@@ -20,12 +27,21 @@ export default function NewYeet() {
                         onChange={handleTextChange}
                         type="text"
                         placeholder="O quê está acontecendo?"
-                        className="flex-1 h-16 mx-5 text-lg bg-slate-950 text-white  focus:outline-none focus:ring-2 focus:ring-slate-950"
+                        className="flex-1 h-16 mx-5 text-lg bg-slate-900 text-white  focus:outline-none focus:ring-2 focus:ring-slate-950"
                     />
                 </div>
-                <div className=" flex justify-end mt-2">
+                <div className=" flex justify-end items-center space-x-3 mt-2">
+                    <p className="text-white">
+                        {charCount}/140
+                    </p>
+                    
                     <ButtonCommon 
-                    onClick={() => {
+                    onClick={() => 
+                        {
+                            console.log(length.text);
+                            if(charCount == 0){
+                                setOpen(true)
+                            } else{
                         axios.post('http://localhost:3001/api/tweets', {
                             text: text,
                             authorId: "2"
@@ -50,14 +66,24 @@ export default function NewYeet() {
                                 console.error('Error message:', error.message);
                             }
                         });
-                    }}
+                    }}}
                     type="submit" 
                     text="Post" />
                 </div>
                 
             </div>
             
-        
+            <PopUp text="Digite algo para postar!" open={open} onClose={()=> setOpen(false)}>
+                <div className="space-y-2 flex flex-col items-center">
+                    <p className="text-lg font-bold">
+                        Você deve inserir algo para yeetar!
+                    </p>
+                        <ButtonCommon onClick={() => setOpen(false)}text="Entendi"/>
+                </div>
+                </PopUp>
+
+
+            
         </>
     );
 }
