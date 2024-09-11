@@ -32,7 +32,6 @@ export class UserService {
             log.error("Email já cadastrado");
             throw new Error('Email já cadastrado');
         }
-        log.trace("Finalizado Verificação se o email já está cadastrado");
 
         log.trace("Iniciado verificação se o username já está cadastrado");
         const usernameExists = await userRepository.findUserByUsername(user.username);
@@ -40,7 +39,6 @@ export class UserService {
             log.error("Username já cadastrado");
             throw new Error('Username já cadastrado');
         }
-        log.trace("Finalizado Verificação se o username já está cadastrado");
 
 
         //2. Criptografar a senha
@@ -48,7 +46,6 @@ export class UserService {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(user.password, salt);
         user.password = hash;
-        log.trace("Finalizado criptocrafia da senha");
 
         
         //3. Cria token de verificação do email
@@ -71,184 +68,187 @@ export class UserService {
     
     async confirmEmail(token, userID) {
 
-        console.log("\n\n\ninfo: Iniciado UserService.confirmEmail", token, userID);
+        log.trace("Iniciado UserService.confirmEmail");
 
         //Regra para confirmar email
         //1. Verificar se o token é válido
-        console.log("\n\ninfo: Iniciado Verificação se o token é válido");
+        log.trace("Iniciado Verificação se o token é válido");
         const userToken = await tokenRepository.findTokenByToken(token, userID);
-        console.log("\n\ninfo: valor de userToken", userToken);
+        
         if (userToken === null) {
-            console.log("\n\nerror: Token inválido");
+            log.error("Token inválido");
             throw new Error('Token inválido');
         }
 
         //2. Verificar se o token está expirado
-        console.log("\n\ninfo: Iniciado Verificação se o token está expirado",new Date(), new Date(userToken.expiresAt));
+        log.trace("Iniciado Verificação se o token está expirado");
         const isTokenExpired = new Date() > new Date(userToken.expiresAt);
         if (isTokenExpired) {
-            console.log("\n\nerror: Token expirado");
+            log.error("Token expirado");
             throw new Error('Token expirado');
         }
 
         //3. Atualizar o status do usuário
-        console.log("\n\ninfo: Iniciado Atualizar o status do usuário");
+        log.trace("Iniciado Atualizar o status do usuário");
         await userRepository.updateUserStatus(userID);
-        console.log("\n\ninfo: Finalizado Atualizar o status do usuário");
 
         //4. Deletar o token
-        console.log("\n\ninfo: Iniciado Deletar o token");
+        log.trace("Iniciado Deletar o token");
         await tokenRepository.deleteToken(token,userID);
-        console.log("\n\ninfo: Finalizado Deletar o token");
 
-        console.log("\n\n\ninfo: Finalizado UserService.confirmEmail");
+        log.trace("Finalizado UserService.confirmEmail");
+        return 'Email confirmado com sucesso';
     }
 
 
     async login(email, password) {
-            console.log("\n\n\ninfo: Iniciado UserService.login", email, password);
+        log.trace("Iniciado UserService.login");
 
         //Regra para login
-        //1. Verificar se o email existe na base de dados
-        console.log("\n\ninfo: Iniciado Verificação se o email existe");
-        const user = await userRepository.findUserByEmail(email);
-        console.log("\n\ninfo: valor de user", user);
-        if (user === null) {
-            console.log("\n\nerror: Email não cadastrado");
-            throw new Error('Email não cadastrado');
+        //0. Verificar se os campos obrigatórios foram preenchidos
+        if (!email || !password) {
+            log.error("Campos obrigatórios não preenchidos");
+            throw new Error('Campos obrigatórios não preenchidos');
         }
 
+        //1. Verificar se o email existe na base de dados
+        log.trace("Iniciado Verificação se o email existe na base de dados");
+        const user = await userRepository.findUserByEmail(email);
+        if (user === null) {
+            log.error("Email não cadastrado");
+            throw new Error('Email não cadastrado');
+        }
         
         //2. Verificar se a senha está correta
-        console.log("\n\ninfo: Iniciado Verificação se a senha está correta", user.password);
+        log.trace("Iniciado Verificação se a senha está correta");
         const isPasswordCorrect = bcrypt.compareSync(password, user.password);
         if (isPasswordCorrect) {
-            console.log("\n\nerror: Senha incorreta");
+            log.error("Senha incorreta");
             throw new Error('Senha incorreta');
         }
 
-        console.log("\n\n\ninfo: Finalizado UserService.login", user);
+        //3. Verificar se o email foi confirmado
+        log.trace("Iniciado Verificação se o email foi confirmado");
+        if (user.status === 0) {
+            log.error("Email não confirmado");
+            throw new Error('Email não confirmado');
+        }
+
+
+        log.trace("Finalizado UserService.login");
         return user;
     }
 
 
     async followUser(followerID, followedID) {
-        console.log("\n\n\ninfo: Iniciado UserService.followUser", followerID, followedID);
+        log.trace("Iniciado UserService.followUser");
 
         //Regra para seguir um usuário
         //1. Verificar se o usuário que está seguindo existe
-        console.log("\n\ninfo: Iniciado Verificação se o usuário que está seguindo existe");
+        
+        log.trace("Iniciado Verificação se o usuário que está seguindo existe");
         const userFollower = await userRepository.findUserById(followerID);
-        console.log("\n\ninfo: valor de userFollower", userFollower);
         if (userFollower === null) {
-            console.log("\n\nerror: Usuário que está seguindo não existe");
+            log.error("Usuário que está seguindo não existe");
             throw new Error('Usuário que está seguindo não existe');
         }
 
         //2. Verificar se o usuário que está sendo seguido existe
-        console.log("\n\ninfo: Iniciado Verificação se o usuário que está sendo seguido existe");
+        log.trace("Iniciado Verificação se o usuário que está sendo seguido existe");
         const userFollowed = await userRepository.findUserById(followedID);
-        console.log("\n\ninfo: valor de userFollowed", userFollowed);
         if (userFollowed === null) {
-            console.log("\n\nerror: Usuário que está sendo seguido não existe");
+            log.error("Usuário que está sendo seguido não existe");
             throw new Error('Usuário que está sendo seguido não existe');
         }
 
         //3. Verificar se o usuário que está seguindo já segue o usuário que está sendo seguido
-        console.log("\n\ninfo: Iniciado Verificação se o usuário que está seguindo já segue o usuário que está sendo seguido");
+        log.trace("Iniciado Verificação se o usuário que está seguindo já segue o usuário que está sendo seguido");
         const isFollowing = await userRepository.isFollowing(followerID, followedID);
-        console.log("\n\ninfo: valor de isFollowing", isFollowing);
         if (isFollowing) {
-            console.log("\n\nerror: Usuário que está seguindo já segue o usuário que está sendo seguido");
+            log.trace("Usuário já segue o usuário será desfeito o follow");
             await userRepository.unfollowUser(followerID, followedID);
-            throw new Error('dar unfollow');
+            throw new Error('Feito unfollow');
         }
 
         //4. Seguir o usuário
-        console.log("\n\ninfo: Iniciado seguir o usuário");
+        log.trace("Iniciado seguir o usuário");
         await userRepository.followUser(followerID, followedID);
-        console.log("\n\ninfo: Finalizado seguir o usuário");
-
-        console.log("\n\n\ninfo: Finalizado UserService.followUser");
+        
+        log.trace("Finalizado UserService.followUser");
+        return 'Feito follow';
     }
 
     async getFollowers(userID) {
-        console.log("\n\n\ninfo: Iniciado UserService.getFollowers", userID);
+        log.trace("Iniciado UserService.getFollowers");
 
         //Regra para ver a quantidade de seguidores de um usuário
-        console.log("\n\ninfo: Iniciado Verificação se o usuário existe");
+        log.trace("Iniciado Verificação se o usuário existe");
         const user = await userRepository.findUserById(userID);
-        console.log("\n\ninfo: valor de user", user);
         if (user === null) {
-            console.log("\n\nerror: Usuário não existe");
+            log.error("Usuário não existe");
             throw new Error('Usuário não existe');
         }
 
-        console.log("\n\ninfo: Iniciado Verificação se o usuário tem seguidores");
+        log.trace("Iniciado Verificação se o usuário tem seguidores");
         const followers = await userRepository.countFollowers(userID);
-        console.log("\n\ninfo: valor de followers", followers);
 
-        console.log("\n\n\ninfo: Finalizado UserService.getFollowers", followers);
+        log.trace("Finalizado UserService.getFollowers");
         return followers;
     }
 
     async getFollowing(userID) {
-        console.log("\n\n\ninfo: Iniciado UserService.getFollowing", userID);
+        log.trace("Iniciado UserService.getFollowing");
 
         //Regra para ver a quantidade de seguindo de um usuário
-        console.log("\n\ninfo: Iniciado Verificação se o usuário existe");
+        log.trace("Iniciado Verificação se o usuário existe");
         const user = await userRepository.findUserById(userID);
-        console.log("\n\ninfo: valor de user", user);
         if (user === null) {
-            console.log("\n\nerror: Usuário não existe");
+            log.error("Usuário não existe");
             throw new Error('Usuário não existe');
         }
 
-        console.log("\n\ninfo: Iniciado Verificação se o usuário segue alguém");
+        log.trace("Iniciado Verificação se o usuário segue alguém");
         const following = await userRepository.countFollowing(userID);
-        console.log("\n\ninfo: valor de following", following);
 
-        console.log("\n\n\ninfo: Finalizado UserService.getFollowing", following);
+        log.trace("Finalizado UserService.getFollowing");
         return following;
     }
 
     async getfollowersList(userID) {
-        console.log("\n\n\ninfo: Iniciado UserService.getfollowersList", userID);
+        log.trace("Iniciado UserService.getfollowersList", userID);
 
         //Regra para ver a lista de usuarios que um usuário segue
-        console.log("\n\ninfo: Iniciado Verificação se o usuário existe");
+        log.trace("Iniciado Verificação se o usuário existe");
         const user = await userRepository.findUserById(userID);
-        console.log("\n\ninfo: valor de user", user);
         if (user === null) {
-            console.log("\n\nerror: Usuário não existe");
+            log.error("Usuário não existe");
             throw new Error('Usuário não existe');
         }
 
-        console.log("\n\ninfo: Iniciado Verificação se o usuário segue alguém");
+        log.trace("Iniciado Verificação se o usuário tem seguidores");
         const followersList = await userRepository.listFollowers(userID);
-        console.log("\n\ninfo: valor de followersList", followersList);
+        
 
-        console.log("\n\n\ninfo: Finalizado UserService.getfollowersList", followersList);
+        log.trace("Finalizado UserService.getfollowersList");
         return followersList;
     }
 
     async getfollowingList(userID) {
-        console.log("\n\n\ninfo: Iniciado UserService.getfollowingList", userID);
+        log.trace("Iniciado UserService.getfollowingList", userID);
 
         //Regra para ver a lista de seguidores de um usuário
-        console.log("\n\ninfo: Iniciado Verificação se o usuário existe");
+        log.trace("Iniciado Verificação se o usuário existe");
         const user = await userRepository.findUserById(userID);
-        console.log("\n\ninfo: valor de user", user);
         if (user === null) {
-            console.log("\n\nerror: Usuário não existe");
+            log.error("Usuário não existe");
             throw new Error('Usuário não existe');
         }
 
-        console.log("\n\ninfo: Iniciado Verificação se o usuário tem seguidores");
+        log.trace("Iniciado Verificação se o usuário segue alguém");
         const followingList = await userRepository.listFollowing(userID);
-        console.log("\n\ninfo: valor de followingList", followingList);
+        
 
-        console.log("\n\n\ninfo: Finalizado UserService.getfollowingList", followingList);
+        log.trace("Finalizado UserService.getfollowingList");
         return followingList;
     }
 
