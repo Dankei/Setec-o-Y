@@ -1,6 +1,7 @@
 import React from 'react';
 import ButtonDelete from './ButtonDelete.js';
 import ButtonCommon from './ButtonCommon.js';
+import axios from 'axios';
 
 export default function DeleteYeet(props) {
     return(
@@ -14,7 +15,34 @@ export default function DeleteYeet(props) {
                 </p>
                 <div className="flex space-x-2">
                     <ButtonCommon onClick={props.onClose} text="Cancela"/>
-                    <ButtonDelete text="Excluir"/>
+                    <ButtonDelete onClick={() => 
+                        {
+                        console.log(length.text);    
+                        axios.delete(`http://localhost:3001/api/tweets/${props.id}` 
+
+                        , {
+                            headers: {
+                                'Content-Type': 'application/json',
+                            }
+                        })
+                        .then((response) => {
+                            console.log('Response data:', response.data);
+                            window.location.reload();
+                        })
+                        .catch((error) => {
+                            if (error.response) {
+                                // O servidor respondeu com um status diferente de 2xx
+                                console.error('Error response:', error.response.data);
+                            } else if (error.request) {
+                                // A requisição foi feita, mas nenhuma resposta foi recebida
+                                console.error('Error request:', error.request);
+                            } else {
+                                // Algo aconteceu ao configurar a requisição
+                                console.error('Error message:', error.message);
+                            }
+                        });
+                    }}
+                        text="Excluir"/>
                 </div>
                 
 

@@ -44,7 +44,7 @@ export default function NewYeet() {
                             } else{
                         axios.post('http://localhost:3001/api/tweets', {
                             text: text,
-                            authorId: "2"
+                            authorID: "2"
                         }, {
                             headers: {
                                 'Content-Type': 'application/json',
