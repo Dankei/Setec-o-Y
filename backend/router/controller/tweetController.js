@@ -50,7 +50,6 @@ export class TweetController {
     log.trace("Iniciado TweetController.findTweetById");
 
     const { id } = request.params;
-    console.log(id);
 
     try {
       const result = await tweetService.findTweetById(id);
