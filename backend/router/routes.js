@@ -16,17 +16,15 @@ const replyController = new ReplyController();
 
 
 // Rotas de usuários
-router.post('/users', userController.createUser);
-router.post('/users/confirmEmail', userController.confirmEmail);
-router.post('/login', userController.login);
-
-//Rota para seguir um usuário ou deixar de seguir
-router.post('/users/follow', userController.followUser);
-
+router.post('/users', userController.createUser); //Rota para criar um usuário
+router.post('/users/confirmEmail', userController.confirmEmail); //Rota para confirmar o email do usuário
+router.post('/login', userController.login); //Rota para fazer login
+router.post('/users/follow', userController.followUser); //Rota para seguir um usuário ou deixar de seguir
 router.get('/users/followers/:userID', userController.getFollowers); //Rota para ver a quantidade de seguidores de um usuário
 router.get('/users/following/:userID', userController.getFollowing); //Rota para ver a quantidade de seguindo de um usuário
 router.get('/users/followersList/:userID', userController.getfollowersList); //Rota para ver a lista de usuarios que um usuário segue
 router.get('/users/followingList/:userID', userController.getfollowingList); //Rota para ver a lista de seguidores de um usuário
+
 
 // Rotas de tweets
 router.post('/tweets', tweetController.createTweet);
