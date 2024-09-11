@@ -1,4 +1,3 @@
-import e from 'express';
 import { UserEntity } from '../../model/entity/userEntity.js';
 import { UserService } from '../../model/service/userService.js';
 
@@ -47,8 +46,8 @@ export class UserController{
             if(error.message === 'Token inválido'){
                 response.status(401).json({message: error.message});
 
-            }else if(error.message === 'Email não cadastrado'){
-                response.status(404).json({message: error.message});
+            }else if(error.message === 'Token expirado'){
+                response.status(406).json({message: error.message});
 
             }else{
                 response.status(400).json({message: error.message});

@@ -5,8 +5,8 @@
   "main": "./frontend/src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "startfront": "webpack-dev-server ./",
-    "startback": "nodemon backend/backend.js",
+    "startfront": "webpack-dev-server > nul 2>&1",
+    "startback": "nodemon --quiet backend/backend.js",
     "start": "concurrently \"npm run startfront\" \"npm run startback\"",
     "build": "webpack ."
   },
