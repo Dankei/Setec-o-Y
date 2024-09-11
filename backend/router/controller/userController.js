@@ -57,6 +57,7 @@ export class UserController{
         }
     }
 
+    
     async login(request, response) {
         log.info("Feito request na rota /login")
         log.trace("Iniciado UserController.login");
