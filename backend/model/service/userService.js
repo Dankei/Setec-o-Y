@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { GenerateTokenUtils } from "./utils/genereteTokenUtils.js";
 import { EmailUtils } from "./utils/emailUtils.js";
 import { TokenRepository } from "../repository/tokenRepository.js";	
-import { TokenEntity } from "../entity/tokenEntity.js";
+import { log } from "../../log/logger.js";
 
 const userRepository = new UserRepository();
 const generateTokenUtils = new GenerateTokenUtils();
@@ -14,43 +14,56 @@ export class UserService {
 
     async createUser(user) {
         
-        console.log("\n\n\ninfo: Iniciado UserService.createUser", user);
+        log.trace("Iniciado UserService.createUser");
 
 
         //Regra para salvar usuario 
+
+        // 0. Verificar se os campos obrigatórios foram preenchidos
+        if (!user.username || !user.email || !user.password) {
+            log.error("Campos obrigatórios não preenchidos");
+            throw new Error('Campos obrigatórios não preenchidos');
+        }
+
         //1. Verificar se o email já está cadastrado
-        console.log("\n\ninfo: Iniciado Verificação se o email já existe");
+        log.trace("Iniciado Verificação se o email já está cadastrado");
         const userExists = await userRepository.findUserByEmail(user.email);
-        console.log("\n\ninfo: valor de userExists", userExists);
         if (userExists !== null) {
-            console.log("\n\nerror: Email já cadastrado");
+            log.error("Email já cadastrado");
             throw new Error('Email já cadastrado');
         }
+        log.trace("Finalizado Verificação se o email já está cadastrado");
+
+        log.trace("Iniciado verificação se o username já está cadastrado");
+        const usernameExists = await userRepository.findUserByUsername(user.username);
+        if (usernameExists !== null) {
+            log.error("Username já cadastrado");
+            throw new Error('Username já cadastrado');
+        }
+        log.trace("Finalizado Verificação se o username já está cadastrado");
 
 
         //2. Criptografar a senha
-        console.log("\n\ninfo: Iniciado criptocrafia da senha", user.password);
+        log.trace("Iniciado criptocrafia da senha");
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(user.password, salt);
         user.password = hash;
-        console.log("\n\ninfo: Finalizado criptocrafia da senha", user.password);
+        log.trace("Finalizado criptocrafia da senha");
 
         
         //3. Cria token de verificação do email
-        console.log("\n\ninfo: Iniciado Verificação se o email é válido gerando o token para o email: ", user.email);
+        log.trace("Iniciado criar token de verificação do email");
         const token = generateTokenUtils.generateToken();
-        console.log("\n\ninfo: Gerado Token : ", token);
         emailUtils.sendEmail(user.email, token);
 
         //4. Salvar o Usuario no banco de dados
-        console.log("\n\n\ninfo: Salvando o Usuario no Banco", user);
+        log.trace("Iniciado salvar usuario no banco de dados");
         const userNew = await userRepository.createUser(user);
          
         //5. Salvar o Token no banco de dados
-        console.log("\n\ninfo: Iniciado salvar token no banco de dados");
         await tokenRepository.createEmailToken(token, userNew.id);
 
-        console.log("\n\n\ninfo: Finalizado UserService.createUser", userNew);
+        log.trace("Finalizado UserService.createUser");
         return userNew;
          
          

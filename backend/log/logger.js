@@ -1,6 +1,6 @@
 // Simulação de enum usando um objeto
 const LogType = {
-  INFO: "ℹ Info",
+  INFO: "\nℹ Info",
   TRACE: "🔍 Trace",
   ERROR: "❌ Error",
   SUCCESS: "✅ Success"

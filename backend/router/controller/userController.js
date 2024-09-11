@@ -1,12 +1,14 @@
 import { UserEntity } from '../../model/entity/userEntity.js';
 import { UserService } from '../../model/service/userService.js';
+import { log } from '../../log/logger.js';
 
 const userService = new UserService();
 
 export class UserController{
 
     async  createUser (request, response) {
-        console.log("\n\n\ninfo: Iniciado UserController.createUser", request.body);
+        log.info("Feito request na rota /users")
+        log.trace("Iniciado UserController.createUser");
         const { username, email, password } = request.body;
 
         try {
@@ -14,16 +16,17 @@ export class UserController{
             const user = new UserEntity(username, email, password);
             const result = await userService.createUser(user);
 
-            console.log("\n\n\ninfo: Finalizado UserController.createUser", result);
+            log.success("Finalizado request com sucesso");
             response.status(201).json(result);
         
             
         } catch (error) {
-            console.log("\n\n\nerror: UserController.createUser",error.message);
-            if(error.message === 'Email já cadastrado'){
+            if(error.message === 'Email já cadastrado' 
+                || error.message === 'Username já cadastrado' 
+                || error.message === 'Campos obrigatórios não preenchidos'){
                 response.status(409).json({message: error.message});
             }else{
-                response.status(400).json({message: error.message});
+                response.status(400).json({message: "Erro ao criar usuário"});
             }
             
         }

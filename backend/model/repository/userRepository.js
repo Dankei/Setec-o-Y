@@ -1,5 +1,6 @@
 import { database } from "../../database/database.js";
 import {UserEntity} from "../entity/userEntity.js";
+import { log } from "../../log/logger.js";
 
 
 export class UserRepository {
@@ -8,7 +9,7 @@ export class UserRepository {
     // Criando um novo usuário no banco de dados
     async createUser(user){
         try{
-        console.log("\n\n\ninfo: Iniciado UserRepository.createUser", user);
+        log.trace("Iniciado UserRepository.createUser");
 
 
         const {username, email, password} = user;
@@ -20,13 +21,13 @@ export class UserRepository {
         );
 
         const newUser = new UserEntity(username, email, password, result.insertId);
-        console.log("\n\n\ninfo: Finalizado UserRepository.createUser", newUser);
+        log.trace("Finalizado UserRepository.createUser");
 
         return newUser;
 
 
     }catch(error){
-        console.log("\n\n\nerror: UserRepository.createUser", error);
+        log.error("UserRepository.createUser\t",error.message);
         throw error;
     }
     }
@@ -36,6 +37,19 @@ export class UserRepository {
         const [rows] = await database.query(
             'SELECT * FROM tb_user WHERE email = ?',
             [email]
+        );
+        if(rows.length){
+            const {username, email, password,id} = rows[0];
+            return new UserEntity(username, email, password,id);
+        }
+        return null;
+    }
+
+    // Verificando se o username já está cadastrado
+    async findUserByUsername(username){
+        const [rows] = await database.query(
+            'SELECT * FROM tb_user WHERE username = ?',
+            [username]
         );
         if(rows.length){
             const {username, email, password,id} = rows[0];
