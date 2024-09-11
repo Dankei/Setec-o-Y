@@ -60,7 +60,7 @@ export class UserController{
     async login(request, response) {
         log.info("Feito request na rota /login")
         log.trace("Iniciado UserController.login");
-        
+
         const { email, password } = request.body;
 
         try {
@@ -86,18 +86,18 @@ export class UserController{
 
 
     async followUser(request, response) {
-        console.log("\n\n\ninfo: Iniciado UserController.followUser", request.body);
+        log.info("Feito request na rota /users/follow")
+        log.trace("Iniciado UserController.followUser");
         //Primeiro é o usuario que ta logado e o segundo é o usuario que ele quer seguir
         const { followerID, followedID } = request.body;
 
         try {
             const result = await userService.followUser(followerID, followedID);
 
-            console.log("\n\n\ninfo: Finalizado UserController.followUser", result);
+            log.success("Finalizado request com sucesso");
             response.status(201).json(result);
 
-        } catch (error) {
-            console.log("\n\n\nerror: UserController.followUser", error.message);
+        } catch (error) {      
                 if(error.message === 'dar unfollow'){
                     response.status(205).json({message: error.message});
                 }else{
@@ -109,62 +109,62 @@ export class UserController{
 
 // add id pero url
     async getFollowers(request,response){
-        console.log("\n\n\ninfo: Iniciado UserController.getFollowers", request.body);
+        log.info("Feito request na rota /users/followers/:userID")
+        log.trace("Iniciado UserController.getFollowers");
         const { userID } = request.params;
 
         try {
             const result = await userService.getFollowers(userID);
 
-            console.log("\n\n\ninfo: Finalizado UserController.getFollowers", result);
+            log.success("Finalizado request com sucesso");
             response.status(200).json(result);
 
         } catch (error) {
-            console.log("\n\n\nerror: UserController.getFollowers", error.message);
             response.status(400).json({message: error.message});
         }
     }
     async getFollowing(request,response){
-        console.log("\n\n\ninfo: Iniciado UserController.getFollowing", request.body);
+        log.info("Feito request na rota /users/following/:userID")
+        log.trace("Iniciado UserController.getFollowing");
         const { userID } = request.params;
 
         try {
             const result = await userService.getFollowing(userID);
 
-            console.log("\n\n\ninfo: Finalizado UserController.getFollowing", result);
+            log.success("Finalizado request com sucesso");
             response.status(200).json(result);
 
         } catch (error) {
-            console.log("\n\n\nerror: UserController.getFollowing", error.message);
             response.status(400).json({message: error.message});
         }
     }
     async getfollowersList(request,response){
-        console.log("\n\n\ninfo: Iniciado UserController.getfollowersList", request.body);
+        log.info("Feito request na rota /users/followersList/:userID")
+        log.trace("Iniciado UserController.getfollowersList");
         const { userID } = request.params;
 
         try {
             const result = await userService.getfollowersList(userID);
 
-            console.log("\n\n\ninfo: Finalizado UserController.getfollowersList", result);
+            log.success("Finalizado request com sucesso");
             response.status(200).json(result);
 
         } catch (error) {
-            console.log("\n\n\nerror: UserController.getfollowersList", error.message);
             response.status(400).json({message: error.message});
         }
     }
     async getfollowingList(request,response){
-        console.log("\n\n\ninfo: Iniciado UserController.getfollowingList", request.body);
+        log.info("Feito request na rota /users/followingList/:userID")
+        log.trace("Iniciado UserController.getfollowingList");
         const { userID } = request.params;
 
         try {
             const result = await userService.getfollowingList(userID);
 
-            console.log("\n\n\ninfo: Finalizado UserController.getfollowingList", result);
+            log.success("Finalizado request com sucesso");
             response.status(200).json(result);
 
         } catch (error) {
-            console.log("\n\n\nerror: UserController.getfollowingList", error.message);
             response.status(400).json({message: error.message});
         }
     }
