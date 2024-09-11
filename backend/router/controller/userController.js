@@ -107,9 +107,10 @@ export class UserController{
         }
     }
 
+// add id pero url
     async getFollowers(request,response){
         console.log("\n\n\ninfo: Iniciado UserController.getFollowers", request.body);
-        const { userID } = request.body;
+        const { userID } = request.params;
 
         try {
             const result = await userService.getFollowers(userID);
@@ -124,7 +125,7 @@ export class UserController{
     }
     async getFollowing(request,response){
         console.log("\n\n\ninfo: Iniciado UserController.getFollowing", request.body);
-        const { userID } = request.body;
+        const { userID } = request.params;
 
         try {
             const result = await userService.getFollowing(userID);
@@ -139,7 +140,7 @@ export class UserController{
     }
     async getfollowersList(request,response){
         console.log("\n\n\ninfo: Iniciado UserController.getfollowersList", request.body);
-        const { userID } = request.body;
+        const { userID } = request.params;
 
         try {
             const result = await userService.getfollowersList(userID);
@@ -154,7 +155,7 @@ export class UserController{
     }
     async getfollowingList(request,response){
         console.log("\n\n\ninfo: Iniciado UserController.getfollowingList", request.body);
-        const { userID } = request.body;
+        const { userID } = request.params;
 
         try {
             const result = await userService.getfollowingList(userID);
