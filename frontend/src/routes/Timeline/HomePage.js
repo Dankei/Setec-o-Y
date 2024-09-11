@@ -25,7 +25,7 @@ function HomePage() {
             <NewYeet />
             {tweets.map(tweet => (
                 <Yeet 
-                    key={tweet.id}
+                    id={tweet.id}
                     User={tweet.authorID}
                     Date={new Date(tweet.createdAt).toLocaleString()}
                     Content={tweet.text}
