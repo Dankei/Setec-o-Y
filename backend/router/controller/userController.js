@@ -34,18 +34,17 @@ export class UserController{
     }
 
     async confirmEmail(request, response) {
-        console.log("\n\n\ninfo: Iniciado UserController.confirmEmail", request.body);
+        log.info("Feito request na rota /users/confirmEmail")
+        log.trace("Iniciado UserController.confirmEmail");
         const { token , userID } = request.body;
 
         try {
             const result = await userService.confirmEmail(token, userID);
 
-            console.log("\n\n\ninfo: Finalizado UserController.confirmEmail", result);
+            log.success("Finalizado request com sucesso");
             response.status(200).json(result);
 
-        } catch (error) {
-            console.log("\n\n\nerror: UserController.confirmEmail", error.message);
-
+        } catch (error) {            
             if(error.message === 'Token inválido'){
                 response.status(401).json({message: error.message});
 
@@ -59,17 +58,18 @@ export class UserController{
     }
 
     async login(request, response) {
-        console.log("\n\n\ninfo: Iniciado UserController.login", request.body);
+        log.info("Feito request na rota /login")
+        log.trace("Iniciado UserController.login");
+        
         const { email, password } = request.body;
 
         try {
             const result = await userService.login(email, password);
 
-            console.log("\n\n\ninfo: Finalizado UserController.login", result);
+            log.success("Finalizado request com sucesso");
             response.status(200).json(result);
 
         } catch (error) {
-            console.log("\n\n\nerror: UserController.login", error.message);
 
             if(error.message === 'Email não cadastrado'){
                 response.status(404).json({message: error.message});
