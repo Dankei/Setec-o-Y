@@ -1,12 +1,16 @@
 import { UserEntity } from '../../model/entity/userEntity.js';
 import { UserService } from '../../model/service/userService.js';
+import { log } from '../../log/logger.js';
 
 const userService = new UserService();
 
 export class UserController {
 
-    async createUser(request, response) {
-        console.log("\n\n\ninfo: Iniciado UserController.createUser", request.body);
+
+    async  createUser (request, response) {
+        log.info("Feito request na rota /users")
+        log.trace("Iniciado UserController.createUser");
+
         const { username, email, password } = request.body;
 
         try {
@@ -14,16 +18,19 @@ export class UserController {
             const user = new UserEntity(username, email, password);
             const result = await userService.createUser(user);
 
-            console.log("\n\n\ninfo: Finalizado UserController.createUser", result);
+            log.success("Finalizado request com sucesso");
             response.status(201).json(result);
 
 
         } catch (error) {
-            console.log("\n\n\nerror: UserController.createUser", error.message);
-            if (error.message === 'Email já cadastrado') {
-                response.status(409).json({ message: error.message });
-            } else {
-                response.status(400).json({ message: error.message });
+
+            if(error.message === 'Email já cadastrado' 
+                || error.message === 'Username já cadastrado' 
+                || error.message === 'Campos obrigatórios não preenchidos'){
+                response.status(409).json({message: error.message});
+            }else{
+                response.status(400).json({message: "Erro ao criar usuário"});
+
             }
 
         }
@@ -31,21 +38,21 @@ export class UserController {
     }
 
     async confirmEmail(request, response) {
-        console.log("\n\n\ninfo: Iniciado UserController.confirmEmail", request.body);
-        const { token, userID } = request.body;
+
+        log.info("Feito request na rota /users/confirmEmail")
+        log.trace("Iniciado UserController.confirmEmail");
+        const { token , userID } = request.body;
+
 
         try {
             const result = await userService.confirmEmail(token, userID);
 
-            console.log("\n\n\ninfo: Finalizado UserController.confirmEmail", result);
+            log.success("Finalizado request com sucesso");
             response.status(200).json(result);
 
-        } catch (error) {
-            console.log("\n\n\nerror: UserController.confirmEmail", error.message);
-
-            if (error.message === 'Token inválido') {
-                response.status(401).json({ message: error.message });
-
+        } catch (error) {            
+            if(error.message === 'Token inválido'){
+                response.status(401).json({message: error.message});
             } else if (error.message === 'Token expirado') {
                 response.status(406).json({ message: error.message });
 
@@ -55,18 +62,20 @@ export class UserController {
         }
     }
 
+    
     async login(request, response) {
-        console.log("\n\n\ninfo: Iniciado UserController.login", request.body);
+        log.info("Feito request na rota /login")
+        log.trace("Iniciado UserController.login");
+
         const { email, password } = request.body;
 
         try {
             const result = await userService.login(email, password);
 
-            console.log("\n\n\ninfo: Finalizado UserController.login", result);
+            log.success("Finalizado request com sucesso");
             response.status(200).json(result);
 
         } catch (error) {
-            console.log("\n\n\nerror: UserController.login", error.message);
 
             if (error.message === 'Email não cadastrado') {
                 response.status(404).json({ message: error.message });
@@ -83,86 +92,112 @@ export class UserController {
 
 
     async followUser(request, response) {
-        console.log("\n\n\ninfo: Iniciado UserController.followUser", request.body);
+        log.info("Feito request na rota /users/follow")
+        log.trace("Iniciado UserController.followUser");
         //Primeiro é o usuario que ta logado e o segundo é o usuario que ele quer seguir
         const { followerID, followedID } = request.body;
 
         try {
             const result = await userService.followUser(followerID, followedID);
 
-            console.log("\n\n\ninfo: Finalizado UserController.followUser", result);
+            log.success("Finalizado request com sucesso");
             response.status(201).json(result);
 
-        } catch (error) {
-            console.log("\n\n\nerror: UserController.followUser", error.message);
-            if (error.message === 'dar unfollow') {
-                response.status(205).json({ message: error.message });
-            } else {
-                response.status(400).json({ message: error.message });
-            }
 
+        } catch (error) {      
+                if(error.message === 'dar unfollow'){
+                    response.status(205).json({message: error.message});
+                }else{
+                    response.status(400).json({message: error.message});
+                }
+            
         }
     }
 
-    // add id pero url
-    async getFollowers(request, response) {
-        console.log("\n\n\ninfo: Iniciado UserController.getFollowers", request.body);
+// add id pero url
+    async getFollowers(request,response){
+        log.info("Feito request na rota /users/followers/:userID")
+        log.trace("Iniciado UserController.getFollowers");
+
         const { userID } = request.params;
 
         try {
             const result = await userService.getFollowers(userID);
 
-            console.log("\n\n\ninfo: Finalizado UserController.getFollowers", result);
+            log.success("Finalizado request com sucesso");
             response.status(200).json(result);
 
         } catch (error) {
-            console.log("\n\n\nerror: UserController.getFollowers", error.message);
-            response.status(400).json({ message: error.message });
+
+            response.status(400).json({message: error.message});
         }
     }
-    async getFollowing(request, response) {
-        console.log("\n\n\ninfo: Iniciado UserController.getFollowing", request.body);
+    async getFollowing(request,response){
+        log.info("Feito request na rota /users/following/:userID")
+        log.trace("Iniciado UserController.getFollowing");
+
         const { userID } = request.params;
 
         try {
             const result = await userService.getFollowing(userID);
 
-            console.log("\n\n\ninfo: Finalizado UserController.getFollowing", result);
+            log.success("Finalizado request com sucesso");
             response.status(200).json(result);
 
         } catch (error) {
-            console.log("\n\n\nerror: UserController.getFollowing", error.message);
-            response.status(400).json({ message: error.message });
+
+            response.status(400).json({message: error.message});
         }
     }
-    async getfollowersList(request, response) {
-        console.log("\n\n\ninfo: Iniciado UserController.getfollowersList", request.body);
+    async getfollowersList(request,response){
+        log.info("Feito request na rota /users/followersList/:userID")
+        log.trace("Iniciado UserController.getfollowersList");
+
         const { userID } = request.params;
 
         try {
             const result = await userService.getfollowersList(userID);
 
-            console.log("\n\n\ninfo: Finalizado UserController.getfollowersList", result);
+            log.success("Finalizado request com sucesso");
             response.status(200).json(result);
 
         } catch (error) {
-            console.log("\n\n\nerror: UserController.getfollowersList", error.message);
-            response.status(400).json({ message: error.message });
+            response.status(400).json({message: error.message});
         }
     }
-    async getfollowingList(request, response) {
-        console.log("\n\n\ninfo: Iniciado UserController.getfollowingList", request.body);
+    async getfollowingList(request,response){
+        log.info("Feito request na rota /users/followingList/:userID")
+        log.trace("Iniciado UserController.getfollowingList");
+
         const { userID } = request.params;
 
         try {
             const result = await userService.getfollowingList(userID);
 
-            console.log("\n\n\ninfo: Finalizado UserController.getfollowingList", result);
+            log.success("Finalizado request com sucesso");
             response.status(200).json(result);
 
         } catch (error) {
-            console.log("\n\n\nerror: UserController.getfollowingList", error.message);
-            response.status(400).json({ message: error.message });
+            response.status(400).json({message: error.message});
+        }
+    }
+
+
+    async findByUsername(request,response){
+        log.info("Feito request na rota /users/:username")
+        log.trace("Iniciado UserController.getUser");
+        const { username } = request.params;
+
+        try {
+            const result = await userService.findUserById(username);
+
+            log.success("Finalizado request com sucesso");
+            response.status(200).json(result);
+
+        } catch (error) {
+
+            response.status(400).json({message: error.message});
+
         }
     }
 
