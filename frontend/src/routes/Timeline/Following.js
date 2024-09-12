@@ -24,8 +24,8 @@ function ProfilePage({back}) {
 
 
     return (
-        <div className="flex flex-col h-full w-full border-solid border-gray-600 border-x-[1px]">
-            <div className="flex text-white border-b-[1px] items-center border-gray-600">
+        <div className="flex flex-col h-full w-full ">
+            <div className="flex text-white  items-center ">
                 
                 <button onClick={back}>
                 <div className="ms-2 size-5">

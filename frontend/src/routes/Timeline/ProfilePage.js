@@ -25,7 +25,7 @@ function ProfilePage() {
         }
     };
         return (
-            <div className="flex h-screen">
+            <div className="flex border-solid border-gray-600  border-x-[1px]">
                 {renderScreen()}
             </div>
             

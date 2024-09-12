@@ -1,11 +1,20 @@
 import React from 'react';
-
+import { useNavigate } from 'react-router-dom';
 
 export default function Yeet(props) {
     const [open, setOpen] = React.useState(false);
+    const navigate = useNavigate();
+
+    function goToProfile() {
+        navigate(`/${props.Username}`);
+        window.location.reload();
+    }
     return(
         <>
-            <div className="flex flex-col border-y-[1px] border-gray-600 p-4">
+            <button onClick={goToProfile}>
+
+            
+            <div className="flex flex-col  p-4">
                 <div className="flex  text-white">
                     
                     
@@ -15,7 +24,7 @@ export default function Yeet(props) {
                     
                     <div className="ms-4 text-white w-[30rem]">
                         
-                        <p className=" ">{props.Username}</p>
+                        <p className="">{props.Username}</p>
                         <p>Olá! Eu estou usando o Y! A nova rede social que vai revolucionar o mundo!</p>
                     </div>
 
@@ -24,7 +33,7 @@ export default function Yeet(props) {
                 
                 
             </div>
-            
+            </button>
         
         </>
     );
