@@ -5,21 +5,22 @@ import Explorebar from '../../components/Explorebar.js';
 
 export default function Timeline() {
   return (
-    <div className="flex w-full h-screen">
-      {/* Navbar */}
-      <div className="fixed left-0 w-1/4 h-full">
+    <div className="relative flex justify-center">
+      <div className="fixed h-full right-20">
+        <Explorebar />
+      </div>
+      
+      <div className="fixed h-full left-20">
         <Navbar />
       </div>
 
-      {/* Outlet (Conteúdo principal) com scroll */}
-      <div className="flex-grow h-full  mx-[25%]">
+      
+      
+      <div className="w-[37rem]">
         <Outlet />
       </div>
-
-      {/* Explorebar */}
-      <div className="fixed right-0 w-1/4 h-full">
-        <Explorebar />
-      </div>
+      
+      
     </div>
   );
 }
