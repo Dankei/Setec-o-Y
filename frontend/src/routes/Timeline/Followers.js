@@ -8,8 +8,7 @@ import { useParams } from "react-router-dom";
 
 function ProfilePage({back}) {
     const [tweets, setTweets] = useState([]);
-    const [following, setFollowing] = useState(2);
-    const [followers, setFollowers] = useState(5);
+
     const { userID } = useParams();
 
     useEffect(() => {
@@ -22,7 +21,6 @@ function ProfilePage({back}) {
     }, []);
 
     // Requisições dos seguidores 
-
 
     return (
         <div className="flex flex-col h-full w-full border-solid border-gray-600 border-b-2 border-x-[1px]">

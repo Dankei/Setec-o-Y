@@ -8,8 +8,6 @@ import { useParams } from "react-router-dom";
 
 function ProfilePage({back}) {
     const [tweets, setTweets] = useState([]);
-    const [following, setFollowing] = useState(2);
-    const [followers, setFollowers] = useState(5);
     const { userID } = useParams();
 
     useEffect(() => {

@@ -7,13 +7,14 @@ import { useParams } from "react-router-dom";
 
 function ProfilePage({followersPage, followingPage}) {
     const [tweets, setTweets] = useState([]);
+    const user = JSON.parse(localStorage.getItem('user'))
     const [userInfo, setUserInfo] = useState([]);
-    const [following, setFollowing] = useState(2);
-    const [followers, setFollowers] = useState(5);
+    const [following, setFollowing] = useState("");
+    const [followers, setFollowers] = useState("");
     const { userID } = useParams();
 
     useEffect(() => {
-        axios.get('http://localhost:3001/api/tweets/author/2')
+        axios.get(`http://localhost:3001/api/tweets/author/${user.id}`)
             .then(response => {
                 const sortedTweets = response.data.sort((a, b) => b.id - a.id);
                 setTweets(sortedTweets);
@@ -22,6 +23,24 @@ function ProfilePage({followersPage, followingPage}) {
     }, []);
 
     // Requisições dos seguidores 
+
+    useEffect(() => {
+        axios.get('http://localhost:3001/api/users/followers/1')
+            .then(response => {
+                setFollowers(response.data);
+            })
+            .catch(error => console.error('Error fetching tweets:', error));
+    }, []);
+
+    // Requisições dos seguindos
+
+    useEffect(() => {
+        axios.get('http://localhost:3001/api/users/following/1')
+            .then(response => {
+                setFollowing(response.data);
+            })
+            .catch(error => console.error('Error fetching tweets:', error));
+    }, []);
 
 
     return (
