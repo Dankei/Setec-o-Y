@@ -80,8 +80,10 @@ export class UserController {
             if (error.message === 'Email não cadastrado') {
                 response.status(404).json({ message: error.message });
 
-            } else if (error.message === 'Senha incorreta') {
-                response.status(401).json({ message: error.message });
+            }else if(error.message === 'Senha incorreta'){
+                response.status(401).json({message: error.message});
+            }else if(error.message === 'Email não confirmado'){
+                response.status(403).json({message: error.message});
 
             } else {
                 response.status(400).json({ message: error.message });
@@ -189,7 +191,7 @@ export class UserController {
         const { username } = request.params;
 
         try {
-            const result = await userService.findUserById(username);
+            const result = await userService.findByUsername(username);
 
             log.success("Finalizado request com sucesso");
             response.status(200).json(result);

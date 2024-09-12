@@ -1,19 +1,90 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom'; // Adicione isso
+import VerificationPopup from '../components/VerificationPopup.js';
 
 function SignUpScreen({ onLoginClick }) {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
+    const [error, setError] = useState('');
     const [focusedInput, setFocusedInput] = useState('');
-
+    const [showVerification, setShowVerification] = useState(false);
+    const [userId, setUserId] = useState(null);
+    const [verificationError, setVerificationError] = useState('');
     const handleFocus = (field) => {
         setFocusedInput(field);
     };
 
     const handleBlur = () => {
         setFocusedInput('');
+    };
+
+
+    const navigate = useNavigate(); // Adicione isso
+
+    const handleSignUp = async () => {
+        // Validações de e-mail e senha
+        if (!email.includes('@')) {
+            setError('E-mail inválido!');
+            return;
+        }
+
+        if (password !== repeatPassword) {
+            setError('As senhas não são iguais!');
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:3001/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username,
+                    email: email,
+                    password: password,
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setUserId(data.id);
+                setShowVerification(true); // Exibe o pop-up de verificação
+            } else {
+                const errorData = await response.json();
+                setError(errorData.message || 'Erro ao criar conta. Tente novamente.');
+            }
+        } catch (err) {
+            setError('Erro ao conectar com o servidor.');
+        }
+    };
+
+    const handleVerifyCode = async (token) => {
+        try {
+            const response = await fetch('http://localhost:3001/api/users/confirmEmail', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    token: token,
+                    userID: userId,
+                }),
+            });
+
+            if (response.ok) {
+                // Login automático se o código for válido
+                navigate('/home'); // Agora o navigate vai funcionar
+            } else {
+                const errorData = await response.json();
+                setVerificationError(errorData.message || 'Erro ao verificar o código.');
+            }
+        } catch (err) {
+            setVerificationError('Erro ao conectar com o servidor.');
+        }
     };
 
     return (
@@ -25,7 +96,8 @@ function SignUpScreen({ onLoginClick }) {
             className="absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center max-h-full gap-10 text-white"
         >
             <h1 className="text-4xl font-black 2xl:text-7xl lg:text-5xl">Criar conta</h1>
-            <form action="" className="flex flex-col gap-10">
+            {error && <p className="text-red-500">{error}</p>}
+            <form className="flex flex-col gap-10">
                 <div className="flex flex-col flex-1 w-full gap-10 md:flex-row">
                     <div className="relative flex flex-col">
                         <input
@@ -115,6 +187,7 @@ function SignUpScreen({ onLoginClick }) {
                 <button
                     className="border-[3px] w-fit mx-auto px-14 py-5 rounded-full text-2xl transition-all hover:bg-white hover:text-black font-bold"
                     type="submit"
+                    onClick={handleSignUp}
                 >
                     Criar conta
                 </button>
@@ -127,6 +200,13 @@ function SignUpScreen({ onLoginClick }) {
                     Fazer Login
                 </button>
             </div>
+            {/* Pop-up de verificação */}
+            {showVerification && (
+                <VerificationPopup
+                    onVerify={handleVerifyCode}
+                    error={verificationError}
+                />
+            )}
         </motion.div>
     );
 }

@@ -1,10 +1,14 @@
 import express from 'express';
 import router from './router/routes.js';
 import cors from 'cors';
-import { log } from "./log/logger.js";
+import {log} from "./log/logger.js";
+import { TokenRepository } from './model/repository/tokenRepository.js';
+import { UserRepository } from './model/repository/userRepository.js';
 
 
 
+const userRepository = new UserRepository();
+const tokenRepository = new TokenRepository();
 
 const app = express();
 const corsOptions = {
@@ -24,5 +28,15 @@ const PORT = 3001;
 app.listen(PORT, () => {
     log.init();
     log.success(`Server is running on port ${PORT}`);
+    
+    //Limpeza de tokns expirados
+    setInterval(() => {
+    log.info("Cleaning expired tokens");
+    log.success("Tokens cleaned");
+    tokenRepository.deleteExpiredTokens()
+    }, 1000 * 30); // 30 segundos  // 1000 * 60 * 60); // 1 hora
+
 
 });
+
+
