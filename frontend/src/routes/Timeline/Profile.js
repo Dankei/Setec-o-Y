@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 
 function ProfilePage({followersPage, followingPage}) {
     const [tweets, setTweets] = useState([]);
+    const [userInfo, setUserInfo] = useState([]);
     const [following, setFollowing] = useState(2);
     const [followers, setFollowers] = useState(5);
     const { userID } = useParams();
@@ -39,7 +40,7 @@ function ProfilePage({followersPage, followingPage}) {
                         </p>
                     </div>
                     <div className="absolute -bottom-14 right-4">
-                        <ButtonCommon text="Editar perfil"/>
+                        <ButtonCommon text="Seguir"/>
                     </div>
                     
                 </div>

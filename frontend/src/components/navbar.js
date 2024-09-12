@@ -5,6 +5,7 @@ import PopUp from './PopUp.js';
 
 export default function Navbar() {
     const [open, setOpen] = React.useState(false);
+    const user = JSON.parse(localStorage.getItem('user'))
     return (
         <div className="flex h-screen">
         <div className="w-80 ps-20 bg-slate-950 text-white flex flex-col">
@@ -28,7 +29,7 @@ export default function Navbar() {
                 </div>
             </a>
 
-            <a href="/profile" className="flex px-4 py-2 rounded hover:bg-gray-700 transition-all">
+            <a href={user.username} className="flex px-4 py-2 rounded hover:bg-gray-700 transition-all">
                 <div className="flex items-center space-x-4 ">
                     <img src="/assets/images/user-icon.jpg" className="size-9 rounded-full transition-all" alt="" />
                     <p className="font-medium text-xl">Perfil</p>
