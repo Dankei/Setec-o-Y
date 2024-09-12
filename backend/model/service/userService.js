@@ -4,7 +4,7 @@ import { GenerateTokenUtils } from "./utils/genereteTokenUtils.js";
 import { EmailUtils } from "./utils/emailUtils.js";
 import { TokenRepository } from "../repository/tokenRepository.js";	
 import { log } from "../../log/logger.js";
-import { i } from "framer-motion/client";
+
 
 const userRepository = new UserRepository();
 const generateTokenUtils = new GenerateTokenUtils();
@@ -132,6 +132,12 @@ export class UserService {
         log.trace("Iniciado Verificação se o email foi confirmado");
         if (user.status === 0) {
             log.error("Email não confirmado");
+              
+            log.trace("Iniciado criar token de verificação do email");
+            const token = generateTokenUtils.generateToken();
+            emailUtils.sendEmail(user.email, token);
+
+            await tokenRepository.createEmailToken(token, user.id);
             throw new Error('Email não confirmado');
         }
 
