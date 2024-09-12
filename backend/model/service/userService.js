@@ -4,6 +4,7 @@ import { GenerateTokenUtils } from "./utils/genereteTokenUtils.js";
 import { EmailUtils } from "./utils/emailUtils.js";
 import { TokenRepository } from "../repository/tokenRepository.js";	
 import { log } from "../../log/logger.js";
+import { i } from "framer-motion/client";
 
 const userRepository = new UserRepository();
 const generateTokenUtils = new GenerateTokenUtils();
@@ -250,6 +251,22 @@ export class UserService {
 
         log.trace("Finalizado UserService.getfollowingList");
         return followingList;
+    }
+
+
+    async findUserById(username) {
+        log.trace("Iniciado UserService.getUserByUsername", username);
+
+        //Regra para buscar um usuário pelo username
+        log.trace("Iniciado Verificação se o usuário existe");
+        const user = await userRepository.findUserByUsername(username);
+        if (user === null) {
+            log.error("Usuário não existe");
+            throw new Error('Usuário não existe');
+        }
+
+        log.trace("Finalizado UserService.getUserByUsername");
+        return { id: user.id, username: user.username, email: user.email};
     }
 
 
