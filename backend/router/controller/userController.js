@@ -191,7 +191,7 @@ export class UserController {
         const { username } = request.params;
 
         try {
-            const result = await userService.findUserById(username);
+            const result = await userService.findByUsername(username);
 
             log.success("Finalizado request com sucesso");
             response.status(200).json(result);

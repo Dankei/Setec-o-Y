@@ -37,12 +37,6 @@ app.listen(PORT, () => {
     }, 1000 * 30); // 30 segundos  // 1000 * 60 * 60); // 1 hora
 
 
-    //Limpeza de usuarios não confirmados a muito tempo
-    setInterval(() => {
-        log.info("Cleaning unconfirmed users");
-        log.success("Users cleaned");
-        userRepository.deleteUnconfirmedUsers()
-        }, 1000 * 60 * 60 * 24 * 30); // 30 dias
 });
 
 
