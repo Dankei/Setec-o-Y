@@ -18,19 +18,21 @@ function HomePage() {
 
     return (
         <div className="flex flex-col h-full w-full border-solid border-gray-600 border-x-[1px]">
-            <div className="flex justify-evenly font-thin text-xl text-white py-5">
+            <div className="flex py-5 text-xl font-thin text-white justify-evenly">
                 <p className="text-white">Todos</p>
                 <p className="text-white">Seguindo</p>
             </div>
             <NewYeet />
-            {tweets.map(tweet => (
-                <Yeet 
-                    id={tweet.id}
-                    User={tweet.authorID}
-                    Date={new Date(tweet.createdAt).toLocaleString()}
-                    Content={tweet.text}
-                />
-            ))}
+            <div className="h-full overflow-y-scroll">
+                {tweets.map(tweet => (
+                    <Yeet
+                        id={tweet.id}
+                        User={tweet.authorID}
+                        Date={new Date(tweet.createdAt).toLocaleString()}
+                        Content={tweet.text}
+                    />
+                ))}
+            </div>
         </div>
     );
 }
