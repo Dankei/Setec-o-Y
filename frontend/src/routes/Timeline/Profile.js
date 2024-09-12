@@ -5,7 +5,7 @@ import ButtonCommon from "../../components/ButtonCommon.js";
 import axios from 'axios';
 
 
-function ProfilePage() {
+function ProfilePage({followersPage, followingPage}) {
     const [tweets, setTweets] = useState([]);
     const [following, setFollowing] = useState(2);
     const [followers, setFollowers] = useState(5);
@@ -48,8 +48,8 @@ function ProfilePage() {
             <div className="mt-28 ms-6 text-white space-y-3 mb-5 ">
                 <p>Olá! Eu estou usando o Y! A nova rede social que vai revolucionar o mundo!</p>
                 <div className="flex text-white space-x-3 mt-2">
-                    <p><b>{following}</b> Seguindo</p>
-                    <p><b>{followers}</b> Seguidores</p>
+                    <button onClick={followingPage}><p><b>{following}</b> Seguindo</p></button>
+                    <button onClick={followersPage}><p><b>{followers}</b> Seguidores</p></button>
                 </div>
             </div>
             {tweets.map(tweet => (

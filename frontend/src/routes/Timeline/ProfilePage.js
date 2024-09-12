@@ -17,10 +17,10 @@ function ProfilePage() {
         if (currentScreen === 'following') {
             return <Following back={() => setCurrentScreen('profile')} />;
         } else if (currentScreen === 'followers') {
-            return <LoginScreen />;
+            return <Following back={() => setCurrentScreen('profile')} />;
         }
         else {
-            return <Profile />;
+            return <Profile followingPage={() => setCurrentScreen('following')} followersPage={() => setCurrentScreen('followers')}  />;
         }
     };
         return (
