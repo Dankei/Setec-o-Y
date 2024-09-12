@@ -29,12 +29,12 @@ app.listen(PORT, () => {
     log.init();
     log.success(`Server is running on port ${PORT}`);
     
-    //Limpeza de tokns expirados
-    setInterval(() => {
-    log.info("Cleaning expired tokens");
-    log.success("Tokens cleaned");
-    tokenRepository.deleteExpiredTokens()
-    }, 1000 * 30); // 30 segundos  // 1000 * 60 * 60); // 1 hora
+    // //Limpeza de tokns expirados
+    // setInterval(() => {
+    // log.info("Cleaning expired tokens");
+    // log.success("Tokens cleaned");
+    // tokenRepository.deleteExpiredTokens()
+    // }, 1000 * 30); // 30 segundos  // 1000 * 60 * 60); // 1 hora
 
 
 });

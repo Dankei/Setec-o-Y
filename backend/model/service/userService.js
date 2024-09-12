@@ -123,14 +123,14 @@ export class UserService {
         //2. Verificar se a senha está correta
         log.trace("Iniciado Verificação se a senha está correta");
         const isPasswordCorrect = bcrypt.compareSync(password, user.password);
-        if (isPasswordCorrect) {
+        if (!isPasswordCorrect) {
             log.error("Senha incorreta");
             throw new Error('Senha incorreta');
         }
 
         //3. Verificar se o email foi confirmado
         log.trace("Iniciado Verificação se o email foi confirmado");
-        if (user.status === 0) {
+        if (user.status == 0) {
             log.error("Email não confirmado");
               
             log.trace("Iniciado criar token de verificação do email");
