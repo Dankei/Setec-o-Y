@@ -24,7 +24,7 @@ router.get('/users/followers/:userID', userController.getFollowers); //Rota para
 router.get('/users/following/:userID', userController.getFollowing); //Rota para ver a quantidade de seguindo de um usuário
 router.get('/users/followersList/:userID', userController.getfollowersList); //Rota para ver a lista de usuarios que um usuário segue
 router.get('/users/followingList/:userID', userController.getfollowingList); //Rota para ver a lista de seguidores de um usuário
-router.get('/users/:id', userController.findUserById); //Rota para ver um usuário pelo id
+router.get('/users/:username', userController.findByUsername); //Rota para ver um usuário pelo Username
 
 // Rotas de tweets
 router.post('/tweets', tweetController.createTweet);

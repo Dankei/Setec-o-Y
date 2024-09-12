@@ -254,7 +254,7 @@ export class UserService {
     }
 
 
-    async findUserById(username) {
+    async findByUsername(username) {
         log.trace("Iniciado UserService.getUserByUsername", username);
 
         //Regra para buscar um usuário pelo username

@@ -171,7 +171,7 @@ export class UserController{
     }
 
 
-    async findUserById(request,response){
+    async findByUsername(request,response){
         log.info("Feito request na rota /users/:username")
         log.trace("Iniciado UserController.getUser");
         const { username } = request.params;
