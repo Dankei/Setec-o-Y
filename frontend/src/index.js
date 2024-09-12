@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         element: <PrivateRoute ><SettingsPage /></PrivateRoute>
       },
       {
-        path: 'profile',
+        path: ':userID',
         element: <PrivateRoute ><ProfilePage /></PrivateRoute>
       }
     ]
