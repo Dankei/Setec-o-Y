@@ -44,7 +44,7 @@ function ProfilePage({followersPage, followingPage}) {
 
 
     return (
-        <div className="flex flex-col h-full w-full border-solid border-gray-600 border-b-2 border-x-[1px]">
+        <div className="flex flex-col w-full border-solid border-gray-600  border-x-[1px]">
             <div className="flex flex-col font-thin text-xl text-white py-2">
                 <p className="text-white ms-2">{ userID }</p>
                 <p className="text-white font-bold text-sm ms-2">12 Yeets</p>

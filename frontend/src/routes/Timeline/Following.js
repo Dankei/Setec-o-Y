@@ -4,26 +4,27 @@ import Yeet from "../../components/Yeet.js";
 import ButtonCommon from "../../components/ButtonCommon.js";
 import axios from 'axios';
 import { useParams } from "react-router-dom";
+import UserCard from "../../components/UserCard.js";
 
 
 function ProfilePage({back}) {
-    const [tweets, setTweets] = useState([]);
+    const [users, setUsers] = useState([]);
     const { userID } = useParams();
 
     useEffect(() => {
-        axios.get('http://localhost:3001/api/tweets/author/2')
+        axios.get('http://localhost:3001/api/tweets/author/1')
             .then(response => {
-                const sortedTweets = response.data.sort((a, b) => b.id - a.id);
-                setTweets(sortedTweets);
+                const sortedUsers = response.data.sort((a, b) => b.id - a.id);
+                setUsers(sortedUsers);
             })
-            .catch(error => console.error('Error fetching tweets:', error));
+            .catch(error => console.error('Error fetching users:', error));
     }, []);
 
     // Requisições dos seguidores 
 
 
     return (
-        <div className="flex flex-col h-full w-full border-solid border-gray-600 border-b-2 border-x-[1px]">
+        <div className="flex flex-col h-full w-full border-solid border-gray-600 border-x-[1px]">
             <div className="flex text-white border-b-[1px] items-center border-gray-600">
                 
                 <button onClick={back}>
@@ -40,12 +41,10 @@ function ProfilePage({back}) {
             
             
 
-            {tweets.map(tweet => (
-                <Yeet 
-                    key={tweet.id}
-                    User="Dankei" 
-                    Date={new Date(tweet.createdAt).toLocaleString()}
-                    Content={tweet.text}
+            {users.map(user => (
+                <UserCard 
+                    key={user.id}
+                    Username={user.text}
                 />
             ))}
             

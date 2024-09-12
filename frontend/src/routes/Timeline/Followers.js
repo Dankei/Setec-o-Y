@@ -12,7 +12,7 @@ function ProfilePage({back}) {
     const { userID } = useParams();
 
     useEffect(() => {
-        axios.get('http://localhost:3001/api/tweets/author/2')
+        axios.get('http://localhost:3001/api/tweets/author/1')
             .then(response => {
                 const sortedTweets = response.data.sort((a, b) => b.id - a.id);
                 setTweets(sortedTweets);
@@ -23,7 +23,7 @@ function ProfilePage({back}) {
     // Requisições dos seguidores 
 
     return (
-        <div className="flex flex-col h-full w-full border-solid border-gray-600 border-b-2 border-x-[1px]">
+        <div className="flex flex-col h-full w-full border-solid border-gray-600  border-x-[1px]">
             <div className="flex text-white border-b-[1px] items-center border-gray-600">
                 
                 <button onClick={back}>

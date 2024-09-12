@@ -9,6 +9,7 @@ export default function NewYeet() {
     const [authorID, setauthorID] = useState('');
     const [open, setOpen] = React.useState(false);
     const [charCount, setCharCount] = useState(0);
+    const user = JSON.parse(localStorage.getItem('user'))
 
     const handleTextChange = (event) => {
         const newText = event.target.value;
@@ -44,7 +45,7 @@ export default function NewYeet() {
                             } else{
                         axios.post('http://localhost:3001/api/tweets', {
                             text: text,
-                            authorId: "2"
+                            authorID: user.id
                         }, {
                             headers: {
                                 'Content-Type': 'application/json',
