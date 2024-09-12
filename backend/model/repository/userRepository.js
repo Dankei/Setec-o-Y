@@ -144,4 +144,14 @@ export class UserRepository {
     );
     return rows.map((row) => row.username);
   }
+
+
+  //Limpeza de usuarios não confirmados
+  async deleteUnconfirmedUsers(){
+    const [result] = await database.query(
+      "DELETE FROM tb_user WHERE status = 0"
+    );
+    return result.affectedRows > 0;
+  }
+
 }

@@ -40,4 +40,14 @@ export class TokenRepository {
 
         return result.affectedRows > 0;
     }
+
+    // Deletando tokens expirados
+    async deleteExpiredTokens() {
+
+        const [result] = await database.query(
+            'DELETE FROM tb_user_tokens WHERE expires_at < NOW()'
+        );
+
+        return result.affectedRows > 0;
+    }
 }

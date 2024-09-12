@@ -77,6 +77,8 @@ export class UserController{
 
             }else if(error.message === 'Senha incorreta'){
                 response.status(401).json({message: error.message});
+            }else if(error.message === 'Email não confirmado'){
+                response.status(403).json({message: error.message});
 
             }else{
             response.status(400).json({message: error.message});
