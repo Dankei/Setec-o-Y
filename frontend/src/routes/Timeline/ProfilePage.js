@@ -4,18 +4,19 @@ import Yeet from "../../components/Yeet.js";
 import ButtonCommon from "../../components/ButtonCommon.js";
 import axios from 'axios';
 
+import Following from "./Following.js";
 import Profile from "./Profile.js";
 
 
 function ProfilePage() {
-    const [currentScreen, setCurrentScreen] = useState('start');
+    const [currentScreen, setCurrentScreen] = useState('following');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const renderScreen = () => {
-        if (currentScreen === 'signup') {
-            return <SignUpScreen />;
-        } else if (currentScreen === 'login') {
+        if (currentScreen === 'following') {
+            return <Following back={() => setCurrentScreen('profile')} />;
+        } else if (currentScreen === 'followers') {
             return <LoginScreen />;
         }
         else {
