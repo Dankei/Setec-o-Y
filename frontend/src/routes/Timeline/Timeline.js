@@ -9,18 +9,18 @@ export default function Timeline() {
       <div className="fixed h-full right-20">
         <Explorebar />
       </div>
-      
+
       <div className="fixed h-full left-20">
         <Navbar />
       </div>
 
-      
-      
+
+
       <div className="w-[37rem]">
         <Outlet />
       </div>
-      
-      
+
+
     </div>
   );
 }
