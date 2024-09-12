@@ -275,5 +275,20 @@ export class UserService {
         return { id: user.id, username: user.username, email: user.email};
     }
 
+    async findById(id) {
+        log.trace("Iniciado UserService.getUserById", id);
+
+        //Regra para buscar um usuário pelo ID
+        log.trace("Iniciado Verificação se o usuário existe");
+        const user = await userRepository.findUserById(id);
+        if (user === null) {
+            log.error("Usuário não existe");
+            throw new Error('Usuário não existe');
+        }
+
+        log.trace("Finalizado UserService.getUserById");
+        return { id: user.id, username: user.username, email: user.email};
+    }
+
 
 }
