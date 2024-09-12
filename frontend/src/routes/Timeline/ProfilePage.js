@@ -5,11 +5,12 @@ import ButtonCommon from "../../components/ButtonCommon.js";
 import axios from 'axios';
 
 import Following from "./Following.js";
+import Followers from "./Followers.js";
 import Profile from "./Profile.js";
 
 
 function ProfilePage() {
-    const [currentScreen, setCurrentScreen] = useState('following');
+    const [currentScreen, setCurrentScreen] = useState('profile');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -17,7 +18,7 @@ function ProfilePage() {
         if (currentScreen === 'following') {
             return <Following back={() => setCurrentScreen('profile')} />;
         } else if (currentScreen === 'followers') {
-            return <Following back={() => setCurrentScreen('profile')} />;
+            return <Followers back={() => setCurrentScreen('profile')} />;
         }
         else {
             return <Profile followingPage={() => setCurrentScreen('following')} followersPage={() => setCurrentScreen('followers')}  />;

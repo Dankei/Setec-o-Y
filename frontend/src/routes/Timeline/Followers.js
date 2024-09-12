@@ -35,7 +35,7 @@ function ProfilePage({back}) {
                 </button>
 
                 <div className="flex flex-col  font-thin text-xl text-white py-2">
-                    <p className="text-white ms-2">Seguindo de: { userID }</p>
+                    <p className="text-white ms-2">Seguidores de: {userID}</p>
                     <p className="text-white font-bold text-sm ms-2">12 Yeets</p>
                 </div>
             </div>
