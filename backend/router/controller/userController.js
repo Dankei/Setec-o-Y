@@ -203,6 +203,24 @@ export class UserController {
         }
     }
 
+    async findById(request,response){
+        log.info("Feito request na rota /users/:id")
+        log.trace("Iniciado UserController.getUser");
+        const { id } = request.params;
+
+        try {
+            const result = await userService.findById(id);
+
+            log.success("Finalizado request com sucesso");
+            response.status(200).json(result);
+
+        } catch (error) {
+
+            response.status(400).json({message: error.message});
+    }
+
+    }
 
 
+    
 }
