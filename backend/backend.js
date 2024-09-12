@@ -1,5 +1,5 @@
 import express from 'express';
-import router from './router/routes.js'; 
+import router from './router/routes.js';
 import cors from 'cors';
 import {log} from "./log/logger.js";
 import { TokenRepository } from './model/repository/tokenRepository.js';

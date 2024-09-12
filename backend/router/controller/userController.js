@@ -4,11 +4,13 @@ import { log } from '../../log/logger.js';
 
 const userService = new UserService();
 
-export class UserController{
+export class UserController {
+
 
     async  createUser (request, response) {
         log.info("Feito request na rota /users")
         log.trace("Iniciado UserController.createUser");
+
         const { username, email, password } = request.body;
 
         try {
@@ -18,25 +20,29 @@ export class UserController{
 
             log.success("Finalizado request com sucesso");
             response.status(201).json(result);
-        
-            
+
+
         } catch (error) {
+
             if(error.message === 'Email já cadastrado' 
                 || error.message === 'Username já cadastrado' 
                 || error.message === 'Campos obrigatórios não preenchidos'){
                 response.status(409).json({message: error.message});
             }else{
                 response.status(400).json({message: "Erro ao criar usuário"});
+
             }
-            
+
         }
 
     }
 
     async confirmEmail(request, response) {
+
         log.info("Feito request na rota /users/confirmEmail")
         log.trace("Iniciado UserController.confirmEmail");
         const { token , userID } = request.body;
+
 
         try {
             const result = await userService.confirmEmail(token, userID);
@@ -47,12 +53,11 @@ export class UserController{
         } catch (error) {            
             if(error.message === 'Token inválido'){
                 response.status(401).json({message: error.message});
+            } else if (error.message === 'Token expirado') {
+                response.status(406).json({ message: error.message });
 
-            }else if(error.message === 'Token expirado'){
-                response.status(406).json({message: error.message});
-
-            }else{
-                response.status(400).json({message: error.message});
+            } else {
+                response.status(400).json({ message: error.message });
             }
         }
     }
@@ -72,16 +77,16 @@ export class UserController{
 
         } catch (error) {
 
-            if(error.message === 'Email não cadastrado'){
-                response.status(404).json({message: error.message});
+            if (error.message === 'Email não cadastrado') {
+                response.status(404).json({ message: error.message });
 
             }else if(error.message === 'Senha incorreta'){
                 response.status(401).json({message: error.message});
             }else if(error.message === 'Email não confirmado'){
                 response.status(403).json({message: error.message});
 
-            }else{
-            response.status(400).json({message: error.message});
+            } else {
+                response.status(400).json({ message: error.message });
             }
         }
 
@@ -100,6 +105,7 @@ export class UserController{
             log.success("Finalizado request com sucesso");
             response.status(201).json(result);
 
+
         } catch (error) {      
                 if(error.message === 'dar unfollow'){
                     response.status(205).json({message: error.message});
@@ -114,6 +120,7 @@ export class UserController{
     async getFollowers(request,response){
         log.info("Feito request na rota /users/followers/:userID")
         log.trace("Iniciado UserController.getFollowers");
+
         const { userID } = request.params;
 
         try {
@@ -123,12 +130,14 @@ export class UserController{
             response.status(200).json(result);
 
         } catch (error) {
+
             response.status(400).json({message: error.message});
         }
     }
     async getFollowing(request,response){
         log.info("Feito request na rota /users/following/:userID")
         log.trace("Iniciado UserController.getFollowing");
+
         const { userID } = request.params;
 
         try {
@@ -138,12 +147,14 @@ export class UserController{
             response.status(200).json(result);
 
         } catch (error) {
+
             response.status(400).json({message: error.message});
         }
     }
     async getfollowersList(request,response){
         log.info("Feito request na rota /users/followersList/:userID")
         log.trace("Iniciado UserController.getfollowersList");
+
         const { userID } = request.params;
 
         try {
@@ -159,6 +170,7 @@ export class UserController{
     async getfollowingList(request,response){
         log.info("Feito request na rota /users/followingList/:userID")
         log.trace("Iniciado UserController.getfollowingList");
+
         const { userID } = request.params;
 
         try {
@@ -185,7 +197,9 @@ export class UserController{
             response.status(200).json(result);
 
         } catch (error) {
+
             response.status(400).json({message: error.message});
+
         }
     }
 
