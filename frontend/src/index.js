@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import PrivateRoute from './routes/PrivateRoute.js';
 import IndexPage from './routes/IndexPage.js';
 import HomePage from './routes/Timeline/HomePage.js';
 import ErrorPage from './routes/ErrorPage.js';
@@ -18,19 +19,19 @@ const router = createBrowserRouter([
   },
   {
     path: '/',
-    element: <Timeline />,
+    element: <PrivateRoute ><Timeline /></PrivateRoute>,
     children: [
       {
         path: 'home',
-        element: <HomePage />
+        element: <PrivateRoute ><HomePage /></PrivateRoute>
       },
       {
         path: 'settings',
-        element: <SettingsPage />
+        element: <PrivateRoute ><SettingsPage /></PrivateRoute>
       },
       {
         path: 'profile',
-        element: <ProfilePage />
+        element: <PrivateRoute ><ProfilePage /></PrivateRoute>
       }
     ]
   }

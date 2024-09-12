@@ -1,7 +1,7 @@
 import express from 'express';
-import router from './router/routes.js'; 
+import router from './router/routes.js';
 import cors from 'cors';
-import {log} from "./log/logger.js";
+import { log } from "./log/logger.js";
 
 
 
@@ -24,5 +24,5 @@ const PORT = 3001;
 app.listen(PORT, () => {
     log.init();
     log.success(`Server is running on port ${PORT}`);
-    
+
 });
