@@ -1,80 +1,79 @@
 import { TweetRepository } from "../repository/tweetRepository.js";
+import { UserRepository } from "../repository/userRepository.js";
+import { log } from "../../log/logger.js";
 
+
+const userRepository = new UserRepository();
 const tweetRepository = new TweetRepository();
 
 export class TweetService {
   async createTweet(tweet) {
-    console.log("\n\n\ninfo: Iniciado TweetService.createTweet", tweet); // Debug
+    log.trace("Iniciado TweetService.createTweet");
 
     try {
-      //Validação de dados temporárias
 
-      // // Verifique se o autor do tweet existe (inativo ate os user estarem cadastrados)
-      // const authorExists = await userRepository.findUserById(tweet.authorID);
-      // if (!authorExists) {
-      //   throw new Error('Author does not exist');
-      // }
+
+      const authorExists = await userRepository.findUserById(tweet.authorID);
+      if (!authorExists) {
+        log.error("Author does not exist");
+        throw new Error('Author does not exist');
+      }
 
       // Verifique se o texto do tweet não está vazio
       if (!tweet.text || tweet.text.trim() === "") {
+        log.error("Empty text");
         throw new Error("Texto vazio");
       }
 
-      console.log("\n\n\ninfo: Finalizado TweetService.createTweet", tweet); // Debug
+      log.trace("Finalizado TweetService.createTweet");
       return await tweetRepository.createTweet(tweet);
     } catch (error) {
-      console.log("\n\n\nerror: TweetService.createTweet", error); // Debug
+      log.error("TweetService.createTweet", error.message);
       throw new Error("Failed to create tweet");
     }
   }
 
   async deleteTweet(id) {
-    console.log("\n\n\ninfo: Iniciado TweetService.deleteTweet", id); // Debug
+    log.trace("Iniciado TweetService.deleteTweet");
 
     try {
-      console.log("\n\n\ninfo: Finalizado TweetService.deleteTweet", id); // Debug
+      log.trace("Finalizado TweetService.deleteTweet");
       return await tweetRepository.deleteTweet(id);
     } catch (error) {
-      console.log("\n\n\nerror: TweetService.deleteTweet", error); // Debug
+      log.error("TweetService.deleteTweet", error.message);
       throw new Error("Failed to delete tweet");
     }
   }
 
   async findTweetById(id) {
-    console.log("\n\n\ninfo: Iniciado TweetService.findTweetById", id); // Debug
+    log.trace("Iniciado TweetService.findTweetById");
     try {
-      console.log("\n\n\ninfo: Finalizado TweetService.findTweetById", id); // Debug
+      log.trace("Finalizado TweetService.findTweetById");
       return await tweetRepository.findTweetById(id);
     } catch (error) {
-      console.log("\n\n\nerror: TweetService.findTweetById", error); // Debug
+      log.error("TweetService.findTweetById", error.message);
       throw new Error("Failed to find tweet");
     }
   }
 
   async findAllTweets() {
-    console.log("\n\n\ninfo: Iniciado TweetService.findAllTweets"); // Debug
+    log.trace("Iniciado TweetService.findAllTweets");
     try {
-      console.log("\n\n\ninfo: Finalizado TweetService.findAllTweets"); // Debug
+      log.trace("Finalizado TweetService.findAllTweets");
       return await tweetRepository.findAllTweets();
     } catch (error) {
-      console.log("\n\n\nerror: TweetService.findAllTweets", error); // Debug
+      log.error("TweetService.findAllTweets", error.message);
       throw new Error("Failed to find tweets");
     }
   }
 
   async findTweetsByauthorID(authorID) {
-    console.log(
-      "\n\n\ninfo: Iniciado TweetService.findTweetsByauthorID",
-      authorID
-    ); // Debug
+    log.trace("Iniciado TweetService.findTweetsByauthorID");
     try {
-      console.log(
-        "\n\n\ninfo: Finalizado TweetService.findTweetsByauthorID",
-        authorID
-      ); // Debug
+      log.trace("Finalizado TweetService.findTweetsByauthorID");
       return await tweetRepository.findTweetsByauthorID(authorID);
     } catch (error) {
-      console.log("\n\n\nerror: TweetService.findTweetsByauthorID", error); // Debug
+      log.error("TweetService.findTweetsByauthorID", error.message);
       throw new Error("Failed to find tweets by author");
     }
   }

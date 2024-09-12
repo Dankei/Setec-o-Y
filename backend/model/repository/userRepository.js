@@ -1,11 +1,15 @@
 import { database } from "../../database/database.js";
-import { UserEntity } from "../entity/userEntity.js";
+import {UserEntity} from "../entity/userEntity.js";
+import { log } from "../../log/logger.js";
+
 
 export class UserRepository {
-  // Criando um novo usuário no banco de dados
-  async createUser(user) {
-    try {
-      console.log("\n\n\ninfo: Iniciado UserRepository.createUser", user);
+   
+
+    // Criando um novo usuário no banco de dados
+    async createUser(user){
+        try{
+        log.trace("Iniciado UserRepository.createUser");
 
       const { username, email, password } = user;
 
@@ -14,33 +18,43 @@ export class UserRepository {
         [username, email, password]
       );
 
-      const newUser = new UserEntity(
-        username,
-        email,
-        password,
-        result.insertId
-      );
-      console.log("\n\n\ninfo: Finalizado UserRepository.createUser", newUser);
+        const newUser = new UserEntity(username, email, password, result.insertId);
+        log.trace("Finalizado UserRepository.createUser");
 
-      return newUser;
-    } catch (error) {
-      console.log("\n\n\nerror: UserRepository.createUser", error);
-      throw error;
+        return newUser;
+
+
+    }catch(error){
+        log.error("UserRepository.createUser\t",error.message);
+        throw error;
     }
   }
 
-  // Verificando se o email já está cadastrado
-  async findUserByEmail(email) {
-    const [rows] = await database.query(
-      "SELECT * FROM tb_user WHERE email = ?",
-      [email]
-    );
-    if (rows.length) {
-      const { username, email, password, id } = rows[0];
-      return new UserEntity(username, email, password, id);
+    // Verificando se o email já está cadastrado
+    async findUserByEmail(email){
+        const [rows] = await database.query(
+            'SELECT * FROM tb_user WHERE email = ?',
+            [email]
+        );
+        if(rows.length){
+            const {username, email, password,id} = rows[0];
+            return new UserEntity(username, email, password,id);
+        }
+        return null;
     }
-    return null;
-  }
+
+    // Verificando se o username já está cadastrado
+    async findUserByUsername(username){
+        const [rows] = await database.query(
+            'SELECT * FROM tb_user WHERE username = ?',
+            [username]
+        );
+        if(rows.length){
+            const {username, email, password,id} = rows[0];
+            return new UserEntity(username, email, password,id);
+        }
+        return null;
+    }
 
   // Atualizando o status do usuário
   async updateUserStatus(id) {
@@ -64,7 +78,6 @@ export class UserRepository {
       }
       return null;
     } catch (error) {
-      console.log("\n\n\nerror: Error ao encontrar o user:", error); // Debug
       throw new Error("Falha ao encontrar user");
     }
   }
@@ -120,7 +133,6 @@ export class UserRepository {
       "SELECT u.username FROM tb_user u JOIN tb_follow f ON u.id = f.followerID WHERE f.followedID = ?",
       [id]
     );
-    console.log(rows);
     return rows.map((row) => row.username);
   }
 
@@ -130,7 +142,6 @@ export class UserRepository {
       "SELECT u.username FROM tb_user u JOIN tb_follow f ON u.id = f.followedID WHERE f.followerID = ?",
       [id]
     );
-    console.log(rows);
     return rows.map((row) => row.username);
   }
 }
