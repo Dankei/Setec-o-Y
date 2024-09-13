@@ -4,12 +4,14 @@ import { GenerateTokenUtils } from "./utils/genereteTokenUtils.js";
 import { EmailUtils } from "./utils/emailUtils.js";
 import { TokenRepository } from "../repository/tokenRepository.js";	
 import { log } from "../../log/logger.js";
+import { TweetRepository } from "../repository/tweetRepository.js";
 
 
 const userRepository = new UserRepository();
 const generateTokenUtils = new GenerateTokenUtils();
 const emailUtils = new EmailUtils();
 const tokenRepository = new TokenRepository();
+const tweetRepository = new TweetRepository();
 
 export class UserService {
 
@@ -317,9 +319,18 @@ export class UserService {
             seguidores = 0;
         }
 
+        log.trace("Inicializado a verificação de quantos yeets a pessoa tem");
+        var yeets = await tweetRepository.countTweetsByauthorID(user.id);
+        if(yeets === null){
+            log.trace("Não tem yeets");
+            yeets = 0;
+        }
+
+
+
 
         log.trace("Finalizado UserService.findProfileUser");
-        return { user: user, seguindo: seguindo, seguidores:seguidores}
+        return { user: user, seguindo: seguindo, seguidores:seguidores,yeets:yeets};
 
 
     }

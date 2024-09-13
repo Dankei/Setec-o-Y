@@ -98,4 +98,18 @@ export class TweetRepository {
       throw new Error("Falha ao encontrar tweets por autor");
     }
   }
+
+
+  //Buscar a quantidade de yeets de um autor
+  async countTweetsByauthorID(authorID) {
+    const [rows] = await database.query(
+      "SELECT COUNT(*) AS followers FROM tb_tweet WHERE authorID = ?",
+      [authorID]
+    );
+    return rows[0].followers;
+  }
+
+
+
+
 }
