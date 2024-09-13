@@ -6,17 +6,18 @@ import axios from 'axios';
 export default function Yeet(props) {
     const [open, setOpen] = React.useState(false);
     const [userInfo,setUserInfo] = React.useState([]);
-    const userInitial = JSON.parse(localStorage.getItem('user'));
+    
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/users/${props.User}`)
+        axios.get(`http://localhost:3001/api/users/findbyid/${props.User}`)
             .then(response => {
                 setUserInfo(response.data);
             })
             .catch(error => console.error('Error fetching tweets:', error));
     }, []);
 
-    console.log(props.User)
+    const userInitial = userInfo.username ? userInfo.username.charAt(0) : '';
+    console.log(userInfo)
 
     return (
         <>
@@ -26,7 +27,7 @@ export default function Yeet(props) {
 
                     <div className="rounded-full w-fit bg-slate-200 h-fit">
                         <p className="pt-1 text-lg font-bold text-center size-10 text-slate-500">
-                            {userInitial.username[0]}
+                            {userInitial}
                         </p>
                     </div>
 
