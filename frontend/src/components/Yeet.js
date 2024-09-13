@@ -6,6 +6,7 @@ import axios from 'axios';
 export default function Yeet(props) {
     const [open, setOpen] = React.useState(false);
     const [userInfo,setUserInfo] = React.useState([]);
+    console.log(props.id)
     
 
     useEffect(() => {
