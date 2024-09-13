@@ -222,5 +222,22 @@ export class UserController {
     }
 
 
+    async findProfileUser(request,response){
+        log.info(`Feito request na rota /users/profile/`);
+        log.trace("Iniciado UserCOntroller.findProfileUser");
+        const {username} = request.params;
+
+        try{
+            const result = await userService.findProfileUser(username);
+
+            log.success("Finalizado request com sucesso");
+            response.status(200).json(result);
+        } catch (error) {
+            response.status(400).json({massage: error.massage});
+        }
+    }
+
+
+
     
 }

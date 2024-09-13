@@ -9,3 +9,13 @@ export class UserEntity{
 }
 
 
+export class UserEntityResponse{
+    constructor(username, email , id = null ){
+        this.id = id
+        this.username = username;
+        this.email = email;
+    }
+
+}
+
+

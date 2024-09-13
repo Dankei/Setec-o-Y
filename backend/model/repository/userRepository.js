@@ -1,5 +1,5 @@
 import { database } from "../../database/database.js";
-import {UserEntity} from "../entity/userEntity.js";
+import {UserEntity, UserEntityResponse} from "../entity/userEntity.js";
 import { log } from "../../log/logger.js";
 
 
@@ -51,7 +51,7 @@ export class UserRepository {
         );
         if(rows.length){
             const {username, email, password,id} = rows[0];
-            return new UserEntity(username, email, password,id);
+            return new UserEntityResponse(username, email,id);
         }
         return null;
     }

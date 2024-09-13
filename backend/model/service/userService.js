@@ -276,7 +276,7 @@ export class UserService {
     }
 
     async findById(id) {
-        log.trace("Iniciado UserService.getUserById", id);
+        log.trace("Iniciado UserService.getUserById");
 
         //Regra para buscar um usuário pelo ID
         log.trace("Iniciado Verificação se o usuário existe");
@@ -289,6 +289,42 @@ export class UserService {
         log.trace("Finalizado UserService.getUserById");
         return { id: user.id, username: user.username, email: user.email};
     }
+    
+
+
+    async findProfileUser(username){
+        log.trace("Iniciado UserService.findProfileUser");
+
+        log.trace("Iniciado Verificação se o usuário existe");
+        const user = await userRepository.findUserByUsername(username);
+        if (user === null) {
+            log.error("Usuário não existe");
+            throw new Error('Usuário não existe');
+        }
+        user.password = 
+
+        log.trace("Inicializando a busca de quantos Seguindo a pessoa tem");
+        var seguindo = await userRepository.countFollowing(user.id);
+        if(seguindo === null){
+            log.trace("Não tem seguidores");
+            seguindo = 0;
+        }
+
+        log.trace("Inicializando a busca de quantos Seguidores a pessoa tem");
+        var seguidores = await userRepository.countFollowers(user.id);
+        if(seguidores === null){
+            log.trace("Não tem seguidores");
+            seguidores = 0;
+        }
+
+
+        log.trace("Finalizado UserService.findProfileUser");
+        return { user: user, seguindo: seguindo, seguidores:seguidores}
+
+
+    }
+
+
 
 
 }
