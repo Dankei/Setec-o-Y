@@ -1,10 +1,23 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PopUp from './PopUp.js';
 import DeleteYeet from './DeleteYeet.js';
+import axios from 'axios';
 
 export default function Yeet(props) {
     const [open, setOpen] = React.useState(false);
+    const [userInfo,setUserInfo] = React.useState([]);
     const userInitial = JSON.parse(localStorage.getItem('user'));
+
+    useEffect(() => {
+        axios.get(`http://localhost:3001/api/users/${props.User}`)
+            .then(response => {
+                setUserInfo(response.data);
+            })
+            .catch(error => console.error('Error fetching tweets:', error));
+    }, []);
+
+    console.log(props.User)
+
     return (
         <>
             <div className="flex flex-col border-y-[1px] border-gray-600 p-4">
