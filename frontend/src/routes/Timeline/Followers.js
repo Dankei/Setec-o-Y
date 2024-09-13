@@ -8,19 +8,28 @@ import UserCard from "../../components/UserCard.js";
 
 
 function ProfilePage({back}) {
+    const [userInfo, setUserInfo] = useState([]);
     const [users, setUsers] = useState([]);
     const { userID } = useParams();
 
     useEffect(() => {
-        axios.get('http://localhost:3001/api/tweets/author/1')
+        axios.get(`http://localhost:3001/api/users/findbyusername/${userID}`)
             .then(response => {
-                const sortedUsers = response.data.sort((a, b) => b.id - a.id);
-                setUsers(sortedUsers);
+                setUserInfo(response.data);
             })
-            .catch(error => console.error('Error fetching users:', error));
+            .catch(error => console.error('Error fetching tweets:', error));
     }, []);
 
-    // Requisições dos seguidores 
+
+    useEffect(() => {
+        if (userInfo.id) {
+            axios.get(`http://localhost:3001/api/users/followersList/${userInfo.id}`)
+                .then(response => {
+                    setUsers(response.data);
+                })
+                .catch(error => console.error('Error fetching tweets:', error));
+        }
+    }, [userInfo]);
 
 
     return (
@@ -44,7 +53,7 @@ function ProfilePage({back}) {
             {users.map(user => (
                 <UserCard 
                     key={user.id}
-                    Username={user.text}
+                    Username={user}
                 />
             ))}
             
