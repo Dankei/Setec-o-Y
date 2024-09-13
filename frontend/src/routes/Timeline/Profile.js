@@ -20,7 +20,9 @@ function ProfilePage({followersPage, followingPage}) {
             })
             .catch(error => console.error('Error fetching tweets:', error));
     }, []);
-    console.log(userInfo.id)
+    console.log(userInfo)
+
+    
 
     useEffect(() => {
         if (userInfo.id) {
@@ -36,22 +38,26 @@ function ProfilePage({followersPage, followingPage}) {
     // Requisições dos seguidores 
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/users/followers/${userInfo.id}`)
-            .then(response => {
-                setFollowers(response.data);
-            })
-            .catch(error => console.error('Error fetching tweets:', error));
-    }, []);
+        if (userInfo.id) {
+            axios.get(`http://localhost:3001/api/users/followers/${userInfo.id}`)
+                .then(response => {
+                    setFollowers(response.data);
+                })
+                .catch(error => console.error('Error fetching tweets:', error));
+        }
+    }, [userInfo]);
 
     // Requisições dos seguindos
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/users/following/${userInfo.id}`)
-            .then(response => {
-                setFollowing(response.data);
-            })
-            .catch(error => console.error('Error fetching tweets:', error));
-    }, []);
+        if (userInfo.id) {
+            axios.get(`http://localhost:3001/api/users/following/${userInfo.id}`)
+                .then(response => {
+                    setFollowing(response.data);
+                })
+                .catch(error => console.error('Error fetching tweets:', error));
+        }
+    }, [userInfo]);
 
 
     return (
@@ -87,7 +93,7 @@ function ProfilePage({followersPage, followingPage}) {
             {tweets.map(tweet => (
                 <Yeet 
                     key={tweet.id}
-                    User="Dankei" 
+                    User={tweet.authorID}
                     Date={new Date(tweet.createdAt).toLocaleString()}
                     Content={tweet.text}
                 />

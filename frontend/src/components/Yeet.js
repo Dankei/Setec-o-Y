@@ -33,7 +33,7 @@ export default function Yeet(props) {
 
                     <div className="ms-4 text-white w-[30rem]">
                         <div className="flex justify-between ">
-                            <p className="text-sm"><b>{props.User}</b> - {props.Date} </p>
+                            <p className="text-sm"><b>{userInfo.username}</b> - {props.Date} </p>
                             <button
                                 onClick={() => setOpen(true)}
                             ><img src="/assets/images/more.png"></img></button>
