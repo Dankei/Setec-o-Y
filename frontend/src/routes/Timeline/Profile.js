@@ -14,7 +14,7 @@ function ProfilePage({followersPage, followingPage}) {
     const { userID } = useParams();
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/users/findbyusername/pedrordgs`)
+        axios.get(`http://localhost:3001/api/users/findbyusername/${userID}`)
             .then(response => {
                 setUserInfo(response.data);
             })
