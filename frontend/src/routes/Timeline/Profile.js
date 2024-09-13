@@ -14,7 +14,22 @@ function ProfilePage({followersPage, followingPage}) {
     const { userID } = useParams();
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/tweets/author/${user.id}`)
+        axios.get(`http://localhost:3001/api/users/findbyusername/${userID}`)
+            .then(response => {
+                setUserInfo(response.data);
+            })
+            .catch(error => console.error('Error fetching tweets:', error));
+    }, []);
+
+    console.log(userInfo.id)
+
+    const teste = userInfo.id;
+
+    console.log(teste)
+
+
+    useEffect(() => {
+        axios.get(`http://localhost:3001/api/tweets/author/${teste}`)
             .then(response => {
                 const sortedTweets = response.data.sort((a, b) => b.id - a.id);
                 setTweets(sortedTweets);
@@ -25,7 +40,7 @@ function ProfilePage({followersPage, followingPage}) {
     // Requisições dos seguidores 
 
     useEffect(() => {
-        axios.get('http://localhost:3001/api/users/followers/1')
+        axios.get(`http://localhost:3001/api/users/followers/${userInfo.id}`)
             .then(response => {
                 setFollowers(response.data);
             })
@@ -35,7 +50,7 @@ function ProfilePage({followersPage, followingPage}) {
     // Requisições dos seguindos
 
     useEffect(() => {
-        axios.get('http://localhost:3001/api/users/following/1')
+        axios.get(`http://localhost:3001/api/users/following/${userInfo.id}`)
             .then(response => {
                 setFollowing(response.data);
             })
