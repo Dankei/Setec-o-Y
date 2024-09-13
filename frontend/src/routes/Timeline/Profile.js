@@ -14,28 +14,24 @@ function ProfilePage({followersPage, followingPage}) {
     const { userID } = useParams();
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/users/findbyusername/${userID}`)
+        axios.get(`http://localhost:3001/api/users/findbyusername/pedrordgs`)
             .then(response => {
                 setUserInfo(response.data);
             })
             .catch(error => console.error('Error fetching tweets:', error));
     }, []);
-
     console.log(userInfo.id)
 
-    const teste = userInfo.id;
-
-    console.log(teste)
-
-
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/tweets/author/${teste}`)
-            .then(response => {
-                const sortedTweets = response.data.sort((a, b) => b.id - a.id);
-                setTweets(sortedTweets);
-            })
-            .catch(error => console.error('Error fetching tweets:', error));
-    }, []);
+        if (userInfo.id) {
+            axios.get(`http://localhost:3001/api/tweets/author/${userInfo.id}`)
+                .then(response => {
+                    const sortedTweets = response.data.sort((a, b) => b.id - a.id);
+                    setTweets(sortedTweets);
+                })
+                .catch(error => console.error('Error fetching tweets:', error));
+        }
+    }, [userInfo]);
 
     // Requisições dos seguidores 
 

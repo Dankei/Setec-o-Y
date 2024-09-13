@@ -73,35 +73,6 @@ export default function NewYeet() {
                     }}}
                     type="submit" 
                     text="Post" />
-                            } else {
-                                axios.post('http://localhost:3001/api/tweets', {
-                                    text: text,
-                                    authorId: "2"
-                                }, {
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    }
-                                })
-                                    .then((response) => {
-                                        console.log('Response data:', response.data);
-                                        window.location.reload();
-                                    })
-                                    .catch((error) => {
-                                        if (error.response) {
-                                            // O servidor respondeu com um status diferente de 2xx
-                                            console.error('Error response:', error.response.data);
-                                        } else if (error.request) {
-                                            // A requisição foi feita, mas nenhuma resposta foi recebida
-                                            console.error('Error request:', error.request);
-                                        } else {
-                                            // Algo aconteceu ao configurar a requisição
-                                            console.error('Error message:', error.message);
-                                        }
-                                    });
-                            }
-                        }}
-                        type="submit"
-                        text="Post" />
                 </div>
             </div>
             <PopUp text="Digite algo para postar!" open={open} onClose={() => setOpen(false)}>
