@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 function VerificationPopup({ onVerify, error }) {
     const [code, setCode] = useState('');
@@ -10,7 +11,11 @@ function VerificationPopup({ onVerify, error }) {
     };
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <motion.div initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            transition={{ duration: 0.5 }}
+            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="flex flex-col gap-3 p-6 text-center rounded-lg shadow-lg bg-slate-800">
                 <h2 className="mb-4 text-2xl font-bold">Verificação de E-mail</h2>
                 <p className="mb-2 text-white">Digite o código de 6 dígitos enviado para o seu e-mail.</p>
@@ -30,7 +35,7 @@ function VerificationPopup({ onVerify, error }) {
                     Verificar
                 </button>
             </div>
-        </div>
+        </motion.div>
     );
 }
 
