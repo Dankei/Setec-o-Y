@@ -73,7 +73,7 @@ function LoginScreen({ onSignUpClick }) {
                             : 'translate-y-0 opacity-100'
                             }`}
                     >
-                        Nome de Usuário
+                        E-mail
                     </label>
                 </div>
                 <div className="relative flex flex-col w-full">

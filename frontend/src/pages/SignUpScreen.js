@@ -77,7 +77,8 @@ function SignUpScreen({ onLoginClick }) {
 
             if (response.ok) {
                 // Login automático se o código for válido
-                navigate('/home'); // Agora o navigate vai funcionar
+                localStorage.setItem('user', JSON.stringify({ id: userId }));
+                navigate('home'); // Agora o navigate vai funcionar
             } else {
                 const errorData = await response.json();
                 setVerificationError(errorData.message || 'Erro ao verificar o código.');
