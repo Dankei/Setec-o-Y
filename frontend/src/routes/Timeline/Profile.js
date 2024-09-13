@@ -20,7 +20,6 @@ function ProfilePage({followersPage, followingPage}) {
             })
             .catch(error => console.error('Error fetching tweets:', error));
     }, []);
-    console.log(userInfo)
 
     
 
@@ -66,7 +65,7 @@ function ProfilePage({followersPage, followingPage}) {
                 <p className="text-white ms-2">{userInfo.username}</p>
                 <p className="text-white font-bold text-sm ms-2">12 Yeets</p>
             </div>
-            <div className="flex flex-col border-y-[1px] border-gray-600 ">
+            <div className="flex flex-col border-y-[1px]  border-gray-600 ">
                 <div className="flex relative">
                     <img src="/assets/images/banner.jpg"></img>
                     <div className="-bottom-[100px] left-6 absolute  flex flex-col justify-center items-center space-y-2">

@@ -8,17 +8,30 @@ import UserCard from "../../components/UserCard.js";
 
 
 function ProfilePage({back}) {
+    const [userInfo, setUserInfo] = useState([]);
     const [users, setUsers] = useState([]);
     const { userID } = useParams();
 
     useEffect(() => {
-        axios.get('http://localhost:3001/api/tweets/author/1')
+        axios.get(`http://localhost:3001/api/users/findbyusername/${userID}`)
             .then(response => {
-                const sortedUsers = response.data.sort((a, b) => b.id - a.id);
-                setUsers(sortedUsers);
+                setUserInfo(response.data);
             })
-            .catch(error => console.error('Error fetching users:', error));
+            .catch(error => console.error('Error fetching tweets:', error));
     }, []);
+
+
+    useEffect(() => {
+        if (userInfo.id) {
+            axios.get(`http://localhost:3001/api/users/followingList/${userInfo.id}`)
+                .then(response => {
+                    setUsers(response.data);
+                })
+                .catch(error => console.error('Error fetching tweets:', error));
+        }
+    }, [userInfo]);
+
+    console.log(users)
 
     // Requisições dos seguidores 
 
@@ -34,7 +47,7 @@ function ProfilePage({back}) {
                 </button>
 
                 <div className="flex flex-col  font-thin text-xl text-white py-2">
-                    <p className="text-white ms-2">Seguindo de: { userID }</p>
+                    <p className="text-white ms-2">{ userID } está seguindo</p>
                     <p className="text-white font-bold text-sm ms-2">12 Yeets</p>
                 </div>
             </div>
@@ -44,7 +57,7 @@ function ProfilePage({back}) {
             {users.map(user => (
                 <UserCard 
                     key={user.id}
-                    Username={user.text}
+                    Username={user}
                 />
             ))}
             

@@ -6,7 +6,6 @@ import axios from 'axios';
 export default function Yeet(props) {
     const [open, setOpen] = React.useState(false);
     const [userInfo,setUserInfo] = React.useState([]);
-    console.log(props.id)
     
 
     useEffect(() => {
@@ -18,7 +17,7 @@ export default function Yeet(props) {
     }, []);
 
     const userInitial = userInfo.username ? userInfo.username.charAt(0) : '';
-    console.log(userInfo)
+ 
 
     return (
         <>
