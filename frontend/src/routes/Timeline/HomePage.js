@@ -30,7 +30,7 @@ function HomePage() {
                 <p className="text-white">Seguindo</p>
             </div>
             <NewYeet />
-            <div className="h-full overflow-y-scroll">
+            <div className="h-full">
                 {tweets.map(tweet => (
                     <Yeet
                         id={tweet.id}

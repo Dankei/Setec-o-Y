@@ -7,39 +7,75 @@ import { useParams } from "react-router-dom";
 
 function ProfilePage({followersPage, followingPage}) {
     const [tweets, setTweets] = useState([]);
-    const [following, setFollowing] = useState(2);
-    const [followers, setFollowers] = useState(5);
+    const user = JSON.parse(localStorage.getItem('user'))
+    const [userInfo, setUserInfo] = useState([]);
+    const [following, setFollowing] = useState("");
+    const [followers, setFollowers] = useState("");
     const { userID } = useParams();
 
     useEffect(() => {
-        axios.get('http://localhost:3001/api/tweets/author/2')
+        axios.get(`http://localhost:3001/api/users/findbyusername/${userID}`)
             .then(response => {
-                const sortedTweets = response.data.sort((a, b) => b.id - a.id);
-                setTweets(sortedTweets);
+                setUserInfo(response.data);
             })
             .catch(error => console.error('Error fetching tweets:', error));
     }, []);
 
+    
+
+    useEffect(() => {
+        if (userInfo.id) {
+            axios.get(`http://localhost:3001/api/tweets/author/${userInfo.id}`)
+                .then(response => {
+                    const sortedTweets = response.data.sort((a, b) => b.id - a.id);
+                    setTweets(sortedTweets);
+                })
+                .catch(error => console.error('Error fetching tweets:', error));
+        }
+    }, [userInfo]);
+
     // Requisições dos seguidores 
+
+    useEffect(() => {
+        if (userInfo.id) {
+            axios.get(`http://localhost:3001/api/users/followers/${userInfo.id}`)
+                .then(response => {
+                    setFollowers(response.data);
+                })
+                .catch(error => console.error('Error fetching tweets:', error));
+        }
+    }, [userInfo]);
+
+    // Requisições dos seguindos
+
+    useEffect(() => {
+        if (userInfo.id) {
+            axios.get(`http://localhost:3001/api/users/following/${userInfo.id}`)
+                .then(response => {
+                    setFollowing(response.data);
+                })
+                .catch(error => console.error('Error fetching tweets:', error));
+        }
+    }, [userInfo]);
 
 
     return (
-        <div className="flex flex-col h-full w-full border-solid border-gray-600 border-b-2 border-x-[1px]">
+        <div className="flex flex-col w-full ">
             <div className="flex flex-col font-thin text-xl text-white py-2">
-                <p className="text-white ms-2">{ userID }</p>
+                <p className="text-white ms-2">{userInfo.username}</p>
                 <p className="text-white font-bold text-sm ms-2">12 Yeets</p>
             </div>
-            <div className="flex flex-col border-y-[1px] border-gray-600 ">
+            <div className="flex flex-col border-y-[1px]  border-gray-600 ">
                 <div className="flex relative">
                     <img src="/assets/images/banner.jpg"></img>
                     <div className="-bottom-[100px] left-6 absolute  flex flex-col justify-center items-center space-y-2">
                         <img className="size-32  rounded-full" src="/assets/images/user-icon.jpg"/>
                         <p className="text-white text-lg  font-bold">
-                            @User
+                            @{userInfo.username}
                         </p>
                     </div>
                     <div className="absolute -bottom-14 right-4">
-                        <ButtonCommon text="Editar perfil"/>
+                        <ButtonCommon text="Seguir"/>
                     </div>
                     
                 </div>
@@ -55,8 +91,8 @@ function ProfilePage({followersPage, followingPage}) {
             </div>
             {tweets.map(tweet => (
                 <Yeet 
-                    key={tweet.id}
-                    User="Dankei" 
+                    id={tweet.id}
+                    User={tweet.authorID}
                     Date={new Date(tweet.createdAt).toLocaleString()}
                     Content={tweet.text}
                 />
