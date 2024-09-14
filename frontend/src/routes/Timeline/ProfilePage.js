@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from "react";
-import NewYeet from "../../components/NewYeet.js";
-import Yeet from "../../components/Yeet.js";
-import ButtonCommon from "../../components/ButtonCommon.js";
-import axios from 'axios';
+import React, { useState } from "react";
 import { motion } from 'framer-motion';
-
 import Following from "./Following.js";
 import Followers from "./Followers.js";
 import Profile from "./Profile.js";
 
-
 function ProfilePage() {
     const [currentScreen, setCurrentScreen] = useState('profile');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
+    
     const renderScreen = () => {
         if (currentScreen === 'following') {
             return <Following back={() => setCurrentScreen('profile')} />;
@@ -35,6 +27,5 @@ function ProfilePage() {
         </motion.div>
     );
 }
-
 
 export default ProfilePage;
