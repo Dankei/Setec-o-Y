@@ -7,7 +7,7 @@ const userService = new UserService();
 export class UserController {
 
 
-    async  createUser (request, response) {
+    async createUser(request, response) {
         log.info("Feito request na rota /users")
         log.trace("Iniciado UserController.createUser");
 
@@ -24,12 +24,12 @@ export class UserController {
 
         } catch (error) {
 
-            if(error.message === 'Email já cadastrado' 
-                || error.message === 'Username já cadastrado' 
-                || error.message === 'Campos obrigatórios não preenchidos'){
-                response.status(409).json({message: error.message});
-            }else{
-                response.status(400).json({message: "Erro ao criar usuário"});
+            if (error.message === 'Email já cadastrado'
+                || error.message === 'Username já cadastrado'
+                || error.message === 'Campos obrigatórios não preenchidos') {
+                response.status(409).json({ message: error.message });
+            } else {
+                response.status(400).json({ message: "Erro ao criar usuário" });
 
             }
 
@@ -41,7 +41,7 @@ export class UserController {
 
         log.info("Feito request na rota /users/confirmEmail")
         log.trace("Iniciado UserController.confirmEmail");
-        const { token , userID } = request.body;
+        const { token, userID } = request.body;
 
 
         try {
@@ -50,9 +50,9 @@ export class UserController {
             log.success("Finalizado request com sucesso");
             response.status(200).json(result);
 
-        } catch (error) {            
-            if(error.message === 'Token inválido'){
-                response.status(401).json({message: error.message});
+        } catch (error) {
+            if (error.message === 'Token inválido') {
+                response.status(401).json({ message: error.message });
             } else if (error.message === 'Token expirado') {
                 response.status(406).json({ message: error.message });
 
@@ -62,7 +62,7 @@ export class UserController {
         }
     }
 
-    
+
     async login(request, response) {
         log.info("Feito request na rota /login")
         log.trace("Iniciado UserController.login");
@@ -80,10 +80,10 @@ export class UserController {
             if (error.message === 'Email não cadastrado') {
                 response.status(404).json({ message: error.message });
 
-            }else if(error.message === 'Senha incorreta'){
-                response.status(401).json({message: error.message});
-            }else if(error.message === 'Email não confirmado'){
-                response.status(403).json({message: error.message});
+            } else if (error.message === 'Senha incorreta') {
+                response.status(401).json({ message: error.message });
+            } else if (error.message === 'Email não confirmado') {
+                response.status(403).json({ message: error.message });
 
             } else {
                 response.status(400).json({ message: error.message });
@@ -106,18 +106,18 @@ export class UserController {
             response.status(201).json(result);
 
 
-        } catch (error) {      
-                if(error.message === 'dar unfollow'){
-                    response.status(205).json({message: error.message});
-                }else{
-                    response.status(400).json({message: error.message});
-                }
-            
+        } catch (error) {
+            if (error.message === 'dar unfollow') {
+                response.status(205).json({ message: error.message });
+            } else {
+                response.status(400).json({ message: error.message });
+            }
+
         }
     }
 
-// add id pero url
-    async getFollowers(request,response){
+    // add id pero url
+    async getFollowers(request, response) {
         log.info("Feito request na rota /users/followers/:userID")
         log.trace("Iniciado UserController.getFollowers");
 
@@ -131,10 +131,10 @@ export class UserController {
 
         } catch (error) {
 
-            response.status(400).json({message: error.message});
+            response.status(400).json({ message: error.message });
         }
     }
-    async getFollowing(request,response){
+    async getFollowing(request, response) {
         log.info("Feito request na rota /users/following/:userID")
         log.trace("Iniciado UserController.getFollowing");
 
@@ -148,10 +148,10 @@ export class UserController {
 
         } catch (error) {
 
-            response.status(400).json({message: error.message});
+            response.status(400).json({ message: error.message });
         }
     }
-    async getfollowersList(request,response){
+    async getfollowersList(request, response) {
         log.info("Feito request na rota /users/followersList/:userID")
         log.trace("Iniciado UserController.getfollowersList");
 
@@ -164,10 +164,10 @@ export class UserController {
             response.status(200).json(result);
 
         } catch (error) {
-            response.status(400).json({message: error.message});
+            response.status(400).json({ message: error.message });
         }
     }
-    async getfollowingList(request,response){
+    async getfollowingList(request, response) {
         log.info("Feito request na rota /users/followingList/:userID")
         log.trace("Iniciado UserController.getfollowingList");
 
@@ -180,12 +180,12 @@ export class UserController {
             response.status(200).json(result);
 
         } catch (error) {
-            response.status(400).json({message: error.message});
+            response.status(400).json({ message: error.message });
         }
     }
 
 
-    async findByUsername(request,response){
+    async findByUsername(request, response) {
         log.info("Feito request na rota /users/:username")
         log.trace("Iniciado UserController.getUser");
         const { username } = request.params;
@@ -198,12 +198,12 @@ export class UserController {
 
         } catch (error) {
 
-            response.status(400).json({message: error.message});
+            response.status(400).json({ message: error.message });
 
         }
     }
 
-    async findById(request,response){
+    async findById(request, response) {
         log.info("Feito request na rota /users/:id")
         log.trace("Iniciado UserController.getUser");
         const { id } = request.params;
@@ -216,11 +216,11 @@ export class UserController {
 
         } catch (error) {
 
-            response.status(400).json({message: error.message});
-    }
+            response.status(400).json({ message: error.message });
+        }
 
     }
 
 
-    
+
 }

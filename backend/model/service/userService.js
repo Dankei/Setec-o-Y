@@ -2,7 +2,7 @@ import { UserRepository } from "../repository/userRepository.js";
 import bcrypt from 'bcrypt';
 import { GenerateTokenUtils } from "./utils/genereteTokenUtils.js";
 import { EmailUtils } from "./utils/emailUtils.js";
-import { TokenRepository } from "../repository/tokenRepository.js";	
+import { TokenRepository } from "../repository/tokenRepository.js";
 import { log } from "../../log/logger.js";
 
 
@@ -14,7 +14,7 @@ const tokenRepository = new TokenRepository();
 export class UserService {
 
     async createUser(user) {
-        
+
         log.trace("Iniciado UserService.createUser");
 
 
@@ -48,7 +48,7 @@ export class UserService {
         const hash = bcrypt.hashSync(user.password, salt);
         user.password = hash;
 
-        
+
         //3. Cria token de verificação do email
         log.trace("Iniciado criar token de verificação do email");
         const token = generateTokenUtils.generateToken();
@@ -57,16 +57,16 @@ export class UserService {
         //4. Salvar o Usuario no banco de dados
         log.trace("Iniciado salvar usuario no banco de dados");
         const userNew = await userRepository.createUser(user);
-         
+
         //5. Salvar o Token no banco de dados
         await tokenRepository.createEmailToken(token, userNew.id);
 
         log.trace("Finalizado UserService.createUser");
         return userNew;
-         
-         
+
+
     }
-    
+
     async confirmEmail(token, userID) {
 
         log.trace("Iniciado UserService.confirmEmail");
@@ -75,7 +75,7 @@ export class UserService {
         //1. Verificar se o token é válido
         log.trace("Iniciado Verificação se o token é válido");
         const userToken = await tokenRepository.findTokenByToken(token, userID);
-        
+
         if (userToken === null) {
             log.error("Token inválido");
             throw new Error('Token inválido');
@@ -95,7 +95,7 @@ export class UserService {
 
         //4. Deletar o token
         log.trace("Iniciado Deletar o token");
-        await tokenRepository.deleteToken(token,userID);
+        await tokenRepository.deleteToken(token, userID);
 
         log.trace("Finalizado UserService.confirmEmail");
         return 'Email confirmado com sucesso';
@@ -119,7 +119,7 @@ export class UserService {
             log.error("Email não cadastrado");
             throw new Error('Email não cadastrado');
         }
-        
+
         //2. Verificar se a senha está correta
         log.trace("Iniciado Verificação se a senha está correta");
         const isPasswordCorrect = bcrypt.compareSync(password, user.password);
@@ -132,7 +132,7 @@ export class UserService {
         log.trace("Iniciado Verificação se o email foi confirmado");
         if (user.status == 0) {
             log.error("Email não confirmado");
-              
+
             log.trace("Iniciado criar token de verificação do email");
             const token = generateTokenUtils.generateToken();
             emailUtils.sendEmail(user.email, token);
@@ -152,7 +152,7 @@ export class UserService {
 
         //Regra para seguir um usuário
         //1. Verificar se o usuário que está seguindo existe
-        
+
         log.trace("Iniciado Verificação se o usuário que está seguindo existe");
         const userFollower = await userRepository.findUserById(followerID);
         if (userFollower === null) {
@@ -174,13 +174,13 @@ export class UserService {
         if (isFollowing) {
             log.trace("Usuário já segue o usuário será desfeito o follow");
             await userRepository.unfollowUser(followerID, followedID);
-            throw new Error('Feito unfollow');
+            throw new Error('dar unfollow');
         }
 
         //4. Seguir o usuário
         log.trace("Iniciado seguir o usuário");
         await userRepository.followUser(followerID, followedID);
-        
+
         log.trace("Finalizado UserService.followUser");
         return 'Feito follow';
     }
@@ -234,7 +234,7 @@ export class UserService {
 
         log.trace("Iniciado Verificação se o usuário tem seguidores");
         const followersList = await userRepository.listFollowers(userID);
-        
+
 
         log.trace("Finalizado UserService.getfollowersList");
         return followersList;
@@ -253,7 +253,7 @@ export class UserService {
 
         log.trace("Iniciado Verificação se o usuário segue alguém");
         const followingList = await userRepository.listFollowing(userID);
-        
+
 
         log.trace("Finalizado UserService.getfollowingList");
         return followingList;
@@ -272,7 +272,7 @@ export class UserService {
         }
 
         log.trace("Finalizado UserService.getUserByUsername");
-        return { id: user.id, username: user.username, email: user.email};
+        return { id: user.id, username: user.username, email: user.email };
     }
 
     async findById(id) {
@@ -287,7 +287,7 @@ export class UserService {
         }
 
         log.trace("Finalizado UserService.getUserById");
-        return { id: user.id, username: user.username, email: user.email};
+        return { id: user.id, username: user.username, email: user.email };
     }
 
 
