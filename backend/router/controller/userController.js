@@ -218,9 +218,5 @@ export class UserController {
 
             response.status(400).json({ message: error.message });
         }
-
     }
-
-
-
 }

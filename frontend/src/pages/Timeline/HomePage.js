@@ -23,7 +23,7 @@ function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
             transition={{ duration: 0.5 }}
-            className="flex flex-col h-full w-full border-solid border-gray-600 border-x-[1px]"
+            className="flex flex-col h-full  w-full border-solid border-gray-600 border-x-[1px]"
         >
             <div className="flex py-5 text-xl font-thin text-white justify-evenly">
                 <p className="text-white">Todos</p>

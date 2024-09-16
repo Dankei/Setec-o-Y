@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import StartScreen from "../pages/StartScreen.js";
-import SignUpScreen from "../pages/SignUpScreen.js";
-import LoginScreen from "../pages/LoginScreen.js";
+import StartScreen from "../pages/Index/StartScreen.js";
+import SignUpScreen from "../pages/Index/SignUpScreen.js";
+import LoginScreen from "../pages/Index/LoginScreen.js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -18,25 +18,6 @@ function IndexPage() {
         } else if (currentScreen === 'login') {
             return <LoginScreen
                 onSignUpClick={() => setCurrentScreen('signup')}
-                onLoginClick={() => {
-                    axios.post('http://localhost:3001/login', {
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            email: email,
-                            password: password,
-                        })
-                    })
-                        .then((response) => {
-                            if (response.status === 200) {
-                                setCurrentScreen('timeline');
-                            }
-                        })
-                        .catch((error) => {
-                            console.error('Error:', error);
-                        });
-                }}
             />;
         }
         else {

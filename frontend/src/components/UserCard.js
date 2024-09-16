@@ -9,32 +9,19 @@ export default function Yeet(props) {
         navigate(`/${props.Username}`);
         window.location.reload();
     }
-    return(
-        <>
-            <button onClick={goToProfile}>
-
-            
-            <div className="flex flex-col  p-4">
-                <div className="flex  text-white">
-                    
-                    
+    return (
+        <button onClick={goToProfile}>
+            <div className="flex flex-col p-4">
+                <div className="flex text-white">
                     <div>
-                        <img className="size-12 rounded-full" src="/assets/images/user-icon.jpg"/>
+                        <img className="rounded-full size-12" src="/assets/images/user-icon.jpg" />
                     </div>
-                    
                     <div className="ms-4 text-white w-[30rem]">
-                        
-                        <p className="">{props.Username}</p>
-                        <p>Olá! Eu estou usando o Y! A nova rede social que vai revolucionar o mundo!</p>
+                        <p className="font-bold text-left">{props.Username}</p>
+                        <p className="text-left">Olá! Eu estou usando o Y! A nova rede social que vai revolucionar o mundo!</p>
                     </div>
-
                 </div>
-                
-                
-                
             </div>
-            </button>
-        
-        </>
+        </button>
     );
 }
