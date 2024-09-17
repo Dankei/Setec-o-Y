@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import UserCard from "../../components/UserCard.js";
 
 
-function ProfilePage({back}) {
+function ProfilePage({ back }) {
     const [userInfo, setUserInfo] = useState([]);
     const [users, setUsers] = useState([]);
     const { userID } = useParams();
@@ -23,7 +23,7 @@ function ProfilePage({back}) {
 
     useEffect(() => {
         if (userInfo.id) {
-            axios.get(`http://localhost:3001/api/users/followingList/${userInfo.id}`)
+            axios.get(`http://localhost:3001/api/users/followersList/${userInfo.id}`)
                 .then(response => {
                     setUsers(response.data);
                 })
@@ -31,38 +31,31 @@ function ProfilePage({back}) {
         }
     }, [userInfo]);
 
-    console.log(users)
-
-    // Requisições dos seguidores 
-
 
     return (
-        <div className="flex flex-col h-full w-full ">
-            <div className="flex text-white  items-center ">
-                
+        <div className="flex flex-col w-full h-full border-x border-x-slate-500">
+            <div className="flex items-center text-white ">
                 <button onClick={back}>
-                <div className="ms-2 size-5">
-                    <img src="./assets/images/back.png"/>
-                </div>
+                    <div className="ms-2 size-5">
+                        <img src="./assets/images/back.png" />
+                    </div>
                 </button>
-
-                <div className="flex flex-col  font-thin text-xl text-white py-2">
-                    <p className="text-white ms-2">{ userID } está seguindo</p>
-                    <p className="text-white font-bold text-sm ms-2">12 Yeets</p>
+                <div className="flex flex-col py-2 text-xl font-thin text-white">
+                    <p className="text-white ms-2">Seguidores de: {userID}</p>
+                    <p className="text-sm font-bold text-white ms-2">12 Yeets</p>
                 </div>
             </div>
-            
-            
-
+            <hr className="w-full h-px border-slate-500" />
             {users.map(user => (
-                <UserCard 
-                    key={user.id}
-                    Username={user}
-                />
+                <div>
+                    <UserCard
+                        key={user.id}
+                        Username={user}
+                    />
+                    <hr className="w-full h-px border-slate-500" />
+                </div>
             ))}
-            
         </div>
-        
     );
 }
 

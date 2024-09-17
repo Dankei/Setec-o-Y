@@ -21,7 +21,7 @@ export default function Yeet(props) {
 
     return (
         <>
-            <div className="flex flex-col border-y-[1px] border-gray-600 p-4">
+            <div className="flex flex-col border-b-[1px] border-gray-600 p-4">
                 <div className="flex text-white">
 
 

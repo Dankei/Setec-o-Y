@@ -6,7 +6,6 @@ import Profile from "./Profile.js";
 
 function ProfilePage() {
     const [currentScreen, setCurrentScreen] = useState('profile');
-    
     const renderScreen = () => {
         if (currentScreen === 'following') {
             return <Following back={() => setCurrentScreen('profile')} />;
