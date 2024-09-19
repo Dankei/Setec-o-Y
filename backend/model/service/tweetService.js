@@ -7,31 +7,26 @@ const userRepository = new UserRepository();
 const tweetRepository = new TweetRepository();
 
 export class TweetService {
-  async createTweet(tweet) {
-    log.trace("Iniciado TweetService.createTweet");
-
-    try {
+ 
+  // Inicio da task
 
 
-      const authorExists = await userRepository.findUserById(tweet.authorID);
-      if (!authorExists) {
-        log.error("Author does not exist");
-        throw new Error('Author does not exist');
-      }
 
-      // Verifique se o texto do tweet não está vazio
-      if (!tweet.text || tweet.text.trim() === "") {
-        log.error("Empty text");
-        throw new Error("Texto vazio");
-      }
 
-      log.trace("Finalizado TweetService.createTweet");
-      return await tweetRepository.createTweet(tweet);
-    } catch (error) {
-      log.error("TweetService.createTweet", error.message);
-      throw new Error("Failed to create tweet");
-    }
-  }
+
+
+
+
+
+
+
+
+  
+
+  // Fim da task
+
+
+
 
   async deleteTweet(id) {
     log.trace("Iniciado TweetService.deleteTweet");
@@ -56,16 +51,7 @@ export class TweetService {
     }
   }
 
-  async findAllTweets() {
-    log.trace("Iniciado TweetService.findAllTweets");
-    try {
-      log.trace("Finalizado TweetService.findAllTweets");
-      return await tweetRepository.findAllTweets();
-    } catch (error) {
-      log.error("TweetService.findAllTweets", error.message);
-      throw new Error("Failed to find tweets");
-    }
-  }
+  
 
   async findTweetsByauthorID(authorID) {
     log.trace("Iniciado TweetService.findTweetsByauthorID");

@@ -5,24 +5,32 @@ import { log } from "../../log/logger.js";
 const tweetService = new TweetService();
 
 export class TweetController {
-  // Criar um novo tweet
-  async createTweet(request, response) {
-    log.info("Feito request na rota /tweets");
-    log.trace("Iniciado TweetController.createTweet");
+ //Inicio da Task
 
 
-    const { text, authorID } = request.body;
 
-    try {
-      const tweet = new TweetEntity(text, authorID);
-      const result = await tweetService.createTweet(tweet);
 
-      log.success("Finalizado request com sucesso");
-      response.status(201).json(result);
-    } catch (error) {
-      response.status(400).json({ message: error.message });
-    }
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+ //Final da Task
 
   // Deletar um tweet
   async deleteTweet(request, response) {
@@ -64,19 +72,7 @@ export class TweetController {
     }
   }
 
-  // Encontrar todos os tweets
-  async findAllTweets(request, response) {
-    log.info("Feito request na rota /tweets");
-    log.trace("Iniciado TweetController.findAllTweets");
-
-    try {
-      const result = await tweetService.findAllTweets();
-      log.success("Finalizado request com sucesso");
-      response.status(200).json(result);
-    } catch (error) {
-      response.status(400).json({ message: error.message });
-    }
-  }
+  
 
   // Encontrar tweets por autor
   async findTweetsByauthorID(request, response) {

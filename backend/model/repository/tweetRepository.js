@@ -2,30 +2,31 @@ import { database } from "../../database/database.js";
 import { TweetEntity } from "../entity/tweetEntity.js";
 
 export class TweetRepository {
-  // Criando um novo tweet
-  async createTweet(tweet) {
-    try {
-      const { text, authorID, createdAt } = tweet;
-
-      const [result] = await database.query(
-        "INSERT INTO tb_tweet (text, authorID, createdAt) VALUES (?, ?, ?)",
-        [text, authorID, createdAt]
-      );
-
-      const newTweet = new TweetEntity(
-        text,
-        authorID,
-        createdAt,
-        result.insertId
-      );
+  
+//Inicio da task
 
 
 
-      return newTweet;
-    } catch (error) {
-      throw new Error("Falha ao criar tweet");
-    }
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Fim da task
+
+
 
   // Deletar um tweet
   async deleteTweet(id) {
@@ -62,22 +63,7 @@ export class TweetRepository {
     }
   }
 
-  // Encontrar todos os tweets
-  async findAllTweets() {
-    try {
-
-      const [rows] = await database.query("SELECT * FROM tb_tweet");
-
-
-      return rows.map((row) => {
-        const { id, text, authorID, createdAt } = row;
-
-        return new TweetEntity(text, authorID, new Date(createdAt), id);
-      });
-    } catch (error) {
-      throw new Error("Falha ao encontrar tweets");
-    }
-  }
+  
 
   // Encontrar tweets por autor
   async findTweetsByauthorID(authorID) {

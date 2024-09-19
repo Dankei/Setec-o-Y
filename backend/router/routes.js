@@ -28,9 +28,14 @@ router.get('/users/findByUsername/:username', userController.findByUsername); //
 router.get('/users/findById/:id', userController.findById); //Rota para ver um usuário pelo ID
 
 // Rotas de tweets
-router.post('/tweets', tweetController.createTweet);
+
+//Inicio da Task
+
+
+
+
+// Fim da Task
 router.delete('/tweets/:id', tweetController.deleteTweet);
-router.get('/tweets', tweetController.findAllTweets);
 router.get('/tweets/:id', tweetController.findTweetById);
 router.get('/tweets/author/:authorID', tweetController.findTweetsByauthorID);
 
