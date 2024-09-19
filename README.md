@@ -2,6 +2,9 @@
 
 Este é um projeto de clone do X/Twitter, criado para evento científico SETEC do Instituto Federal do Paraná e para demonstração de habilidades em desenvolvimento web. Ele possui funcionalidades básicas do X, como criação e autenticação de contas, publicação de tweets, seguir usuários, e perfis próprios.
 
+Apostilas:
+Tasks: https://crystalline-protocol-254.notion.site/Tasks-Curso-de-front-end-e-back-end-10374d6e359880b1b668ec72f5cccc65?pvs=25
+
 ## Funcionalidades
 
 - Cadastro e login de usuários
