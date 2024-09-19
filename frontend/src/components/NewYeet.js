@@ -5,7 +5,6 @@ import PopUp from './PopUp.js';
 
 export default function NewYeet() {
     const [text, setText] = useState('');
-    const [authorID, setAuthorID] = useState('');
     const [open, setOpen] = useState(false);
     const [charCount, setCharCount] = useState(0);
     const user = JSON.parse(localStorage.getItem('user')) || {}; // Adiciona valor default
