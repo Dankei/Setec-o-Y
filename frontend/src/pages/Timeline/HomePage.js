@@ -1,21 +1,9 @@
-import React, { useState, useEffect } from "react";
+//  Importacao dos modulos e componentes necessarios
 import NewYeet from "../../components/NewYeet.js";
-import Yeet from "../../components/Yeet.js";
-import axios from 'axios';
 import { motion } from 'framer-motion';
 
 function HomePage() {
-    const [tweets, setTweets] = useState([]);
-
-    useEffect(() => {
-        axios.get('http://localhost:3001/api/tweets/')
-            .then(response => {
-                const sortedTweets = response.data.sort((a, b) => b.id - a.id);
-                setTweets(sortedTweets);
-            })
-            .catch(error => console.error('Error fetching tweets:', error));
-    }, []);
-    console.log(tweets)
+    // Adicionar o useState
 
     return (
         <motion.div
@@ -30,16 +18,9 @@ function HomePage() {
                 <p className="text-white">Seguindo</p>
             </div>
             <NewYeet />
-            <div className="h-full">
-                {tweets.map(tweet => (
-                    <Yeet
-                        id={tweet.id}
-                        User={tweet.authorID}
-                        Date={new Date(tweet.createdAt).toLocaleString()}
-                        Content={tweet.text}
-                    />
-                ))}
-            </div>
+             {/*
+                Adicionar a lista de yeets
+             */}
         </motion.div >
     );
 }
